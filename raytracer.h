@@ -2,37 +2,38 @@
 #define RAYTRACER_H
 
 #include "common.h"
+#include "scene.h"
+#include "ray.h"
 
 namespace Raytracer {
 
-class Ray {
-public:
-	Ray() : origin(vec3(0, 0, 0)), direction(vec3(0, 0, 0)) {}
-	Ray(vec3& _origin, vec3& _direction) :
-		origin(_origin), direction(_direction) {}
-	void SetOrigin(vec3& _origin) { origin = _origin; }
-	void setDirection(vec3& _direction) { direction = _direction; }
-	vec3& GetOrigin() { return origin; }
-	vec3& GetDirection() { return direction; }
-
-private:
-	vec3 origin;
-	vec3 direction;
-};
 
 class Scene;
 class Primitive;
+
 class Engine {
 public:
 	Engine() { scene = new Scene(); }
 	~Engine() { delete scene; }
 	Scene* GetScene() { return scene; }
+	void SetTarget(int _width, int _height) {
+		width = _width;
+		height = _height;
+	}
+
+	Primitive* Raytrace(const Ray& ray, Color& acc, int depth, float index, float& dist);
 	void Init();
 	bool Render();
 
 
 protected:
 	Scene* scene;
+	int width;
+	int height;
+
+	ofstream out;
+
+
 
 };
 

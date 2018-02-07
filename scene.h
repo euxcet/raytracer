@@ -1,6 +1,8 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include "ray.h"
+
 namespace Raytracer {
 
 #define HIT 1
@@ -9,19 +11,28 @@ namespace Raytracer {
 
 class Material {
 public:
-	Material() : color(Color(0.2f, 0.2f, 0.2f)), refl(0), diff(0.2f) {}
-	void SetColor(Color& _color) { color = _color; }
+	Material() : color(Color(0.2f, 0.2f, 0.2f)), refl(0), diff(0.2f), spec(0.8f), rindex(1.5f) {}
+
+	void SetColor(const Color& _color) { color = _color; }
 	void SetDiffuse(float _diff) { diff = _diff; }
 	void SetReflection(float _refl) { refl = _refl; }
+	void SetRefraction(float _refr) { refr = _refr; }
+	void SetRefrIndex(float _rindex) { rindex = _rindex; }
+	void SetSpecular(float _spec) { spec = _spec; }
+
 	Color GetColor() { return color; }
+
 	float GetDiffuse() { return diff; }
 	float GetReflection() { return refl; }
-	float GetSpecular() { return 1.0f - diff; } // diffuse + specular = 1
+	float GetRefraction() { return refr; }
+	float GetRefrIndex() { return rindex; }
+	float GetSpecular() { return spec; }
 
 private:
 	Color color;
-	float diff;
-	float refl;
+	float diff, spec;
+	float refl, refr;
+	float rindex;
 };
 
 class Primitive {
@@ -30,37 +41,33 @@ public:
 		SPHERE = 1,
 		PLANE
 	};
-	Primitive() : name(0), light(false) {}
+	Primitive() : light(false) {name = "";}
 
 	Material* GetMaterial() { return &material; }
-	void SetMaterial(Material& _m) { material = m; }
+	void SetMaterial(Material& _m) { material = _m; }
 	virtual int GetType() = 0;
-	virtual int Intersect(Ray& ray, float& dist) = 0;
-	virtual vec3 GetNormal(vec3& pos) = 0;
+	virtual int Intersect(const Ray& ray, float& dist) = 0;
+	virtual vec3 GetNormal(const vec3& pos) = 0;
 	virtual Color GetColor(vec3) { return material.GetColor(); }
 	virtual void Light( bool _l) { light = _l; } // TODO: ?GetLight
 	bool IsLight() { return light; }
-	void SetName(char* _n) {
-		delete name;
-		name = new char[strlen(_n) + 1];
-		strcpy(name, _n);
-	}
+	void SetName(string _n) { name = _n; }
 
 protected:
 	Material material;
-	char* name;
+	string name;
 	bool light;
 };
 
 class Sphere : public Primitive {
 public:
 	int GetType() { return SPHERE; }
-	Sphere(vec3& _center, float _radius) :
-		center(_center), radius(radius) {}
+	Sphere(const vec3& _center, float _radius) :
+		center(_center), radius(_radius) {}
 	vec3 GetCenter() { return center; }
-	float getSqrRadius() { return radius * radius; }
-	int Intersect(Ray& ray, float& dist);
-	vec3 GetNormal(vec3 pos) { return (pos - center) / radius; }
+	float GetSqrRadius() { return radius * radius; }
+	int Intersect(const Ray& ray, float& dist);
+	vec3 GetNormal(const vec3& pos) { return (pos - center) / radius; }
 
 private:
 	vec3 center;
@@ -70,17 +77,17 @@ private:
 class PlanePrim : public Primitive {
 public:
 	int GetType() { return PLANE; }
-	PlanePrim(vec3& normal, float d) : plane( Plane(normal, d) ) {}
+	PlanePrim(const vec3& normal, float d) : plane( Plane(normal, d) ) {}
 	vec3& GetNormal() { return plane.N; }
-	int Intersect(Ray& ray, float& dist);
-	vec3 GetNormal(vec3& pos) { return plane.N; }
+	int Intersect(const Ray& ray, float& dist);
+	vec3 GetNormal(const vec3& pos) { return plane.N; }
 private:
 	Plane plane;
 };
 
 class Scene {
 public:
-	Scene() : primcnt(0), primitive(0) {}
+	Scene() : primcnt(0), primitive(0) { Init(); }
 	~Scene() { delete primitive; }
 	void Init();
 	int GetPrimcnt() { return primcnt; }

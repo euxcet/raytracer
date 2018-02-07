@@ -2,11 +2,26 @@
 #define COMMON_H
 
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <string>
+using std::string;
+
+#include <iostream>
+#include <fstream>
+#include <cassert>
+using std::ofstream;
+using std::cin;
+using std::cout;
+using std::endl;
 
 
 namespace Raytracer {
+
+#define EPS (1e-4)
+#define BIGFLOAT (1e6)
+#define TRACEDEPTH (6)
 
 class vec3 {
 public:
@@ -25,10 +40,12 @@ public:
 		float k = 1. / Length();
 		x *= k; y *= k; z *= k;
 	}
-	void operator +=(vec3& v) { x += v.x; y += v.y; z += v.z; }
-	void operator -=(vec3& v) { x -= v.x; y -= v.y; z -= v.z; }
+	void operator +=(const vec3& v) { x += v.x; y += v.y; z += v.z; }
+	void operator +=(vec3* v) { x += v -> x; y += v -> y; z += v -> z; }
+	void operator -=(const vec3& v) { x -= v.x; y -= v.y; z -= v.z; }
 	void operator *=(float f) { x *= f; y *= f; z *= f; }
-	void operator *=(vec3& v) { x *= v.x; y *= v.y; z *= v.z; }
+	void operator *=(const vec3& v) { x *= v.x; y *= v.y; z *= v.z; }
+	void operator /=(float f) { x /= f; y /= f; z /= f; } // TODO : divide 0
 	vec3 operator-() const { return vec3(-x, -y, -z); }
 	friend vec3 operator + (const vec3& v1, const vec3& v2) {
 		return vec3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
@@ -45,6 +62,9 @@ public:
 	friend vec3 operator * (const vec3& v1, const vec3& v2) {
 		return vec3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
 	}
+	friend vec3 operator / (const vec3& v, float f) {
+		return vec3(v.x / f, v.y / f, v.z / f);
+	}
 
 	union {
 		struct { float x, y, z; };
@@ -56,8 +76,9 @@ public:
 class Plane {
 public:
 	Plane() : N(0, 0, 0), D(0) {}
-	Plane(vec3 _n, float _d) : N(_n), D(_d) {}
+	Plane(const vec3 &_n, float _d) : N(_n), D(_d) {}
 
+	/*
 	union {
 		struct {
 			vec3 N;
@@ -65,6 +86,9 @@ public:
 		};
 		float c[4];
 	};
+	*/
+	vec3 N;
+	float D;
 
 };
 
