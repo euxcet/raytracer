@@ -111,7 +111,7 @@ bool Engine::Render() {
 	vec3 o(0, 0, -5);
 	out << "P3\n" << width << " " << height << "\n255\n";
 
-	int ns = 1;
+	int ns = 3;
 
 	for(int y = 0; y < height; y++) {
 		for(int x = 0; x < width; x++) {

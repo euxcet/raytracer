@@ -23,6 +23,10 @@ namespace Raytracer {
 #define BIGFLOAT (1e6)
 #define TRACEDEPTH (6)
 
+#define HIT 1
+#define MISS 0
+#define INPRIM -1
+
 class vec3 {
 public:
 	vec3() : x(0.f), y(0.f), z(0.f) {}
@@ -89,6 +93,11 @@ public:
 	*/
 	vec3 N;
 	float D;
+
+};
+
+
+class matrix {
 
 };
 
