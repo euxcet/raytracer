@@ -5,6 +5,7 @@ namespace Raytracer {
 
 
 void Scene::Init() {
+	/*
 	primitive = new Primitive*[500];
 	// ground plane
 	primitive[0] = new PlanePrim( vec3( 0, 1, 0 ), 4.4f );
@@ -95,6 +96,68 @@ void Scene::Init() {
 	}
 	// set number of primitives
 	primcnt = prim;
+	*/
+
+	primitive = new Primitive*[500];
+	// ground plane
+	primitive[0] = new PlanePrim( vec3( 0, 1, 0 ), 4.4f );
+	primitive[0]->SetName( "plane" );
+	primitive[0]->GetMaterial()->SetReflection( 0.0f );
+	primitive[0]->GetMaterial()->SetRefraction( 0.0f );
+	primitive[0]->GetMaterial()->SetDiffuse( 1.0f );
+	primitive[0]->GetMaterial()->SetColor( Color( 0.4f, 0.3f, 0.3f ) );
+	// big sphere
+	primitive[1] = new Sphere( vec3( 0, -0.8f, 6 ), 2 );
+	primitive[1]->SetName( "big sphere" );
+	primitive[1]->GetMaterial()->SetReflection( 0.2f );
+	primitive[1]->GetMaterial()->SetRefraction( 0.8f );
+	primitive[1]->GetMaterial()->SetRefrIndex( 1.3f );
+	primitive[1]->GetMaterial()->SetColor( Color( 0.7f, 0.7f, 1.0f ) );
+//	primitive[1]->GetMaterial()->SetDiffuseRefl( 0.3f );
+	// small sphere
+	primitive[2] = new Sphere( vec3( -5, -0.8f, 7 ), 2 );
+	primitive[2]->SetName( "small sphere" );
+	primitive[2]->GetMaterial()->SetReflection( 0.5f );
+	primitive[2]->GetMaterial()->SetRefraction( 0.0f );
+	primitive[2]->GetMaterial()->SetRefrIndex( 1.3f );
+	primitive[2]->GetMaterial()->SetDiffuse( 0.1f );
+	primitive[2]->GetMaterial()->SetColor( Color( 0.7f, 0.7f, 1.0f ) );
+//	primitive[2]->GetMaterial()->SetDiffuseRefl( 0.6f );
+	// third sphere
+	primitive[3] = new Sphere( vec3( 5, -0.8f, 7 ), 2 );
+	primitive[3]->SetName( "small sphere" );
+	primitive[3]->GetMaterial()->SetReflection( 0.5f );
+	primitive[3]->GetMaterial()->SetRefraction( 0.0f );
+	primitive[3]->GetMaterial()->SetRefrIndex( 1.3f );
+	primitive[3]->GetMaterial()->SetDiffuse( 0.1f );
+	primitive[3]->GetMaterial()->SetColor( Color( 0.7f, 0.7f, 1.0f ) );
+#if 1
+	// area light
+	primitive[4] = new Box( aabb( vec3( -1, 5, 4 ), vec3( 2, 0.1f, 2 ) ) );
+	primitive[4]->Light( true );
+	primitive[4]->GetMaterial()->SetColor( Color( 1, 1, 1 ) );
+#else
+	// light source 1
+	primitive[4] = new Sphere( vec3( 0, 5, 5 ), 0.1f );
+	primitive[4]->Light( true );
+	primitive[4]->GetMaterial()->SetColor( Color( 1, 1, 1 ) );
+#endif
+	// back plane
+	primitive[5] = new PlanePrim( vec3( 0, 0, -1 ), 12.4f );
+	primitive[5]->SetName( "backplane" );
+	primitive[5]->GetMaterial()->SetReflection( 0.0f );
+	primitive[5]->GetMaterial()->SetRefraction( 0.0f );
+	primitive[5]->GetMaterial()->SetDiffuse( 1.0f );
+	primitive[5]->GetMaterial()->SetColor( Color( 0.4f, 0.3f, 0.3f ) );
+	// ceiling
+	primitive[6] = new PlanePrim( vec3( 0, -1, 0 ), 5.2f );
+	primitive[6]->SetName( "ceiling" );
+	primitive[6]->GetMaterial()->SetReflection( 0.0f );
+	primitive[6]->GetMaterial()->SetRefraction( 0.0f );
+	primitive[6]->GetMaterial()->SetDiffuse( 1.0f );
+	primitive[6]->GetMaterial()->SetColor( Color( 0.4f, 0.3f, 0.3f ) );
+	primcnt = 6;
+
 
 }
 

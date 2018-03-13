@@ -70,6 +70,8 @@ public:
 		return vec3(v.x / f, v.y / f, v.z / f);
 	}
 
+	void print() { printf("%f %f %f\n", x, y, z); }
+
 	union {
 		struct { float x, y, z; };
 		struct { float r, g, b; };
@@ -81,21 +83,42 @@ class Plane {
 public:
 	Plane() : N(0, 0, 0), D(0) {}
 	Plane(const vec3 &_n, float _d) : N(_n), D(_d) {}
-
-	/*
-	union {
-		struct {
-			vec3 N;
-			float D;
-		};
-		float c[4];
-	};
-	*/
 	vec3 N;
 	float D;
 
 };
 
+
+class aabb {
+public:
+	aabb() : pos(vec3(0, 0, 0)), size(vec3(0, 0, 0)) {}
+	aabb(const vec3 &_pos, const vec3& _size) : pos(_pos), size(_size) {}
+	vec3 GetPos() const { return pos; }
+	vec3 GetSize() const { return size; }
+
+	bool Intersect(const aabb& ab) {
+		vec3 v1 = ab.GetPos();
+		vec3 v2 = ab.GetPos() + ab.GetSize();
+		vec3 v3 = pos;
+		vec3 v4 = pos + size;
+		return (v2.x > v3.x && v4.x > v1.x &&
+				v2.y > v3.y && v4.y > v1.y &&
+				v2.z > v3.z && v4.z > v1.z);
+	}
+
+	bool Contain(const vec3& pos) {
+		vec3 v1 = pos;
+		vec3 v2 = pos + size;
+		return (v1.x - EPS < pos.x && pos.x < v2.x + EPS &&
+				v1.y - EPS < pos.y && pos.y < v2.y + EPS &&
+				v1.z - EPS < pos.z && pos.z < v2.z + EPS);
+	}
+
+
+private:
+	vec3 pos;
+	vec3 size;
+};
 
 class matrix {
 

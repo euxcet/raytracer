@@ -21,7 +21,11 @@ public:
 		height = _height;
 	}
 
+	int FindNearest(const Ray& ray, float& dist, Primitive*& prim);
 	Primitive* Raytrace(const Ray& ray, Color& acc, int depth, float index, float& dist);
+
+	float CalcShade(Primitive* light, vec3 pi, vec3& dir);
+
 	void Init();
 	bool Render();
 
