@@ -1,2 +1,1 @@
-####Raytracer
 A simple raytracer
