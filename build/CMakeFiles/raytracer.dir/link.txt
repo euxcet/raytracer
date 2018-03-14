@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libraytracer.a  CMakeFiles/raytracer.dir/src/core/api.cpp.o CMakeFiles/raytracer.dir/src/core/primitive.cpp.o CMakeFiles/raytracer.dir/src/core/scene.cpp.o CMakeFiles/raytracer.dir/src/core/engine.cpp.o CMakeFiles/raytracer.dir/src/primitive/sphere.cpp.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libraytracer.a

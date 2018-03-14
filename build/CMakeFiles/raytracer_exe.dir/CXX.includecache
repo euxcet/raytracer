@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../src/core/api.h
+raytracer.h
+../src/core/raytracer.h
+
+../src/core/raytracer.h
+cmath
+-
+cstdio
+-
+cstdlib
+-
+cstring
+-
+string
+-
+iostream
+-
+fstream
+-
+cassert
+-
+
+/Users/euxcet/Graphic/old/mine/src/main/main.cpp
+raytracer.h
+/Users/euxcet/Graphic/old/mine/src/main/raytracer.h
+api.h
+/Users/euxcet/Graphic/old/mine/src/main/api.h
+
