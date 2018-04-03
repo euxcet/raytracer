@@ -4,11 +4,14 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/euxcet/Graphic/old/mine/src/core/api.cpp" "/Users/euxcet/Graphic/old/mine/build/CMakeFiles/raytracer.dir/src/core/api.cpp.o"
-  "/Users/euxcet/Graphic/old/mine/src/core/engine.cpp" "/Users/euxcet/Graphic/old/mine/build/CMakeFiles/raytracer.dir/src/core/engine.cpp.o"
-  "/Users/euxcet/Graphic/old/mine/src/core/primitive.cpp" "/Users/euxcet/Graphic/old/mine/build/CMakeFiles/raytracer.dir/src/core/primitive.cpp.o"
-  "/Users/euxcet/Graphic/old/mine/src/core/scene.cpp" "/Users/euxcet/Graphic/old/mine/build/CMakeFiles/raytracer.dir/src/core/scene.cpp.o"
-  "/Users/euxcet/Graphic/old/mine/src/primitive/sphere.cpp" "/Users/euxcet/Graphic/old/mine/build/CMakeFiles/raytracer.dir/src/primitive/sphere.cpp.o"
+  "/Users/euxcet/Graphic/raytracer/src/core/api.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/api.cpp.o"
+  "/Users/euxcet/Graphic/raytracer/src/core/engine.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/engine.cpp.o"
+  "/Users/euxcet/Graphic/raytracer/src/core/intersection.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/intersection.cpp.o"
+  "/Users/euxcet/Graphic/raytracer/src/core/light.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/light.cpp.o"
+  "/Users/euxcet/Graphic/raytracer/src/core/primitive.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/primitive.cpp.o"
+  "/Users/euxcet/Graphic/raytracer/src/core/scene.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/scene.cpp.o"
+  "/Users/euxcet/Graphic/raytracer/src/core/shape.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/shape.cpp.o"
+  "/Users/euxcet/Graphic/raytracer/src/shape/sphere.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 

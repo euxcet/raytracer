@@ -1,4 +1,5 @@
 #include "shape.h"
-namespace pbrt {
+namespace Raytracer {
+    Shape::Shape() {}
     Shape::~Shape() {}
 }

@@ -5,20 +5,28 @@ PROJECT( raytracer )
 
 SET( CORE_SOURCE
 	src/core/api.cpp
+	src/core/engine.cpp
+	src/core/intersection.cpp
+	src/core/light.cpp
 	src/core/primitive.cpp
 	src/core/scene.cpp
-	src/core/engine.cpp
+	src/core/shape.cpp
 	)
 
 set ( CORE_HEADERS
 	src/core/api.h
+	src/core/engine.h
+	src/core/geometry.h
+	src/core/intersection.h
+	src/core/light.h
+	src/core/material.h
+	src/core/primitive.h
 	src/core/raytracer.h
 	src/core/scene.h
-	src/core/material.h
-	src/core/common.h
+	src/core/shape.h
 	)
 FILE ( GLOB SOURCE
-	 src/primitive/*.cpp
+	 src/shape/sphere.cpp
      )
 
 INCLUDE_DIRECTORIES ( src )

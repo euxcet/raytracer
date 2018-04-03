@@ -2,6 +2,7 @@
 #include "api.h"
 
 int main() {
+    Raytracer::Init();
 }
 
 /*

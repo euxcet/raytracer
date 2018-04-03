@@ -3,10 +3,7 @@
 
 #include "raytracer.h"
 
-
 namespace Raytracer {
-
-
 class Vector3 {
 public:
 	Vector3() { x = y = z = 0; }
@@ -19,14 +16,15 @@ public:
 		if (i == 1) return y;
 		return z;
 	}
-	float& operator[](int i) const {
+	float &operator[](int i) {
 		if (i == 0) return x;
 		if (i == 1) return y;
 		return z;
 	}
 
+	Vector3& operator=(const Vector3 &v) { x = v.x; y = v.y; z = v.z; return *this; }
 	Vector3& operator+=(const Vector3& v) { x += v.x; y += v.y; z += v.z; return *this; }
- 	Vector3& &operator-=(const Vector3& v) { x -= v.x; y -= v.y; z -= v.z; return *this; }
+ 	Vector3& operator-=(const Vector3& v) { x -= v.x; y -= v.y; z -= v.z; return *this; }
 	Vector3& operator*=(const Vector3& v) { x *= v.x; y *= v.y; z *= v.z; return *this; }
 	Vector3& operator*=(float f) { x *= f; y *= f; z *= f; return *this; }
 	Vector3& operator/=(float f) { x /= f; y /= f; z /= f; return *this; }
@@ -40,8 +38,8 @@ public:
 	bool operator!=(const Vector3& v) const { return x != v.x || y != v.y || z != v.z; }
 
 
-	float Length() { return sqrt(x*x + y*y + z*z); }
-	float SqrLength() { return x*x + y*y + z*z; }
+	float Length() const { return sqrt(x*x + y*y + z*z); }
+	float SqrLength() const { return x*x + y*y + z*z; }
 
 	union {
 		struct { float x, y, z; };
@@ -49,10 +47,6 @@ public:
 		struct { float c[3]; };
 	};
 };
-
-inline float Dot(const Vector3 &v1, const Vector3 &v2) {
-	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
-}
 
 inline std::ostream& operator<<(std::ostream &os, const Vector3 &v) {
 	os << "[ " << v.x << ", " << v.y << ", " << v.z << " ]";
@@ -64,9 +58,9 @@ inline Vector3 operator*(float f, const Vector3 &v) {
 }
 
 class Point3 {
+public:
 	Point3() { x = y = z = 0; }
 	Point3(float x, float y, float z) : x(x), y(y), z(z) {}
-	explicit Point3(const Point3 &p) : x(p.x), y(p.y), z(p.z) {}
 
 	float operator[](int i) const {
 		if (i == 0) return x;
@@ -74,7 +68,7 @@ class Point3 {
 		return z;
 	}
 
-	float& operator[](int i) const {
+	float &operator[](int i) {
 		if (i == 0) return x;
 		if (i == 1) return y;
 		return z;
@@ -85,8 +79,8 @@ class Point3 {
 	Point3 operator+(const Point3& p) const { return Point3(x + p.x, y + p.y, z + p.z); }
 	Vector3 operator-(const Point3& p) const { return Vector3(x - p.x, y - p.y, z - p.z); }
 	Point3 operator-(const Vector3& v) const { return Point3(x - v.x, y - v.y, z - v.z); }
-	Point3 operator*(float f) { return Point3(x * f, y * f, z * f); }
-	Point3 operator/(float f) { return Point3(x / f, y / f, z / f); }
+	Point3 operator*(float f) const { return Point3(x * f, y * f, z * f); }
+	Point3 operator/(float f) const { return Point3(x / f, y / f, z / f); }
 	Point3 operator-() { return Point3(-x, -y, -z); }
 
 	Point3& operator+=(const Vector3& v) { x += v.x; y += v.y; z += v.z; return *this; }
@@ -120,7 +114,7 @@ public:
 		return z;
 	}
 
-	float& operator[](int i) const {
+	float &operator[](int i) {
 		if (i == 0) return x;
 		if (i == 1) return y;
 		return z;
@@ -131,6 +125,7 @@ public:
 	Normal3 operator+(const Normal3 &n) const { return Normal3(x + n.x, y + n.y, z + n.z); }
 	Normal3 operator-(const Normal3 &n) const { return Normal3(x - n.x, y - n.y, z - n.z); }
 	Normal3 operator*(float f) const { return Normal3(x * f, y * f, z * f); }
+	Normal3 operator/(float f) const { return Normal3(x / f, y / f, z / f); }
 
 	Normal3& operator+(const Normal3 &n) { x += n.x; y += n.y; z += n.z; return *this; }
 	Normal3& operator-(const Normal3 &n) { x -= n.x; y -= n.y; z -= n.z; return *this; }
@@ -138,6 +133,8 @@ public:
 	Normal3& operator/=(float f) { x /= f; y /= f; z /= f; return *this; }
 
 
+	float Length() const { return sqrt(x*x + y*y + z*z); }
+	float SqrLength() const { return x*x + y*y + z*z; }
 
 	float x, y, z;
 };
@@ -149,19 +146,19 @@ inline std::ostream& operator<<(std::ostream &os, const Normal3 &n) {
 
 class Ray {
 public:
-	Ray() : origin(Vector3(0, 0, 0)), direction(Vector3(0, 0, 0)) {DEBUG = 0;}
-	Ray(const Vector3& _origin, const Vector3& _direction) :
-		origin(_origin), direction(_direction) {}
-	void SetOrigin(const Vector3& _origin) { origin = _origin; }
-	void setDirection(const Vector3& _direction) { direction = _direction; }
-	Vector3 GetOrigin() const { return origin; }
+	Ray() : tmax(INF) {}
+	Ray(const Point3& origin, const Vector3& direction,
+		float tmax = INF)
+		 : origin(origin), direction(direction), tmax(tmax) {}
+	Point3 operator()(float t) const { return origin + t * direction; }
+	//TODO Remove  SetOrigin and SetDirection
+	void SetOrigin(const Point3& _origin) { origin = _origin; }
+	void SetDirection(const Vector3& _direction) { direction = _direction; }
+	Point3 GetOrigin() const { return origin; }
 	Vector3 GetDirection() const { return direction; }
 
-public:
-	int DEBUG;
-
-private:
-	Vector3 origin;
+	float tmax;
+	Point3 origin;
 	Vector3 direction;
 };
 
@@ -209,25 +206,41 @@ inline float Dot(const Normal3& v1, const Normal3& v2) {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
 inline Vector3 Cross(const Vector3& v1, const Vector3& v2) {
-    return Vector3<T>((v1.y * v2.z) - (v1.z * v2.y),
+    return Vector3((v1.y * v2.z) - (v1.z * v2.y),
 					  (v1.z * v2.x) - (v1.x * v2.z),
                       (v1.x * v2.y) - (v1.y * v2.x));
 }
 inline Vector3 Cross(const Vector3& v1, const Normal3& v2) {
-    return Vector3<T>((v1.y * v2.z) - (v1.z * v2.y),
+    return Vector3((v1.y * v2.z) - (v1.z * v2.y),
 					  (v1.z * v2.x) - (v1.x * v2.z),
                       (v1.x * v2.y) - (v1.y * v2.x));
 }
 inline Vector3 Cross(const Normal3& v1, const Vector3& v2) {
-    return Vector3<T>((v1.y * v2.z) - (v1.z * v2.y),
+    return Vector3((v1.y * v2.z) - (v1.z * v2.y),
 					  (v1.z * v2.x) - (v1.x * v2.z),
                       (v1.x * v2.y) - (v1.y * v2.x));
 }
 
+inline Vector3 operator+(const Vector3& v, const Normal3& n) {
+	return Vector3(v.x + n.x, v.y + n.y, v.z + n.z);
+}
+
+inline Vector3 operator+(const Normal3& n, const Vector3& v) {
+	return Vector3(n.x + v.x, n.y + v.y, n.z + v.z);
+}
+
+inline Vector3 operator-(const Normal3& n, const Vector3& v) {
+	return Vector3(n.x - v.x, n.y - v.y, n.z - v.z);
+}
+inline Vector3 operator-(const Vector3& v, const Normal3& n) {
+	return Vector3(v.x - n.x, v.y - n.y, v.z - n.z);
+}
+
+
 inline Vector3::Vector3(const Point3& p) : x(p.x), y(p.y), z(p.z) {}
 inline Vector3::Vector3(const Normal3 &n) : x(n.x), y(n.y), z(n.z) {}
 inline Vector3 operator*(float f, Vector3& v) { return v * f; }
-inline Normal3 Normalize(const Vector3& v) { return v / v.Length(); }
+inline Vector3 Normalize(const Vector3& v) { return v / v.Length(); }
 
 inline Point3 operator*(float f, const Point3& p) { return p * f; }
 inline float Distance(const Point3& p1, const Point3& p2) { return (p1 - p2).Length(); }
@@ -237,10 +250,6 @@ inline Point3 Lerp(float t, const Point3& p1, const Point3& p2) {
 
 inline Normal3 operator*(float f, const Normal3& n) { return n * f; }
 inline Normal3 Normalize(const Normal3& n) { return n / n.Length(); }
-
-
-
-
 
 };
 

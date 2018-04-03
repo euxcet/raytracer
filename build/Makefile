@@ -48,10 +48,10 @@ RM = /usr/local/Cellar/cmake/3.10.2/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/euxcet/Graphic/old/mine
+CMAKE_SOURCE_DIR = /Users/euxcet/Graphic/raytracer
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/euxcet/Graphic/old/mine/build
+CMAKE_BINARY_DIR = /Users/euxcet/Graphic/raytracer/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,9 +126,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/euxcet/Graphic/old/mine/build/CMakeFiles /Users/euxcet/Graphic/old/mine/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/euxcet/Graphic/raytracer/build/CMakeFiles /Users/euxcet/Graphic/raytracer/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/euxcet/Graphic/old/mine/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/euxcet/Graphic/raytracer/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -236,6 +236,60 @@ src/core/engine.cpp.s:
 	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/engine.cpp.s
 .PHONY : src/core/engine.cpp.s
 
+src/core/intersection.o: src/core/intersection.cpp.o
+
+.PHONY : src/core/intersection.o
+
+# target to build an object file
+src/core/intersection.cpp.o:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/intersection.cpp.o
+.PHONY : src/core/intersection.cpp.o
+
+src/core/intersection.i: src/core/intersection.cpp.i
+
+.PHONY : src/core/intersection.i
+
+# target to preprocess a source file
+src/core/intersection.cpp.i:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/intersection.cpp.i
+.PHONY : src/core/intersection.cpp.i
+
+src/core/intersection.s: src/core/intersection.cpp.s
+
+.PHONY : src/core/intersection.s
+
+# target to generate assembly for a file
+src/core/intersection.cpp.s:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/intersection.cpp.s
+.PHONY : src/core/intersection.cpp.s
+
+src/core/light.o: src/core/light.cpp.o
+
+.PHONY : src/core/light.o
+
+# target to build an object file
+src/core/light.cpp.o:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/light.cpp.o
+.PHONY : src/core/light.cpp.o
+
+src/core/light.i: src/core/light.cpp.i
+
+.PHONY : src/core/light.i
+
+# target to preprocess a source file
+src/core/light.cpp.i:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/light.cpp.i
+.PHONY : src/core/light.cpp.i
+
+src/core/light.s: src/core/light.cpp.s
+
+.PHONY : src/core/light.s
+
+# target to generate assembly for a file
+src/core/light.cpp.s:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/light.cpp.s
+.PHONY : src/core/light.cpp.s
+
 src/core/primitive.o: src/core/primitive.cpp.o
 
 .PHONY : src/core/primitive.o
@@ -290,6 +344,33 @@ src/core/scene.cpp.s:
 	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/scene.cpp.s
 .PHONY : src/core/scene.cpp.s
 
+src/core/shape.o: src/core/shape.cpp.o
+
+.PHONY : src/core/shape.o
+
+# target to build an object file
+src/core/shape.cpp.o:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/shape.cpp.o
+.PHONY : src/core/shape.cpp.o
+
+src/core/shape.i: src/core/shape.cpp.i
+
+.PHONY : src/core/shape.i
+
+# target to preprocess a source file
+src/core/shape.cpp.i:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/shape.cpp.i
+.PHONY : src/core/shape.cpp.i
+
+src/core/shape.s: src/core/shape.cpp.s
+
+.PHONY : src/core/shape.s
+
+# target to generate assembly for a file
+src/core/shape.cpp.s:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/shape.cpp.s
+.PHONY : src/core/shape.cpp.s
+
 src/main/main.o: src/main/main.cpp.o
 
 .PHONY : src/main/main.o
@@ -317,32 +398,32 @@ src/main/main.cpp.s:
 	$(MAKE) -f CMakeFiles/raytracer_exe.dir/build.make CMakeFiles/raytracer_exe.dir/src/main/main.cpp.s
 .PHONY : src/main/main.cpp.s
 
-src/primitive/sphere.o: src/primitive/sphere.cpp.o
+src/shape/sphere.o: src/shape/sphere.cpp.o
 
-.PHONY : src/primitive/sphere.o
+.PHONY : src/shape/sphere.o
 
 # target to build an object file
-src/primitive/sphere.cpp.o:
-	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/primitive/sphere.cpp.o
-.PHONY : src/primitive/sphere.cpp.o
+src/shape/sphere.cpp.o:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o
+.PHONY : src/shape/sphere.cpp.o
 
-src/primitive/sphere.i: src/primitive/sphere.cpp.i
+src/shape/sphere.i: src/shape/sphere.cpp.i
 
-.PHONY : src/primitive/sphere.i
+.PHONY : src/shape/sphere.i
 
 # target to preprocess a source file
-src/primitive/sphere.cpp.i:
-	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/primitive/sphere.cpp.i
-.PHONY : src/primitive/sphere.cpp.i
+src/shape/sphere.cpp.i:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/shape/sphere.cpp.i
+.PHONY : src/shape/sphere.cpp.i
 
-src/primitive/sphere.s: src/primitive/sphere.cpp.s
+src/shape/sphere.s: src/shape/sphere.cpp.s
 
-.PHONY : src/primitive/sphere.s
+.PHONY : src/shape/sphere.s
 
 # target to generate assembly for a file
-src/primitive/sphere.cpp.s:
-	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/primitive/sphere.cpp.s
-.PHONY : src/primitive/sphere.cpp.s
+src/shape/sphere.cpp.s:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/shape/sphere.cpp.s
+.PHONY : src/shape/sphere.cpp.s
 
 # Help Target
 help:
@@ -364,18 +445,27 @@ help:
 	@echo "... src/core/engine.o"
 	@echo "... src/core/engine.i"
 	@echo "... src/core/engine.s"
+	@echo "... src/core/intersection.o"
+	@echo "... src/core/intersection.i"
+	@echo "... src/core/intersection.s"
+	@echo "... src/core/light.o"
+	@echo "... src/core/light.i"
+	@echo "... src/core/light.s"
 	@echo "... src/core/primitive.o"
 	@echo "... src/core/primitive.i"
 	@echo "... src/core/primitive.s"
 	@echo "... src/core/scene.o"
 	@echo "... src/core/scene.i"
 	@echo "... src/core/scene.s"
+	@echo "... src/core/shape.o"
+	@echo "... src/core/shape.i"
+	@echo "... src/core/shape.s"
 	@echo "... src/main/main.o"
 	@echo "... src/main/main.i"
 	@echo "... src/main/main.s"
-	@echo "... src/primitive/sphere.o"
-	@echo "... src/primitive/sphere.i"
-	@echo "... src/primitive/sphere.s"
+	@echo "... src/shape/sphere.o"
+	@echo "... src/shape/sphere.i"
+	@echo "... src/shape/sphere.s"
 .PHONY : help
 
 

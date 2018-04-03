@@ -1,18 +1,17 @@
 #ifndef SHAPE_SPHERE_H
 #define SHAPE_SPHERE_H
 
-#include "primitive.h"
+#include "shape.h"
 
 namespace Raytracer {
 
 class Sphere : public Shape {
 public:
-	Sphere(const Point3& _center, float _radius) :
-		center(_center), radius(_radius) {}
+	Sphere(const Point3& center, float radius) :
+		Shape(), center(center), radius(radius) {}
 
-	int Intersect(const Ray& ray, float& dist) const;
-	Normal3 GetNormal(const Point3& pos) const { return (pos - center) / radius; }
-
+	bool Intersect(const Ray& ray, Intersection *isc) const;
+	Normal3 GetNormal(const Point3& pos) const { return Normal3(Normalize(pos - center)); }
 
 	Point3 GetCenter() const { return center; }
 	float GetSqrRadius() const { return radius * radius; }
@@ -22,9 +21,8 @@ private:
 	float radius;
 };
 
-std::shared_ptr<Primitive> CreateSpherePrimitive(float x, float y, float z, float radius) {
-    return std::make_shared<Sphere>(Vector3(x, y, z), radius);
-}
+Shape* CreateSphereShape(float x, float y, float z, float radius);
+
 
 }
 

@@ -1,11 +1,21 @@
 #include "api.h"
-#include "primitive/sphere.h"
+#include "engine.h"
+#include "primitive.h"
+#include "material.h"
+#include "scene.h"
+#include "shape.h"
+#include "geometry.h"
+#include "shape/sphere.h"
 
 namespace Raytracer {
-    static unique_ptr<Scene> scene;
     void Init() {
-        scene.reset(new Scene);
-        shared_ptr<Primitive> shape = CreateSpherePrimitive(1, 2, 3, 3);
-        unique_ptr<
+        Material *material = new Material();
+        Primitive *primitive = new GeometricPrimitive(CreateSphereShape(2, 2, 3, 1.5), material);
+        vector<Light*> lights;
+        lights.push_back(new Light(Point3(0, 0, 0), Color(1, 1, 1)));
+        lights.push_back(new Light(Point3(2, 5, 1), Color(0.6, 0.6, 0.6)));
+        Scene *scene = new Scene(primitive, lights);
+        Engine *engine = new Engine(scene, 800, 600);
+        engine -> Render();
     }
 }

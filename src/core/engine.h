@@ -4,24 +4,18 @@
 #include "raytracer.h"
 #include "primitive.h"
 #include "scene.h"
-#include "common.h"
+#include "geometry.h"
 
 namespace Raytracer {
 
 class Engine {
 public:
-	Engine() { scene = new Scene(); }
-	~Engine() { delete scene; }
-	Scene* GetScene() { return scene; }
-	void SetTarget(int _width, int _height) {
-		width = _width;
-		height = _height;
-	}
+	Engine(Scene* scene, int width, int height)
+        : scene(scene), width(width), height(height) {}
 
-	int FindNearest(const Ray& ray, float& dist, Primitive*& prim);
-	Primitive* Raytrace(const Ray& ray, Color& acc, int depth, float index, float& dist);
-
-	float CalcShade(Primitive* light, Vector3 pi, Vector3& dir);
+	Color Raytrace(const Ray& ray, int depth, float index);
+	Color SpawnReflectionRay(const Ray &ray, Intersection isc, int depth, float index);
+	Color SpawnRefractionRay(const Ray &ray, Intersection isc, int depth, float index);
 
 	bool Render();
 
@@ -30,7 +24,6 @@ protected:
 	Scene* scene;
 	int width;
 	int height;
-
 	ofstream out;
 };
 

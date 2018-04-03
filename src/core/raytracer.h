@@ -11,11 +11,13 @@ using std::string;
 #include <iostream>
 #include <fstream>
 #include <cassert>
+#include <memory>
 using std::ofstream;
 using std::cin;
 using std::cout;
 using std::endl;
 using std::shared_ptr;
+using std::unique_ptr;
 using std::abs;
 
 #include <vector>
@@ -24,6 +26,7 @@ using std::vector;
 namespace Raytracer {
 
 #define EPS (1e-4)
+#define INF (1e6)
 #define BIGFLOAT (1e6)
 #define TRACEDEPTH (6)
 
@@ -32,16 +35,20 @@ namespace Raytracer {
 #define INPRIM -1
 
 class Vector3;
-class Plane;
+class Point3;
+class Normal3;
 class aabb;
+class Ray;
 class Engine;
 
-
-class Ray;
 class Primitive;
+class GeometricPrimitive;
+class Aggregate;
 class Material;
+class Light;
 class Scene;
-class PPM;
+class Shape;
+class Intersection;
 
 
 };
