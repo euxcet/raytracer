@@ -1,1 +1,11 @@
-/build
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+
+# cmake build
+/build/*
+
+# Thumbnails
+._*
