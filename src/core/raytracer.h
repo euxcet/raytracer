@@ -35,7 +35,7 @@ namespace Raytracer {
 #define EPS (1e-4)
 #define INF (1e6)
 #define BIGFLOAT (1e6)
-#define TRACEDEPTH (6)
+#define TRACEDEPTH (4)
 #define SAMPLE (1)
 #define PI M_PI
 

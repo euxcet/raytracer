@@ -5,9 +5,8 @@ namespace Raytracer {
 
     bool Plane::Intersect(const Ray& ray, Intersection *isc) const {
         float dot = Dot(normal, ray.GetDirection());
- //       cout << dot << endl;
         if (dot > EPS || dot < -EPS) {
-            float dis = -(Dot(normal, Vector3(ray.GetOrigin())) - dist) / dot;
+            float dis = -(Dot(normal, Vector3(ray.GetOrigin())) + dist) / dot;
             if (dis > 0) {
                 if (dis < ray.tmax) {
 					isc -> dist = dis;
@@ -27,8 +26,8 @@ namespace Raytracer {
         return make_pair(x - floor(x), y - floor(y));
     }
 
-    Plane* CreatePlaneShape(const Normal3 &normal, float dist) {
-        return new Plane(normal, dist);
+    Plane* CreatePlaneShape(const Normal3 &normal, const Point3 &origin) {
+        return new Plane(normal, origin);
     }
 
 }

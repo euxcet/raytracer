@@ -65,7 +65,7 @@ bool Engine::Render() {
 	Vector3 dir = Normalize(des - eye);
 	Vector3 up = Normalize(Vector3(0, 1, -dir.y / dir.z));
 	Camera *camera = new Camera(eye, dir, up, width, height);
-	for(int i = 0; i < width; i++)
+	for(int i = 0; i < width; i++) {
 		for(int j = 0; j < height; j++) {
 			Color col = Color();
 			for(int t = 0; t < SAMPLE; t++) {
@@ -73,6 +73,8 @@ bool Engine::Render() {
 			}
 			camera -> SetColor(i, j, col / SAMPLE);
 		}
+		cout << (1. * i) / width << endl;
+	}
 	camera -> print();
 	delete camera;
 	return true;
