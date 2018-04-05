@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+../src/accelerator/bfaccel.h
+raytracer.h
+../src/accelerator/raytracer.h
+primitive.h
+../src/accelerator/primitive.h
+
 ../src/core/geometry.h
 raytracer.h
 ../src/core/raytracer.h
@@ -23,12 +29,18 @@ light.h
 ../src/core/light.h
 raytracer.h
 ../src/core/raytracer.h
+intersection.h
+../src/core/intersection.h
+scene.h
+../src/core/scene.h
 geometry.h
 ../src/core/geometry.h
 
 ../src/core/material.h
 raytracer.h
 ../src/core/raytracer.h
+texture.h
+../src/core/texture.h
 
 ../src/core/primitive.h
 raytracer.h
@@ -53,6 +65,8 @@ cstring
 -
 string
 -
+algorithm
+-
 iostream
 -
 fstream
@@ -64,6 +78,18 @@ memory
 vector
 -
 
+../src/core/scene.h
+raytracer.h
+../src/core/raytracer.h
+geometry.h
+../src/core/geometry.h
+primitive.h
+../src/core/primitive.h
+intersection.h
+../src/core/intersection.h
+light.h
+../src/core/light.h
+
 ../src/core/shape.h
 raytracer.h
 ../src/core/raytracer.h
@@ -72,9 +98,21 @@ geometry.h
 intersection.h
 ../src/core/intersection.h
 
+../src/core/texture.h
+raytracer.h
+../src/core/raytracer.h
+
+../src/shape/plane.h
+shape.h
+../src/shape/shape.h
+
 ../src/shape/sphere.h
 shape.h
 ../src/shape/shape.h
+
+/Users/euxcet/Graphic/raytracer/src/accelerator/bfaccel.cpp
+accelerator/bfaccel.h
+/Users/euxcet/Graphic/raytracer/src/accelerator/accelerator/bfaccel.h
 
 /Users/euxcet/Graphic/raytracer/src/core/api.cpp
 api.h
@@ -93,10 +131,24 @@ geometry.h
 /Users/euxcet/Graphic/raytracer/src/core/geometry.h
 shape/sphere.h
 /Users/euxcet/Graphic/raytracer/src/core/shape/sphere.h
+shape/plane.h
+/Users/euxcet/Graphic/raytracer/src/core/shape/plane.h
+accelerator/bfaccel.h
+/Users/euxcet/Graphic/raytracer/src/core/accelerator/bfaccel.h
 
 /Users/euxcet/Graphic/raytracer/src/core/api.h
 raytracer.h
 /Users/euxcet/Graphic/raytracer/src/core/raytracer.h
+
+/Users/euxcet/Graphic/raytracer/src/core/camera.cpp
+camera.h
+/Users/euxcet/Graphic/raytracer/src/core/camera.h
+
+/Users/euxcet/Graphic/raytracer/src/core/camera.h
+raytracer.h
+/Users/euxcet/Graphic/raytracer/src/core/raytracer.h
+geometry.h
+/Users/euxcet/Graphic/raytracer/src/core/geometry.h
 
 /Users/euxcet/Graphic/raytracer/src/core/engine.cpp
 engine.h
@@ -111,6 +163,8 @@ scene.h
 /Users/euxcet/Graphic/raytracer/src/core/scene.h
 geometry.h
 /Users/euxcet/Graphic/raytracer/src/core/geometry.h
+camera.h
+/Users/euxcet/Graphic/raytracer/src/core/camera.h
 
 /Users/euxcet/Graphic/raytracer/src/core/geometry.h
 raytracer.h
@@ -137,12 +191,18 @@ light.h
 /Users/euxcet/Graphic/raytracer/src/core/light.h
 raytracer.h
 /Users/euxcet/Graphic/raytracer/src/core/raytracer.h
+intersection.h
+/Users/euxcet/Graphic/raytracer/src/core/intersection.h
+scene.h
+/Users/euxcet/Graphic/raytracer/src/core/scene.h
 geometry.h
 /Users/euxcet/Graphic/raytracer/src/core/geometry.h
 
 /Users/euxcet/Graphic/raytracer/src/core/material.h
 raytracer.h
 /Users/euxcet/Graphic/raytracer/src/core/raytracer.h
+texture.h
+/Users/euxcet/Graphic/raytracer/src/core/texture.h
 
 /Users/euxcet/Graphic/raytracer/src/core/primitive.cpp
 primitive.h
@@ -170,6 +230,8 @@ cstdlib
 cstring
 -
 string
+-
+algorithm
 -
 iostream
 -
@@ -209,6 +271,14 @@ geometry.h
 /Users/euxcet/Graphic/raytracer/src/core/geometry.h
 intersection.h
 /Users/euxcet/Graphic/raytracer/src/core/intersection.h
+
+/Users/euxcet/Graphic/raytracer/src/core/texture.h
+raytracer.h
+/Users/euxcet/Graphic/raytracer/src/core/raytracer.h
+
+/Users/euxcet/Graphic/raytracer/src/shape/plane.cpp
+shape/plane.h
+/Users/euxcet/Graphic/raytracer/src/shape/shape/plane.h
 
 /Users/euxcet/Graphic/raytracer/src/shape/sphere.cpp
 shape/sphere.h

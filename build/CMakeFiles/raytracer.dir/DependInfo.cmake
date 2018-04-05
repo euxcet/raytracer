@@ -4,13 +4,16 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/euxcet/Graphic/raytracer/src/accelerator/bfaccel.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o"
   "/Users/euxcet/Graphic/raytracer/src/core/api.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/api.cpp.o"
+  "/Users/euxcet/Graphic/raytracer/src/core/camera.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/camera.cpp.o"
   "/Users/euxcet/Graphic/raytracer/src/core/engine.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/engine.cpp.o"
   "/Users/euxcet/Graphic/raytracer/src/core/intersection.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/intersection.cpp.o"
   "/Users/euxcet/Graphic/raytracer/src/core/light.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/light.cpp.o"
   "/Users/euxcet/Graphic/raytracer/src/core/primitive.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/primitive.cpp.o"
   "/Users/euxcet/Graphic/raytracer/src/core/scene.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/scene.cpp.o"
   "/Users/euxcet/Graphic/raytracer/src/core/shape.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/core/shape.cpp.o"
+  "/Users/euxcet/Graphic/raytracer/src/shape/plane.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/shape/plane.cpp.o"
   "/Users/euxcet/Graphic/raytracer/src/shape/sphere.cpp" "/Users/euxcet/Graphic/raytracer/build/CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")

@@ -21,6 +21,8 @@ cstring
 -
 string
 -
+algorithm
+-
 iostream
 -
 fstream

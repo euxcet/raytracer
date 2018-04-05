@@ -1,11 +1,21 @@
 #include "accelerator/bfaccel.h"
 
-namespace raytracer {
+namespace Raytracer {
 
-    int BFAccel::Intersect(const Ray& ray, Intersection *isc) const {
-        return 0;
-//        for(auto
+    bool BFAccel::Intersect(const Ray& ray, Intersection *isc) const {
+        float tmax = ray.tmax;
+        bool res = false;
+        for (auto primitive : primitives) {
+            if (primitive -> Intersect(Ray(ray.origin, ray.direction, tmax), isc)) {
+                tmax = isc -> dist;
+                res = true;
+            }
+        }
+        return res;
     }
 
 
+    Aggregate* CreateBFAccelerator(vector<Primitive*> primitives) {
+        return new BFAccel(primitives);
+    }
 }

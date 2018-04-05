@@ -11,8 +11,9 @@ namespace Raytracer {
 
 class Scene {
 public:
-	Scene(Primitive* aggregate, const vector<Light*> &lights)
-		: aggregate(aggregate), lights(lights) {}
+	Scene(Primitive* aggregate, const vector<Light*> &lights,
+			const Color &background = Color())
+		: aggregate(aggregate), lights(lights), background(background) {}
 
 	Color Le(const Ray &ray, Intersection isc) const;
 	bool Intersect(const Ray &ray, Intersection *isc) const;
@@ -21,6 +22,7 @@ public:
 private:
 	Primitive* aggregate;
 	vector<Light*> lights;
+	Color background;
 };
 
 }

@@ -14,6 +14,7 @@ public:
 	virtual ~Primitive() {}
 	virtual bool Intersect(const Ray &ray, Intersection *isc) const = 0;
 	virtual const Material* GetMaterial() const = 0;
+	virtual const Shape* GetShape() const = 0;
 };
 
 class GeometricPrimitive : public Primitive {
@@ -23,6 +24,7 @@ public:
 	~GeometricPrimitive() {}
 	virtual bool Intersect(const Ray &r, Intersection *isc) const;
 	const Material* GetMaterial() const;
+	const Shape* GetShape() const;
 
 private:
 	Shape* shape;
@@ -33,6 +35,10 @@ class Aggregate : public Primitive {
 public:
 	const Material* GetMaterial() const {
 		puts("Can't get material from class [Aggregate]!");
+		return NULL;
+	}
+	const Shape* GetShape() const {
+		puts("Can't get shape from class [Aggregate]!");
 		return NULL;
 	}
 };

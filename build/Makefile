@@ -182,6 +182,33 @@ raytracer_exe/fast:
 	$(MAKE) -f CMakeFiles/raytracer_exe.dir/build.make CMakeFiles/raytracer_exe.dir/build
 .PHONY : raytracer_exe/fast
 
+src/accelerator/bfaccel.o: src/accelerator/bfaccel.cpp.o
+
+.PHONY : src/accelerator/bfaccel.o
+
+# target to build an object file
+src/accelerator/bfaccel.cpp.o:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o
+.PHONY : src/accelerator/bfaccel.cpp.o
+
+src/accelerator/bfaccel.i: src/accelerator/bfaccel.cpp.i
+
+.PHONY : src/accelerator/bfaccel.i
+
+# target to preprocess a source file
+src/accelerator/bfaccel.cpp.i:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.i
+.PHONY : src/accelerator/bfaccel.cpp.i
+
+src/accelerator/bfaccel.s: src/accelerator/bfaccel.cpp.s
+
+.PHONY : src/accelerator/bfaccel.s
+
+# target to generate assembly for a file
+src/accelerator/bfaccel.cpp.s:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.s
+.PHONY : src/accelerator/bfaccel.cpp.s
+
 src/core/api.o: src/core/api.cpp.o
 
 .PHONY : src/core/api.o
@@ -208,6 +235,33 @@ src/core/api.s: src/core/api.cpp.s
 src/core/api.cpp.s:
 	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/api.cpp.s
 .PHONY : src/core/api.cpp.s
+
+src/core/camera.o: src/core/camera.cpp.o
+
+.PHONY : src/core/camera.o
+
+# target to build an object file
+src/core/camera.cpp.o:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/camera.cpp.o
+.PHONY : src/core/camera.cpp.o
+
+src/core/camera.i: src/core/camera.cpp.i
+
+.PHONY : src/core/camera.i
+
+# target to preprocess a source file
+src/core/camera.cpp.i:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/camera.cpp.i
+.PHONY : src/core/camera.cpp.i
+
+src/core/camera.s: src/core/camera.cpp.s
+
+.PHONY : src/core/camera.s
+
+# target to generate assembly for a file
+src/core/camera.cpp.s:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/camera.cpp.s
+.PHONY : src/core/camera.cpp.s
 
 src/core/engine.o: src/core/engine.cpp.o
 
@@ -398,6 +452,33 @@ src/main/main.cpp.s:
 	$(MAKE) -f CMakeFiles/raytracer_exe.dir/build.make CMakeFiles/raytracer_exe.dir/src/main/main.cpp.s
 .PHONY : src/main/main.cpp.s
 
+src/shape/plane.o: src/shape/plane.cpp.o
+
+.PHONY : src/shape/plane.o
+
+# target to build an object file
+src/shape/plane.cpp.o:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/shape/plane.cpp.o
+.PHONY : src/shape/plane.cpp.o
+
+src/shape/plane.i: src/shape/plane.cpp.i
+
+.PHONY : src/shape/plane.i
+
+# target to preprocess a source file
+src/shape/plane.cpp.i:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/shape/plane.cpp.i
+.PHONY : src/shape/plane.cpp.i
+
+src/shape/plane.s: src/shape/plane.cpp.s
+
+.PHONY : src/shape/plane.s
+
+# target to generate assembly for a file
+src/shape/plane.cpp.s:
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/shape/plane.cpp.s
+.PHONY : src/shape/plane.cpp.s
+
 src/shape/sphere.o: src/shape/sphere.cpp.o
 
 .PHONY : src/shape/sphere.o
@@ -439,9 +520,15 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... src/accelerator/bfaccel.o"
+	@echo "... src/accelerator/bfaccel.i"
+	@echo "... src/accelerator/bfaccel.s"
 	@echo "... src/core/api.o"
 	@echo "... src/core/api.i"
 	@echo "... src/core/api.s"
+	@echo "... src/core/camera.o"
+	@echo "... src/core/camera.i"
+	@echo "... src/core/camera.s"
 	@echo "... src/core/engine.o"
 	@echo "... src/core/engine.i"
 	@echo "... src/core/engine.s"
@@ -463,6 +550,9 @@ help:
 	@echo "... src/main/main.o"
 	@echo "... src/main/main.i"
 	@echo "... src/main/main.s"
+	@echo "... src/shape/plane.o"
+	@echo "... src/shape/plane.i"
+	@echo "... src/shape/plane.s"
 	@echo "... src/shape/sphere.o"
 	@echo "... src/shape/sphere.i"
 	@echo "... src/shape/sphere.s"

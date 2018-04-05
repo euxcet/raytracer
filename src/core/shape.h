@@ -13,6 +13,8 @@ public:
     virtual ~Shape();
     virtual bool Intersect(const Ray &ray, Intersection* isc) const = 0;
 	virtual Normal3 GetNormal(const Point3& pos) const = 0;
+    virtual pair<float, float> Coordinate(const Point3& pos) const = 0;
+    // TODO: modify pair<int,int> to Point2
 };
 
 }

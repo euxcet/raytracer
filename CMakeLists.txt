@@ -5,6 +5,7 @@ PROJECT( raytracer )
 
 SET( CORE_SOURCE
 	src/core/api.cpp
+	src/core/camera.cpp
 	src/core/engine.cpp
 	src/core/intersection.cpp
 	src/core/light.cpp
@@ -15,6 +16,7 @@ SET( CORE_SOURCE
 
 set ( CORE_HEADERS
 	src/core/api.h
+	src/core/camera.h
 	src/core/engine.h
 	src/core/geometry.h
 	src/core/intersection.h
@@ -24,9 +26,12 @@ set ( CORE_HEADERS
 	src/core/raytracer.h
 	src/core/scene.h
 	src/core/shape.h
+	src/core/texture.h
 	)
 FILE ( GLOB SOURCE
+	 src/shape/plane.cpp
 	 src/shape/sphere.cpp
+	 src/accelerator/bfaccel.cpp
      )
 
 INCLUDE_DIRECTORIES ( src )

@@ -1,14 +1,14 @@
 #include "raytracer.h"
 #include "primitive.h"
 
-namespace raytracer {
+namespace Raytracer {
 
 class BFAccel : public Aggregate {
 public:
     BFAccel(const vector<Primitive*> &primitives)
         : primitives(primitives) {}
 
-    int Intersect(const Ray& ray, ) const;
+    bool Intersect(const Ray& ray, Intersection* isc) const;
 
 private:
     vector<Primitive*> primitives;
@@ -16,6 +16,6 @@ private:
 };
 
 
-Aggregate* CreateBFAccelerator(vector<Primitive*> primitives) {
-    return new BFAccel(primitives);
+Aggregate* CreateBFAccelerator(vector<Primitive*> primitives);
+
 }

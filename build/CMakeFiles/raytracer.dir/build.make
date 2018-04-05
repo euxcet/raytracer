@@ -81,9 +81,33 @@ CMakeFiles/raytracer.dir/src/core/api.cpp.o.provides: CMakeFiles/raytracer.dir/s
 CMakeFiles/raytracer.dir/src/core/api.cpp.o.provides.build: CMakeFiles/raytracer.dir/src/core/api.cpp.o
 
 
+CMakeFiles/raytracer.dir/src/core/camera.cpp.o: CMakeFiles/raytracer.dir/flags.make
+CMakeFiles/raytracer.dir/src/core/camera.cpp.o: ../src/core/camera.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/raytracer.dir/src/core/camera.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raytracer.dir/src/core/camera.cpp.o -c /Users/euxcet/Graphic/raytracer/src/core/camera.cpp
+
+CMakeFiles/raytracer.dir/src/core/camera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raytracer.dir/src/core/camera.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/euxcet/Graphic/raytracer/src/core/camera.cpp > CMakeFiles/raytracer.dir/src/core/camera.cpp.i
+
+CMakeFiles/raytracer.dir/src/core/camera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raytracer.dir/src/core/camera.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/euxcet/Graphic/raytracer/src/core/camera.cpp -o CMakeFiles/raytracer.dir/src/core/camera.cpp.s
+
+CMakeFiles/raytracer.dir/src/core/camera.cpp.o.requires:
+
+.PHONY : CMakeFiles/raytracer.dir/src/core/camera.cpp.o.requires
+
+CMakeFiles/raytracer.dir/src/core/camera.cpp.o.provides: CMakeFiles/raytracer.dir/src/core/camera.cpp.o.requires
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/core/camera.cpp.o.provides.build
+.PHONY : CMakeFiles/raytracer.dir/src/core/camera.cpp.o.provides
+
+CMakeFiles/raytracer.dir/src/core/camera.cpp.o.provides.build: CMakeFiles/raytracer.dir/src/core/camera.cpp.o
+
+
 CMakeFiles/raytracer.dir/src/core/engine.cpp.o: CMakeFiles/raytracer.dir/flags.make
 CMakeFiles/raytracer.dir/src/core/engine.cpp.o: ../src/core/engine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/raytracer.dir/src/core/engine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/raytracer.dir/src/core/engine.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raytracer.dir/src/core/engine.cpp.o -c /Users/euxcet/Graphic/raytracer/src/core/engine.cpp
 
 CMakeFiles/raytracer.dir/src/core/engine.cpp.i: cmake_force
@@ -107,7 +131,7 @@ CMakeFiles/raytracer.dir/src/core/engine.cpp.o.provides.build: CMakeFiles/raytra
 
 CMakeFiles/raytracer.dir/src/core/intersection.cpp.o: CMakeFiles/raytracer.dir/flags.make
 CMakeFiles/raytracer.dir/src/core/intersection.cpp.o: ../src/core/intersection.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/raytracer.dir/src/core/intersection.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/raytracer.dir/src/core/intersection.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raytracer.dir/src/core/intersection.cpp.o -c /Users/euxcet/Graphic/raytracer/src/core/intersection.cpp
 
 CMakeFiles/raytracer.dir/src/core/intersection.cpp.i: cmake_force
@@ -131,7 +155,7 @@ CMakeFiles/raytracer.dir/src/core/intersection.cpp.o.provides.build: CMakeFiles/
 
 CMakeFiles/raytracer.dir/src/core/light.cpp.o: CMakeFiles/raytracer.dir/flags.make
 CMakeFiles/raytracer.dir/src/core/light.cpp.o: ../src/core/light.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/raytracer.dir/src/core/light.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/raytracer.dir/src/core/light.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raytracer.dir/src/core/light.cpp.o -c /Users/euxcet/Graphic/raytracer/src/core/light.cpp
 
 CMakeFiles/raytracer.dir/src/core/light.cpp.i: cmake_force
@@ -155,7 +179,7 @@ CMakeFiles/raytracer.dir/src/core/light.cpp.o.provides.build: CMakeFiles/raytrac
 
 CMakeFiles/raytracer.dir/src/core/primitive.cpp.o: CMakeFiles/raytracer.dir/flags.make
 CMakeFiles/raytracer.dir/src/core/primitive.cpp.o: ../src/core/primitive.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/raytracer.dir/src/core/primitive.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/raytracer.dir/src/core/primitive.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raytracer.dir/src/core/primitive.cpp.o -c /Users/euxcet/Graphic/raytracer/src/core/primitive.cpp
 
 CMakeFiles/raytracer.dir/src/core/primitive.cpp.i: cmake_force
@@ -179,7 +203,7 @@ CMakeFiles/raytracer.dir/src/core/primitive.cpp.o.provides.build: CMakeFiles/ray
 
 CMakeFiles/raytracer.dir/src/core/scene.cpp.o: CMakeFiles/raytracer.dir/flags.make
 CMakeFiles/raytracer.dir/src/core/scene.cpp.o: ../src/core/scene.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/raytracer.dir/src/core/scene.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/raytracer.dir/src/core/scene.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raytracer.dir/src/core/scene.cpp.o -c /Users/euxcet/Graphic/raytracer/src/core/scene.cpp
 
 CMakeFiles/raytracer.dir/src/core/scene.cpp.i: cmake_force
@@ -203,7 +227,7 @@ CMakeFiles/raytracer.dir/src/core/scene.cpp.o.provides.build: CMakeFiles/raytrac
 
 CMakeFiles/raytracer.dir/src/core/shape.cpp.o: CMakeFiles/raytracer.dir/flags.make
 CMakeFiles/raytracer.dir/src/core/shape.cpp.o: ../src/core/shape.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/raytracer.dir/src/core/shape.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/raytracer.dir/src/core/shape.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raytracer.dir/src/core/shape.cpp.o -c /Users/euxcet/Graphic/raytracer/src/core/shape.cpp
 
 CMakeFiles/raytracer.dir/src/core/shape.cpp.i: cmake_force
@@ -225,9 +249,33 @@ CMakeFiles/raytracer.dir/src/core/shape.cpp.o.provides: CMakeFiles/raytracer.dir
 CMakeFiles/raytracer.dir/src/core/shape.cpp.o.provides.build: CMakeFiles/raytracer.dir/src/core/shape.cpp.o
 
 
+CMakeFiles/raytracer.dir/src/shape/plane.cpp.o: CMakeFiles/raytracer.dir/flags.make
+CMakeFiles/raytracer.dir/src/shape/plane.cpp.o: ../src/shape/plane.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/raytracer.dir/src/shape/plane.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raytracer.dir/src/shape/plane.cpp.o -c /Users/euxcet/Graphic/raytracer/src/shape/plane.cpp
+
+CMakeFiles/raytracer.dir/src/shape/plane.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raytracer.dir/src/shape/plane.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/euxcet/Graphic/raytracer/src/shape/plane.cpp > CMakeFiles/raytracer.dir/src/shape/plane.cpp.i
+
+CMakeFiles/raytracer.dir/src/shape/plane.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raytracer.dir/src/shape/plane.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/euxcet/Graphic/raytracer/src/shape/plane.cpp -o CMakeFiles/raytracer.dir/src/shape/plane.cpp.s
+
+CMakeFiles/raytracer.dir/src/shape/plane.cpp.o.requires:
+
+.PHONY : CMakeFiles/raytracer.dir/src/shape/plane.cpp.o.requires
+
+CMakeFiles/raytracer.dir/src/shape/plane.cpp.o.provides: CMakeFiles/raytracer.dir/src/shape/plane.cpp.o.requires
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/shape/plane.cpp.o.provides.build
+.PHONY : CMakeFiles/raytracer.dir/src/shape/plane.cpp.o.provides
+
+CMakeFiles/raytracer.dir/src/shape/plane.cpp.o.provides.build: CMakeFiles/raytracer.dir/src/shape/plane.cpp.o
+
+
 CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o: CMakeFiles/raytracer.dir/flags.make
 CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o: ../src/shape/sphere.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o -c /Users/euxcet/Graphic/raytracer/src/shape/sphere.cpp
 
 CMakeFiles/raytracer.dir/src/shape/sphere.cpp.i: cmake_force
@@ -249,31 +297,61 @@ CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o.provides: CMakeFiles/raytracer.d
 CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o.provides.build: CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o
 
 
+CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o: CMakeFiles/raytracer.dir/flags.make
+CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o: ../src/accelerator/bfaccel.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o -c /Users/euxcet/Graphic/raytracer/src/accelerator/bfaccel.cpp
+
+CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/euxcet/Graphic/raytracer/src/accelerator/bfaccel.cpp > CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.i
+
+CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/euxcet/Graphic/raytracer/src/accelerator/bfaccel.cpp -o CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.s
+
+CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o.requires:
+
+.PHONY : CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o.requires
+
+CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o.provides: CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o.requires
+	$(MAKE) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o.provides.build
+.PHONY : CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o.provides
+
+CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o.provides.build: CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o
+
+
 # Object files for target raytracer
 raytracer_OBJECTS = \
 "CMakeFiles/raytracer.dir/src/core/api.cpp.o" \
+"CMakeFiles/raytracer.dir/src/core/camera.cpp.o" \
 "CMakeFiles/raytracer.dir/src/core/engine.cpp.o" \
 "CMakeFiles/raytracer.dir/src/core/intersection.cpp.o" \
 "CMakeFiles/raytracer.dir/src/core/light.cpp.o" \
 "CMakeFiles/raytracer.dir/src/core/primitive.cpp.o" \
 "CMakeFiles/raytracer.dir/src/core/scene.cpp.o" \
 "CMakeFiles/raytracer.dir/src/core/shape.cpp.o" \
-"CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o"
+"CMakeFiles/raytracer.dir/src/shape/plane.cpp.o" \
+"CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o" \
+"CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o"
 
 # External object files for target raytracer
 raytracer_EXTERNAL_OBJECTS =
 
 libraytracer.a: CMakeFiles/raytracer.dir/src/core/api.cpp.o
+libraytracer.a: CMakeFiles/raytracer.dir/src/core/camera.cpp.o
 libraytracer.a: CMakeFiles/raytracer.dir/src/core/engine.cpp.o
 libraytracer.a: CMakeFiles/raytracer.dir/src/core/intersection.cpp.o
 libraytracer.a: CMakeFiles/raytracer.dir/src/core/light.cpp.o
 libraytracer.a: CMakeFiles/raytracer.dir/src/core/primitive.cpp.o
 libraytracer.a: CMakeFiles/raytracer.dir/src/core/scene.cpp.o
 libraytracer.a: CMakeFiles/raytracer.dir/src/core/shape.cpp.o
+libraytracer.a: CMakeFiles/raytracer.dir/src/shape/plane.cpp.o
 libraytracer.a: CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o
+libraytracer.a: CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o
 libraytracer.a: CMakeFiles/raytracer.dir/build.make
 libraytracer.a: CMakeFiles/raytracer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX static library libraytracer.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/euxcet/Graphic/raytracer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX static library libraytracer.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/raytracer.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/raytracer.dir/link.txt --verbose=$(VERBOSE)
 
@@ -283,13 +361,16 @@ CMakeFiles/raytracer.dir/build: libraytracer.a
 .PHONY : CMakeFiles/raytracer.dir/build
 
 CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/core/api.cpp.o.requires
+CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/core/camera.cpp.o.requires
 CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/core/engine.cpp.o.requires
 CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/core/intersection.cpp.o.requires
 CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/core/light.cpp.o.requires
 CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/core/primitive.cpp.o.requires
 CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/core/scene.cpp.o.requires
 CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/core/shape.cpp.o.requires
+CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/shape/plane.cpp.o.requires
 CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/shape/sphere.cpp.o.requires
+CMakeFiles/raytracer.dir/requires: CMakeFiles/raytracer.dir/src/accelerator/bfaccel.cpp.o.requires
 
 .PHONY : CMakeFiles/raytracer.dir/requires
 

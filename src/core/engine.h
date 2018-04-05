@@ -5,6 +5,7 @@
 #include "primitive.h"
 #include "scene.h"
 #include "geometry.h"
+#include "camera.h"
 
 namespace Raytracer {
 

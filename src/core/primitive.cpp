@@ -14,5 +14,9 @@ const Material* GeometricPrimitive::GetMaterial() const {
 	return material;
 }
 
+const Shape* GeometricPrimitive::GetShape() const {
+	return shape;
+}
+
 
 }

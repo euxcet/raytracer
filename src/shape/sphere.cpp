@@ -6,7 +6,6 @@ bool Sphere::Intersect(const Ray& ray, Intersection *isc) const {
 	Vector3 v = ray.GetOrigin() - center;
 	float b = -Dot(v, ray.GetDirection());
 	float det = (b * b) - Dot(v, v) + radius * radius;
-//	cout << ray.origin << " " << ray.direction << endl;
 
 	if (det > 0) {
 		det = sqrtf(det);
@@ -32,6 +31,13 @@ bool Sphere::Intersect(const Ray& ray, Intersection *isc) const {
 		}
 	}
 	return false;
+}
+
+pair<float, float> Sphere::Coordinate(const Point3& pos) const {
+	Vector3 v = Normalize(pos - GetCenter());
+	float phi = (atan2(v.y, v.x) + PI) / (2. * PI);
+	float theta = (atan2(v.z, sqrt(v.x * v.x + v.y * v.y)) + PI / 2.) / PI;
+	return make_pair(phi, theta);
 }
 
 Shape* CreateSphereShape(float x, float y, float z, float radius) {
