@@ -31,6 +31,24 @@ private:
 	Material* material;
 };
 
+class Mesh : public Primitive {
+public:
+	Mesh(vector<Shape*> shapes, Material* material)
+		: shapes(shapes), material(material) {}
+	Mesh(const char* file, Material* material);
+	~Mesh() {}
+	bool Intersect(const Ray &r, Intersection *isc) const;
+	const Material* GetMaterial() const { return material; }
+	const Shape* GetShape() const {
+		puts("Can't get shape from class [Mesh]!");
+		return NULL;
+	}
+private:
+	ifstream fin;
+	vector<Shape*> shapes;
+	Material* material;
+};
+
 class Aggregate : public Primitive {
 public:
 	const Material* GetMaterial() const {

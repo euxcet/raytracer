@@ -35,8 +35,8 @@ namespace Raytracer {
 #define EPS (1e-4)
 #define INF (1e6)
 #define BIGFLOAT (1e6)
-#define TRACEDEPTH (4)
-#define SAMPLE (1)
+#define TRACEDEPTH (6)
+#define SAMPLE (25)
 #define PI M_PI
 
 #define HIT 1
@@ -46,7 +46,7 @@ namespace Raytracer {
 class Vector3;
 class Point3;
 class Normal3;
-class aabb;
+class AABB;
 class Ray;
 
 class Camera;

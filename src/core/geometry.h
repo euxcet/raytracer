@@ -162,36 +162,92 @@ public:
 	Vector3 direction;
 };
 
-class aabb {
+class AABB {
 public:
-	aabb() : pos(Vector3(0, 0, 0)), size(Vector3(0, 0, 0)) {}
-	aabb(const Vector3 &_pos, const Vector3& _size) : pos(_pos), size(_size) {}
-	Vector3 GetPos() const { return pos; }
+	AABB() : pos(Point3(0, 0, 0)), size(Vector3(0, 0, 0)) {}
+	AABB(const Point3 &pos, const Vector3& size) : pos(pos), size(size) {}
+	Point3 GetPos() const { return pos; }
 	Vector3 GetSize() const { return size; }
 
-	bool Intersect(const aabb& ab) {
-		Vector3 v1 = ab.GetPos();
-		Vector3 v2 = ab.GetPos() + ab.GetSize();
-		Vector3 v3 = pos;
-		Vector3 v4 = pos + size;
+	bool Intersect(const AABB& ab) const {
+		Point3 v1 = ab.GetPos();
+		Point3 v2 = ab.GetPos() + ab.GetSize();
+		Point3 v3 = pos;
+		Point3 v4 = pos + size;
 		return (v2.x > v3.x && v4.x > v1.x &&
 				v2.y > v3.y && v4.y > v1.y &&
 				v2.z > v3.z && v4.z > v1.z);
 	}
 
-	bool Contain(const Vector3& pos) {
-		Vector3 v1 = pos;
-		Vector3 v2 = pos + size;
+	bool Intersect(const Ray& ray, float &hit0, float &hit1) {
+		float t0 = 0, t1 = ray.tmax;
+		Point3 pMin = pos;
+		Point3 pMax = pos + size;
+	    for (int i = 0; i < 3; ++i) {
+	        float invRayDir = 1.f / ray.direction[i];
+	        float tNear = (pMin[i] - ray.origin[i]) * invRayDir;
+	        float tFar  = (pMax[i] - ray.origin[i]) * invRayDir;
+
+	        if (tNear > tFar) std::swap(tNear, tFar);
+	        t0 = tNear > t0 ? tNear : t0;
+	        t1 = tFar  < t1 ? tFar  : t1;
+	        if (t0 > t1) return false;
+	    }
+		hit0 = t0; hit1 = t1;
+	    return true;
+	}
+
+	AABB Expand() const {
+		return AABB(pos - Vector3(EPS, EPS, EPS),
+					size + Vector3(EPS * 2, EPS * 2, EPS * 2));
+	}
+
+	AABB Combine(const AABB& ab) const {
+		Point3 p = Point3( min(pos.x, ab.GetPos().x),
+						   min(pos.y, ab.GetPos().y),
+						   min(pos.z, ab.GetPos().z));
+		Point3 pb = Point3(max(pos.x + size.x, ab.GetPos().x + ab.GetSize().x),
+						   max(pos.y + size.y, ab.GetPos().y + ab.GetSize().y),
+						   max(pos.z + size.z, ab.GetPos().z + ab.GetSize().z));
+		return AABB(p, pb - p);
+	}
+
+	AABB CutLeft(int dim) const {
+		if (dim == 0) return AABB(pos, Vector3(size.x / 2, size.y, size.z));
+		if (dim == 1) return AABB(pos, Vector3(size.x, size.y / 2, size.z));
+		if (dim == 2) return AABB(pos, Vector3(size.x, size.y, size.z / 2));
+		puts("dim can only be less than 3 in functino AABB::CutLeft(int dim)");
+		return AABB();
+	}
+
+	AABB CutRight(int dim) const {
+		if (dim == 0) return AABB(pos + Vector3(size.x / 2, 0, 0),
+								  Vector3(size.x / 2, size.y, size.z));
+		if (dim == 1) return AABB(pos + Vector3(0, size.y / 2, 0),
+								  Vector3(size.x, size.y / 2, size.z));
+		if (dim == 2) return AABB(pos + Vector3(0, 0, size.z / 2),
+								  Vector3(size.x, size.y, size.z / 2));
+		puts("dim can only be less than 3 in functino AABB::CutRight(int dim)");
+		return AABB();
+	}
+
+	bool Contain(const Point3& pos) const {
+		Point3 v1 = pos;
+	 	Point3 v2 = pos + size;
 		return (v1.x - EPS < pos.x && pos.x < v2.x + EPS &&
 				v1.y - EPS < pos.y && pos.y < v2.y + EPS &&
 				v1.z - EPS < pos.z && pos.z < v2.z + EPS);
 	}
-private:
-	Vector3 pos;
+	Point3 pos;
 	Vector3 size;
 };
-typedef Vector3 Color;
 
+inline std::ostream& operator<<(std::ostream &os, const AABB &ab) {
+	cout << ab.pos << "  " << ab.pos + ab.size << endl;
+	return os;
+}
+
+typedef Vector3 Color;
 
 inline float Dot(const Vector3& v1, const Vector3& v2) {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;

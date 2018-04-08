@@ -33,6 +33,11 @@ bool Sphere::Intersect(const Ray& ray, Intersection *isc) const {
 	return false;
 }
 
+AABB Sphere::GetAABB() const {
+	//TODO;
+	return AABB();
+}
+
 pair<float, float> Sphere::Coordinate(const Point3& pos) const {
 	Vector3 v = Normalize(pos - GetCenter());
 	float phi = (atan2(v.y, v.x) + PI) / (2. * PI);

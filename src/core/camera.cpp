@@ -14,7 +14,7 @@ namespace Raytracer {
     Vector3 Camera::Emit(double x, double y) {
         x += (rand() % 1000 / 1000.) * 1.2 - 0.6;
         y += (rand() % 1000 / 1000.) * 1.2 - 0.6;
-        float dx = x / width - 0.5;
+        float dx = (x - width / 2) / height;
         float dy = y / height - 0.5;
         Point3 onimage = eye + direction + dx * right + dy * up;
         return Normalize(onimage - eye);

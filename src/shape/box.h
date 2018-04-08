@@ -1,27 +1,25 @@
 #ifndef SHAPE_BOX_H
 #define SHAPE_BOX_H
 
+#include "shape.h"
+#include "geometry.h"
 
 namespace Raytracer {
 
-class Box : public Primitive {
+class Box : public Shape {
 public:
-	Box() : box(Vector3(0, 0, 0), Vector3(0, 0, 0)) {}
-	Box(const aabb& _box) : box(_box) {}
+	Box(const Point3& pos, const Vector3& size) : box(AABB(pos, size)) {}
+	Box(const AABB& box) : box(box) {}
 
-	int Intersect(const Ray& ray, float& dist) const;
-	Normal3 GetNormal(const Normal3& pos) const;
-
-
-	bool IntersectBox(const aabb& _box) const { return box.Intersect(_box); }
-	bool Contain(const Point3& p) const { return box.Contain(p); }
+	bool Intersect(const Ray& ray, Intersection *isc) const;
+	Normal3 GetNormal(const Point3& pos) const;
+	
 	Point3 GetPos() const { return box.GetPos(); }
 	Vector3 GetSize() const { return box.GetSize(); }
-
-	aabb GetAABB() const { return box; }
+	AABB GetAABB() const { return box; }
 
 protected:
-	aabb box;
+	AABB box;
 };
 
 }

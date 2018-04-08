@@ -3,7 +3,6 @@
 namespace Raytracer {
 
 bool GeometricPrimitive::Intersect(const Ray &r, Intersection *isc) const {
-	float dist = r.tmax;
 	bool res;
 	if ((res = shape -> Intersect(r, isc)))
 		isc -> primitive = this;
@@ -18,5 +17,21 @@ const Shape* GeometricPrimitive::GetShape() const {
 	return shape;
 }
 
+Mesh::Mesh(const char* file, Material *material) : material(material) {
+}
+
+bool Mesh::Intersect(const Ray &r, Intersection *isc) const {
+	float dist = r.tmax;
+	bool res = false;
+	for(auto shape : shapes) {
+		Ray ray(r.GetOrigin(), r.GetDirection(), dist);
+		if ((res = shape -> Intersect(r, isc))) {
+			isc -> primitive = this;
+			dist = isc -> dist;
+			res = true;
+		}
+	}
+	return res;
+}
 
 }

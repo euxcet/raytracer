@@ -13,6 +13,7 @@ public:
 	bool Intersect(const Ray& ray, Intersection *isc) const;
 	Normal3 GetNormal(const Point3& pos) const { return Normal3(Normalize(pos - center)); }
 	Point3 GetCenter() const { return center; }
+	AABB GetAABB() const;
     pair<float, float> Coordinate(const Point3& pos) const; // TODO: modify pair<int,int> to Point2
 
 	float GetSqrRadius() const { return radius * radius; }

@@ -12,6 +12,7 @@ Color Engine::Raytrace(const Ray& ray, int depth, float index) {
     if (!result) return Color(0, 0, 0);
 
     if (isc.light != NULL) return isc.light -> GetColor();
+
     Color res = Color();
 	if (isc.primitive -> GetMaterial() -> GetRefraction() < EPS) {
 	    res = scene -> Le(ray, isc);

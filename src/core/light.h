@@ -8,7 +8,7 @@
 
 namespace Raytracer {
 
-#define LIGHT_SAMPLE (2)
+#define LIGHT_SAMPLE (25)
 
 class Light {
 public:

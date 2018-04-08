@@ -31,7 +31,9 @@ set ( CORE_HEADERS
 FILE ( GLOB SOURCE
 	 src/shape/plane.cpp
 	 src/shape/sphere.cpp
+	 src/shape/triangle.cpp
 	 src/accelerator/bfaccel.cpp
+	 src/accelerator/kdtreeaccel.cpp
      )
 
 INCLUDE_DIRECTORIES ( src )
