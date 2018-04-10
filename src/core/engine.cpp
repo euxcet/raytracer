@@ -3,6 +3,7 @@
 //TODO: Memory!!!!
 
 namespace Raytracer {
+	static int tot = 0;
 
 Color Engine::Raytrace(const Ray& ray, int depth, float index) {
 	if (depth >= TRACEDEPTH) return Color(0, 0, 0);
@@ -14,15 +15,16 @@ Color Engine::Raytrace(const Ray& ray, int depth, float index) {
     if (isc.light != NULL) return isc.light -> GetColor();
 
     Color res = Color();
-	if (isc.primitive -> GetMaterial() -> GetRefraction() < EPS) {
-	    res = scene -> Le(ray, isc);
-	}
-    res += isc.primitive -> GetMaterial() -> GetReflection()
-                * SpawnReflectionRay(ray, isc, depth, index);
-	if (isc.primitive -> GetMaterial() -> GetRefraction() > EPS) {
+    res = scene -> Le(ray, isc);
+	tot ++;
+
+	if (isc.primitive -> GetMaterial() -> GetReflection() > EPS)
+	    res += isc.primitive -> GetMaterial() -> GetReflection()
+	                * SpawnReflectionRay(ray, isc, depth, index);
+
+	if (isc.primitive -> GetMaterial() -> GetRefraction() > EPS)
 	    res += isc.primitive -> GetMaterial() -> GetRefraction()
 	                * SpawnRefractionRay(ray, isc, depth, index);
-	}
 
     return res;
 }
@@ -75,6 +77,7 @@ bool Engine::Render() {
 			camera -> SetColor(i, j, col / SAMPLE);
 		}
 		cout << (1. * i) / width << endl;
+	cout << tot << endl;
 	}
 	camera -> print();
 	delete camera;

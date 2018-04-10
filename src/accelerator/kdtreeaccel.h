@@ -7,10 +7,10 @@ namespace Raytracer {
 class KDTreeNode {
 public:
     KDTreeNode() { l = r = NULL; box = AABB(); leaf = false; }
-    KDTreeNode *l, *r;
-
+    
     bool IsLeaf() const { return leaf; }
 
+    KDTreeNode *l, *r;
     AABB box;
     bool leaf;
     vector<Primitive*> prims;

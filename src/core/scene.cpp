@@ -9,9 +9,9 @@ Color Scene::Le(const Ray &ray, Intersection isc) const {
     double spec = isc.primitive -> GetMaterial() -> GetSpecular();
     // No Texture
     Color res = color * background * diff;
+    if (diff < EPS && spec < EPS) return res;
     for(auto light: lights) {
         double shade = light -> CalcShade(this, isc.p);
-        if (shade < EPS) continue;
         Vector3 R = Normalize(light -> GetOrigin() - isc.p);
         double dot = Dot(R, isc.n);
         if (dot > EPS) {

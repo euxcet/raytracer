@@ -33,7 +33,7 @@ namespace Raytracer {
 
 
         ifstream fin;
-        fin.open("2.obj");
+        fin.open("../obj/bunny.obj");
         int v, f;
         fin >> v >> f;
         char s[4];
@@ -89,7 +89,7 @@ namespace Raytracer {
                                         Color(1, 1, 1)));
 
         Scene *scene = new Scene(CreateKDTreeAccelerator(triangles, primitives), lights, Color(0.1, 0.1, 0.1));
-        Engine *engine = new Engine(scene, 1280, 720);
+        Engine *engine = new Engine(scene, 400, 400);
         engine -> Render();
     }
 }
