@@ -21,6 +21,7 @@ namespace Raytracer {
         vector<Primitive*> triangles;
         //plane
 
+        /*
         primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 1, 0), Point3(0, -23, 0)),
                              new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.7, 1, 0, 1.7)
                             ));
@@ -28,20 +29,19 @@ namespace Raytracer {
 
         primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 0, 1), Point3(0, 0, 0)),
                              new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.7, 1, 0, 1.7)
-                            ));
-
-                            /*
-        primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 1, 0), Point3(0, -23, 0)),
-                             new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.7, 1, 0, 1.7,
-                                new Texture("../texture/floor.pic"))
-                            ));
-
-
-        primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 0, 1), Point3(0, 0, 0)),
-                             new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.7, 1, 0, 1.7,
-                                new Texture("../texture/floor.pic"))
                             ));
                             */
+
+        primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 1, 0), Point3(0, -23, 0)),
+                             new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.7, 1, 0, 1.7,
+                                new Texture("../texture/floor.pic"))
+                            ));
+
+
+        primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 0, 1), Point3(0, 0, 0)),
+                             new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.7, 1, 0, 1.7,
+                                new Texture("../texture/floor.pic"))
+                            ));
 
 
 
@@ -85,20 +85,16 @@ namespace Raytracer {
             */
 
 
-            /*
         primitives.push_back(new GeometricPrimitive(CreateSphereShape(0, -8, 3.3, 3.3),
                              new Material(Color(1, 0, 0), Color(1, 0, 0), 0, 0.3, 0.45, 0.25, 1.7,
                                 new Texture("../texture/marble.pic"))
                             ));
-                            */
 
 
-                            /*
         primitives.push_back(new GeometricPrimitive(CreateSphereShape(-2.2, 2, 0.7, 0.7),
                              new Material(Color(1, 0, 0), Color(1, 0, 0), 1, 0, 0, 0, 1.7)));
         primitives.push_back(new GeometricPrimitive(CreateSphereShape(2.2, 2, 0.7, 0.7),
                              new Material(Color(0, 0, 1), Color(0, 0, 1), 1, 0, 0, 0, 1.7)));
-                             */
 
 
 
@@ -109,7 +105,7 @@ namespace Raytracer {
 
         Scene *scene = new Scene(CreateKDTreeAccelerator(triangles, primitives), lights, Color(0.1, 0.1, 0.1));
         //Engine *engine = CreateRaytracerEngine(scene, 400, 400);
-        Engine *engine = CreatePPMEngine(scene, 400, 400);
+        Engine *engine = CreatePPMEngine(scene, 1280, 800);
         engine -> Render();
     }
 }

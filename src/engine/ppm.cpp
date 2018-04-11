@@ -24,7 +24,7 @@ KDTNode* KDTree::BuildTree(int u, int v) {
     if (dim == 2) sort(hps + u, hps + v + 1, cmpZ);
     node -> dim = dim;
     node -> hp = hps[mid];
-    node -> l = BuildTree(u, mid);
+    node -> l = BuildTree(u, mid - 1);
     node -> r = BuildTree(mid + 1, v);
     return node;
 }
@@ -56,28 +56,31 @@ void KDTree::Update(KDTNode *node, const Photon &photon) {
     //TODO DOT()
 
     HitPoint* hp = node -> hp;
-    if ((hp -> isc.p - photon.position).Length() <= hp -> R2) {
+//    cout << hp -> isc.p << " " << node -> dim << " " << photon.position << endl;
+ //   cout << (hp -> isc.p - photon.position).SqrLength() << endl;
+    float curR2 = hp -> R2;
+    if ((hp -> isc.p - photon.position).SqrLength() <= curR2) {
         double g = (hp -> tot * ALPHA + ALPHA) / (hp -> tot * ALPHA + 1.0);
         hp -> R2 *= g;
         hp -> tot ++;
-        hp -> color = (hp -> color + hp -> weight * photon.color) * g;
+        hp -> color = (hp -> color + hp -> weight * photon.color / PI) * g;
     }
     if (node -> dim == 0) {
-        if (photon.position.x >= hp -> isc.p.x - sqrt(hp -> R2))
+        if (photon.position.x >= hp -> isc.p.x - sqrt(curR2))
             Update(node -> r, photon);
-        if (photon.position.x <= hp -> isc.p.x + sqrt(hp -> R2))
+        if (photon.position.x <= hp -> isc.p.x + sqrt(curR2))
             Update(node -> l, photon);
     }
     else if (node -> dim == 1) {
-        if (photon.position.y >= hp -> isc.p.y - sqrt(hp -> R2))
+        if (photon.position.y >= hp -> isc.p.y - sqrt(curR2))
             Update(node -> r, photon);
-        if (photon.position.y <= hp -> isc.p.y + sqrt(hp -> R2))
+        if (photon.position.y <= hp -> isc.p.y + sqrt(curR2))
             Update(node -> l, photon);
     }
     else {
-        if (photon.position.z >= hp -> isc.p.y - sqrt(hp -> R2))
+        if (photon.position.z >= hp -> isc.p.z - sqrt(curR2))
             Update(node -> r, photon);
-        if (photon.position.z <= hp -> isc.p.y + sqrt(hp -> R2))
+        if (photon.position.z <= hp -> isc.p.z + sqrt(curR2))
             Update(node -> l, photon);
     }
 
@@ -90,14 +93,16 @@ void PPMEngine::Raytrace(const Ray& ray, int depth, float index, Vector3 weight,
     if (!result) return;
 
     double diff = isc.primitive -> GetMaterial() -> GetDiffuse();
+    Color color = isc.primitive -> GetMaterial() ->
+					GetColor(isc.primitive -> GetShape() -> Coordinate(isc.p));
     if (diff > EPS) {
         HitPoint *hp = new HitPoint();
-        hp -> weight = weight * diff;
+        hp -> weight = weight * diff * color;
         hp -> id = id;
         hp -> ray = ray;
         hp -> isc = isc;
         hp -> tot = 0;
-        hp -> R2 = 10.0;
+        hp -> R2 = HITRADIUS;
         hps.push_back(hp);
     }
     float refl = isc.primitive -> GetMaterial() -> GetReflection();
@@ -222,25 +227,17 @@ void PPMEngine::Photontrace(const Photon &photon, int depth) {
     if (!result) return;
     Photon hitphoton = Photon(isc.p, photon.direction, photon.color);
     if (isc.primitive -> GetMaterial() -> GetDiffuse() > EPS) {
-        cout << hitphoton.color << endl;
+    //    cout << hitphoton.color << endl;
+    /*
+        for(auto hp: hps)
+            if ((hp -> isc.p - photon.position).Length() <= hp -> R2) {
+                double g = (hp -> tot * ALPHA + ALPHA) / (hp -> tot * ALPHA + 1.0);
+                hp -> R2 *= g;
+                hp -> tot ++;
+                hp -> color = (hp -> color + hp -> weight * photon.color / PI) * g;
+            }
+            */
         tree -> Update(tree -> root, hitphoton);
-        /*
-        float mdist = INF;
-        float predist = 0;
-        HitPoint* hp = NULL;
-        int tot = 0;
-        while (true) {
-            mdist = INF;
-            tree -> FindNearest(tree -> root, isc.p, mdist, predist, hp);
-            if (hp == NULL) break;
-            predist = mdist;
-            if ((hp -> isc.p - hitphoton.position).Length() > COLLECT_RADIUS) break;
-            Color c = hp -> weight * hitphoton.color * 4 / (PHOTON_COUNT * powf(COLLECT_RADIUS, 2));
-//            cout << c << endl;
-            camera -> AddColor(hp->id / height, hp->id % height, c);
-            hp -> cnt ++;
-        }
-        */
     }
     float prob = 1.;
     if (PhotonDiffusion(hitphoton, isc, depth, prob)) return;
@@ -250,6 +247,7 @@ void PPMEngine::Photontrace(const Photon &photon, int depth) {
 }
 
 bool PPMEngine::Render() {
+
 	Point3 eye(0, 10, 5);
 	Point3 des(0, -5, 0);
 	Vector3 dir = Normalize(des - eye);
@@ -262,19 +260,30 @@ bool PPMEngine::Render() {
     }
     tree = new KDTree(hps);
 
-    vector<Photon*> photons = scene -> EmitPhotons(PHOTON_COUNT);
-    int tot = 0;
-    for(auto photon : photons) {
-        Photontrace(*photon, 0);
-        tot ++;
-        cout << tot << endl;
+    int count = 0;
+
+    while (true) {
+        vector<Photon*> photons = scene -> EmitPhotons(PHOTON_COUNT);
+        count += PHOTON_COUNT;
+        int tot = 0;
+        for(auto photon : photons) {
+            Photontrace(*photon, 0);
+            tot ++;
+            cout << tot << endl;
+        }
+
+        camera -> clear();
+
+        for(auto hp: hps) {
+            Color col = hp -> color / (PI * hp -> R2 * count);
+            camera -> AddColor(hp -> id / height, hp -> id % height, col);
+        }
+        camera -> print();
+        for(int i = 0; i < photons.size(); i++)
+            delete photons[i];
+        photons.clear();
     }
 
-    for(auto hp: hps) {
-        camera -> AddColor(hp -> id / height, hp -> id % height, hp -> color / (hp -> R2 * PHOTON_COUNT));
-    }
-
-    camera -> print();
 	delete camera;
 	return true;
 }

@@ -14,6 +14,7 @@ public:
     void SetColor(int x, int y, const Color& c);
     void AddColor(int x, int y, const Color& c);
     void print();
+    void clear();
 
 private:
     Point3 eye;

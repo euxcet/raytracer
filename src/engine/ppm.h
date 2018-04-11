@@ -6,9 +6,10 @@
 
 namespace Raytracer {
 
-#define PHOTON_COUNT 1000
-#define PHOTON_DEPTH 6
-#define COLLECT_RADIUS 0.3
+#define PHOTON_COUNT 100000
+#define PHOTON_DEPTH 16
+#define COLLECT_RADIUS 10
+#define HITRADIUS 0.1
 #define ALPHA 0.8
 
 class HitPoint {
@@ -47,6 +48,7 @@ public:
     KDTNode* root;
     HitPoint** hps;
     int hpcount;
+    float curR2;
 };
 
 

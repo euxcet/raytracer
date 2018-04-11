@@ -19,7 +19,7 @@ vector<Photon*> PointLight::EmitPhotons(int pcount) const {
             y = rand() % 20000 / 10000. - 1;
             z = rand() % 20000 / 10000. - 1;
         } while (x*x + y*y + z*z >= 1 || x*x + y*y + z*z < EPS);
-        Photon *photon = new Photon(origin, Normalize(Vector3(x, y, z)), color);
+        Photon *photon = new Photon(origin, Normalize(Vector3(x, y, z)), Vector3(80, 80, 80) * PI * 4.);
         photons.push_back(photon);
     }
     return photons;
@@ -56,7 +56,7 @@ vector<Photon*> AreaLight::EmitPhotons(int pcount) const {
         } while (x*x + y*y + z*z >= 1 || x*x + y*y + z*z < EPS);
         rx = rand() % 10000 / 10000. - 0.5;
         ry = rand() % 10000 / 10000. - 0.5;
-        Photon *photon = new Photon(origin + dx * rx + dy * ry, Normalize(Vector3(x, y, z)), color);
+        Photon *photon = new Photon(origin + dx * rx + dy * ry, Normalize(Vector3(x, y, z)), Color(2500, 2500, 2500));
         photons.push_back(photon);
     }
     return photons;

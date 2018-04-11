@@ -28,6 +28,11 @@ namespace Raytracer {
         data[x][y] += c;
     }
 
+    void Camera::clear() {
+        for(int j = 0; j < height; j++)
+            for(int i = 0; i < width; i++) data[i][j] = Color(0, 0, 0);
+    }
+
     void Camera::print() {
         out.open("1.ppm");
         out << "P3\n" << width << " " << height << "\n255\n";
