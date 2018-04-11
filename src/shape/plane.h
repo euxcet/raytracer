@@ -22,7 +22,7 @@ private:
     float dist;
 };
 
-Plane* CreatePlaneShape(const Normal3 &normal, const Point3 &origin);
+Shape* CreatePlaneShape(const Normal3 &normal, const Point3 &origin);
 
 
 }

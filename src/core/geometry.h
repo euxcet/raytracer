@@ -38,6 +38,7 @@ public:
 	bool operator!=(const Vector3& v) const { return x != v.x || y != v.y || z != v.z; }
 
 
+	float Power() const { return (x + y + z) / 3; }
 	float Length() const { return sqrt(x*x + y*y + z*z); }
 	float SqrLength() const { return x*x + y*y + z*z; }
 
@@ -47,6 +48,8 @@ public:
 		struct { float c[3]; };
 	};
 };
+
+typedef Vector3 Color;
 
 inline std::ostream& operator<<(std::ostream &os, const Vector3 &v) {
 	os << "[ " << v.x << ", " << v.y << ", " << v.z << " ]";
@@ -162,6 +165,18 @@ public:
 	Vector3 direction;
 };
 
+class Photon {
+public:
+	Photon() {}
+	Photon(const Point3& position, const Vector3& direction,
+		   const Color& color)
+		   : position(position), direction(direction), color(color) {}
+
+	Color color;
+	Point3 position;
+	Vector3 direction;
+};
+
 class AABB {
 public:
 	AABB() : pos(Point3(0, 0, 0)), size(Vector3(0, 0, 0)) {}
@@ -247,7 +262,6 @@ inline std::ostream& operator<<(std::ostream &os, const AABB &ab) {
 	return os;
 }
 
-typedef Vector3 Color;
 
 inline float Dot(const Vector3& v1, const Vector3& v2) {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;

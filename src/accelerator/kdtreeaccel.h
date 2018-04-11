@@ -1,3 +1,6 @@
+#ifndef ACCELERATOR_KDTREEACCEL_H
+#define ACCELERATOR_KDTREEACCEL_H
+
 #include "raytracer.h"
 #include "geometry.h"
 #include "primitive.h"
@@ -7,7 +10,7 @@ namespace Raytracer {
 class KDTreeNode {
 public:
     KDTreeNode() { l = r = NULL; box = AABB(); leaf = false; }
-    
+
     bool IsLeaf() const { return leaf; }
 
     KDTreeNode *l, *r;
@@ -36,3 +39,5 @@ Aggregate* CreateKDTreeAccelerator(vector<Primitive*> triangles,
                                    vector<Primitive*> others);
 
 }
+
+#endif

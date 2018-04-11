@@ -18,6 +18,7 @@ public:
 	Color Le(const Ray &ray, Intersection isc) const;
 	bool Intersect(const Ray &ray, Intersection *isc) const;
 	float CalcShade(Point3 o, Point3 p) const;
+	vector<Photon*> EmitPhotons(int pcount) const;
 
 private:
 	Primitive* aggregate;

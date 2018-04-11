@@ -1,3 +1,6 @@
+#ifndef ACCELERATOR_BFACCEL_H
+#define ACCELERATOR_BFACCEL_H
+
 #include "raytracer.h"
 #include "primitive.h"
 
@@ -19,3 +22,5 @@ private:
 Aggregate* CreateBFAccelerator(vector<Primitive*> primitives);
 
 }
+
+#endif

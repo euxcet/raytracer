@@ -16,6 +16,7 @@ public:
     virtual Point3 GetOrigin() const = 0;
     virtual double CalcShade(const Scene *scene, const Point3 &p) = 0;
     virtual bool Intersect(const Ray &ray) const = 0;
+    virtual vector<Photon*> EmitPhotons(int pcount) const = 0;
 
 protected:
     Color color;
@@ -28,6 +29,7 @@ public:
     Point3 GetOrigin() const { return origin; }
     double CalcShade(const Scene *scene, const Point3 &p);
     bool Intersect(const Ray &ray) const { return false; }
+    vector<Photon*> EmitPhotons(int pcount) const;
 
 private:
     Point3 origin;
@@ -40,6 +42,8 @@ public:
     Point3 GetOrigin() const { return origin; }
     double CalcShade(const Scene *scene, const Point3 &p);
     bool Intersect(const Ray &ray) const;
+    vector<Photon*> EmitPhotons(int pcount) const;
+
 private:
     Point3 origin;
     Vector3 dx;

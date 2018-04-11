@@ -25,6 +25,7 @@ using std::unique_ptr;
 using std::abs;
 using std::pair;
 using std::make_pair;
+using std::sort;
 
 #include <vector>
 using std::vector;
@@ -49,6 +50,7 @@ class Point3;
 class Normal3;
 class AABB;
 class Ray;
+class Photon;
 
 class Camera;
 class Engine;

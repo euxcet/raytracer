@@ -34,6 +34,8 @@ FILE ( GLOB SOURCE
 	 src/shape/triangle.cpp
 	 src/accelerator/bfaccel.cpp
 	 src/accelerator/kdtreeaccel.cpp
+	 src/engine/rt.cpp
+	 src/engine/ppm.cpp
      )
 
 INCLUDE_DIRECTORIES ( src )

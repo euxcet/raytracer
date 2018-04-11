@@ -22,6 +22,15 @@ Color Scene::Le(const Ray &ray, Intersection isc) const {
     return res;
 }
 
+vector<Photon*> Scene::EmitPhotons(int pcount) const {
+    vector<Photon*> res;
+    for(auto light: lights) {
+        for(auto photon: light -> EmitPhotons(pcount))
+            res.push_back(photon);
+    }
+    return res;
+}
+
 bool Scene::Intersect(const Ray &ray, Intersection *isc) const {
     return aggregate -> Intersect(ray, isc);
 }

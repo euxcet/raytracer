@@ -12,6 +12,7 @@ public:
            const Vector3& _up, int width, int height);
     Vector3 Emit(double x, double y);
     void SetColor(int x, int y, const Color& c);
+    void AddColor(int x, int y, const Color& c);
     void print();
 
 private:

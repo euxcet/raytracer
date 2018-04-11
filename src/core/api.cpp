@@ -10,6 +10,8 @@
 #include "shape/triangle.h"
 #include "accelerator/bfaccel.h"
 #include "accelerator/kdtreeaccel.h"
+#include "engine/rt.h"
+#include "engine/ppm.h"
 
 namespace Raytracer {
 
@@ -20,6 +22,16 @@ namespace Raytracer {
         //plane
 
         primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 1, 0), Point3(0, -23, 0)),
+                             new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.7, 1, 0, 1.7)
+                            ));
+
+
+        primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 0, 1), Point3(0, 0, 0)),
+                             new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.7, 1, 0, 1.7)
+                            ));
+
+                            /*
+        primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 1, 0), Point3(0, -23, 0)),
                              new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.7, 1, 0, 1.7,
                                 new Texture("../texture/floor.pic"))
                             ));
@@ -29,9 +41,11 @@ namespace Raytracer {
                              new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.7, 1, 0, 1.7,
                                 new Texture("../texture/floor.pic"))
                             ));
+                            */
 
 
 
+                            /*
         ifstream fin;
         fin.open("../obj/bunny.obj");
         int v, f;
@@ -60,6 +74,7 @@ namespace Raytracer {
             triangles.push_back(new GeometricPrimitive(p,
                 new Material(Color(1, 0, 0), Color(1, 0, 0), 0, 0, 0.45, 0.25, 1.7 )));
         }
+        */
         /*
         Point3 v0 = Point3(0, 0, -1);
         Point3 v1 = Point3(3, 0, -1);
@@ -70,26 +85,31 @@ namespace Raytracer {
             */
 
 
+            /*
         primitives.push_back(new GeometricPrimitive(CreateSphereShape(0, -8, 3.3, 3.3),
                              new Material(Color(1, 0, 0), Color(1, 0, 0), 0, 0.3, 0.45, 0.25, 1.7,
                                 new Texture("../texture/marble.pic"))
                             ));
+                            */
 
 
+                            /*
         primitives.push_back(new GeometricPrimitive(CreateSphereShape(-2.2, 2, 0.7, 0.7),
                              new Material(Color(1, 0, 0), Color(1, 0, 0), 1, 0, 0, 0, 1.7)));
         primitives.push_back(new GeometricPrimitive(CreateSphereShape(2.2, 2, 0.7, 0.7),
                              new Material(Color(0, 0, 1), Color(0, 0, 1), 1, 0, 0, 0, 1.7)));
+                             */
 
 
 
         vector<Light*> lights;
-        //lights.push_back(new PointLight(Point3(-3, 3, 5), Color(1, 1, 1)));
-        lights.push_back(new AreaLight(Point3(-3, 3, 5), Vector3(1.5, 0, 0), Vector3(0, 1.5, 0),
-                                        Color(1, 1, 1)));
+        lights.push_back(new PointLight(Point3(-3, 3, 5), Color(1, 1, 1)));
+        //lights.push_back(new AreaLight(Point3(-3, 3, 5), Vector3(1.5, 0, 0), Vector3(0, 1.5, 0),
+//                                        Color(1, 1, 1)));
 
         Scene *scene = new Scene(CreateKDTreeAccelerator(triangles, primitives), lights, Color(0.1, 0.1, 0.1));
-        Engine *engine = new Engine(scene, 400, 400);
+        //Engine *engine = CreateRaytracerEngine(scene, 400, 400);
+        Engine *engine = CreatePPMEngine(scene, 400, 400);
         engine -> Render();
     }
 }
