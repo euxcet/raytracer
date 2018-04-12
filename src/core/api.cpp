@@ -104,7 +104,7 @@ namespace Raytracer {
 //                                        Color(1, 1, 1)));
 
         Scene *scene = new Scene(CreateKDTreeAccelerator(triangles, primitives), lights, Color(0.1, 0.1, 0.1));
-        //Engine *engine = CreateRaytracerEngine(scene, 400, 400);
+//        Engine *engine = CreatePPMEngine(scene, 400, 400);
         Engine *engine = CreatePPMEngine(scene, 1280, 800);
         engine -> Render();
     }

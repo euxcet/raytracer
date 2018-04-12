@@ -34,7 +34,7 @@ namespace Raytracer {
     }
 
     void Camera::print() {
-        out.open("1.ppm");
+        ofstream out("1.ppm");
         out << "P3\n" << width << " " << height << "\n255\n";
         for(int j = 0; j < height; j++)
             for(int i = 0; i < width; i++) {
