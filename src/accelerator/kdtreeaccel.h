@@ -21,9 +21,9 @@ public:
 
 class KDTreeAccel : public Aggregate {
 public:
-    KDTreeAccel(const vector<Primitive*> &triangles,
+    KDTreeAccel(const vector<Mesh*> &meshs,
                 const vector<Primitive*> &others);
-    KDTreeNode* BuildTree(const AABB &scene, const vector<Primitive*> tris);
+    KDTreeNode* BuildTree(const AABB &scene, const vector<Primitive*> &tris);
     bool Traverse(KDTreeNode *node, const Ray& ray, Intersection* isc, float &tmax) const;
     bool Intersect(const Ray& ray, Intersection* isc) const;
 
@@ -35,7 +35,7 @@ private:
 };
 
 
-Aggregate* CreateKDTreeAccelerator(vector<Primitive*> triangles,
+Aggregate* CreateKDTreeAccelerator(vector<Mesh*> meshs,
                                    vector<Primitive*> others);
 
 }

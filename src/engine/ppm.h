@@ -6,20 +6,19 @@
 
 namespace Raytracer {
 
-#define PHOTON_COUNT 100000
-#define PHOTON_DEPTH 16
+#define PHOTON_COUNT 30000
+#define PHOTON_DEPTH 12
 #define COLLECT_RADIUS 10
-#define HITRADIUS 0.1
+#define HITRADIUS 0.01
 #define ALPHA 0.8
 
 class HitPoint {
 public:
-    HitPoint() { cnt = 0; }
+    HitPoint() { }
     Vector3 weight;
     Ray ray;
     Intersection isc;
     int id;
-    int cnt;
     int tot;
     Color color;
     double R2;
@@ -27,6 +26,10 @@ public:
 class KDTNode {
 public:
     KDTNode() { l = r = NULL; }
+    ~KDTNode() {
+        if (l != NULL) delete l;
+        if (r != NULL) delete r;
+    }
     KDTNode *l, *r;
     HitPoint* hp;
     int dim;
@@ -42,7 +45,6 @@ public:
     KDTree(const vector<HitPoint*> &vhps);
     ~KDTree() { if (root != NULL) delete root; }
     KDTNode* BuildTree(int u, int v);
-    void FindNearest(KDTNode *node, Point3 p, float &mdist, float pdist, HitPoint *&hp);
     void Update(KDTNode *node, const Photon &photon);
 
     KDTNode* root;

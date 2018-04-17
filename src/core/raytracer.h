@@ -7,6 +7,7 @@
 #include <cstring>
 #include <string>
 #include <algorithm>
+#include <omp.h>
 using std::string;
 using std::min;
 using std::max;
@@ -36,7 +37,7 @@ namespace Raytracer {
 #define EPS (1e-4)
 #define INF (1e6)
 #define BIGFLOAT (1e6)
-#define TRACEDEPTH (6)
+#define TRACEDEPTH (5)
 #define SAMPLE (1)
 #define LIGHT_SAMPLE (1)
 #define PI M_PI
@@ -44,6 +45,8 @@ namespace Raytracer {
 #define HIT 1
 #define MISS 0
 #define INPRIM -1
+
+#define RAND() (rand() % 32768 / 32768.)
 
 class Vector3;
 class Point3;
@@ -56,6 +59,7 @@ class Camera;
 class Engine;
 class Primitive;
 class GeometricPrimitive;
+class Mesh;
 class Aggregate;
 class Material;
 class Light;

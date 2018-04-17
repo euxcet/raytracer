@@ -1,4 +1,5 @@
 #include "engine/ppm.h"
+#include <omp.h>
 
 namespace Raytracer {
 
@@ -29,38 +30,16 @@ KDTNode* KDTree::BuildTree(int u, int v) {
     return node;
 }
 
-void KDTree::FindNearest(KDTNode *node, Point3 p, float &mdist, float pdist, HitPoint *&hp) {
-    if (node == NULL) return;
-    float dist = (p - node -> hp -> isc.p).Length();
-    if (dist < mdist && dist > pdist)  {
-        mdist = dist;
-        hp = node -> hp;
-    }
-    float d;
-    if (node -> dim == 0) d = p.x - node -> hp -> isc.p.x;
-    if (node -> dim == 1) d = p.y - node -> hp -> isc.p.y;
-    if (node -> dim == 2) d = p.z - node -> hp -> isc.p.z;
-    if (d < 0) {
-        FindNearest(node -> l, p, mdist, pdist, hp);
-        if (-d < mdist || hp == NULL) FindNearest(node -> r, p, mdist, pdist, hp);
-    }
-    else {
-        FindNearest(node -> r, p, mdist, pdist, hp);
-        if (d < mdist || hp == NULL) FindNearest(node -> l, p, mdist, pdist, hp);
-    }
-}
-
 void KDTree::Update(KDTNode *node, const Photon &photon) {
     if (node == NULL) return;
 
     //TODO DOT()
 
     HitPoint* hp = node -> hp;
-//    cout << hp -> isc.p << " " << node -> dim << " " << photon.position << endl;
- //   cout << (hp -> isc.p - photon.position).SqrLength() << endl;
     float curR2 = hp -> R2;
-    if ((hp -> isc.p - photon.position).SqrLength() <= curR2) {
-        double g = (hp -> tot * ALPHA + ALPHA) / (hp -> tot * ALPHA + 1.0);
+    if ((hp -> isc.p - photon.position).SqrLength() <= curR2 &&
+        Dot(hp -> isc.n, photon.direction) < 0) {
+        float g = (hp -> tot * ALPHA + ALPHA) / (hp -> tot * ALPHA + 1.0);
         hp -> R2 *= g;
         hp -> tot ++;
         hp -> color = (hp -> color + hp -> weight * photon.color / PI) * g;
@@ -87,23 +66,28 @@ void KDTree::Update(KDTNode *node, const Photon &photon) {
 }
 
 void PPMEngine::Raytrace(const Ray& ray, int depth, float index, Vector3 weight, int id) {
+    if (weight.Power() < EPS) return;
+
 	if (depth >= TRACEDEPTH) return;
     Intersection isc;
     bool result = scene -> Intersect(ray, &isc);
     if (!result) return;
 
-    double diff = isc.primitive -> GetMaterial() -> GetDiffuse();
+    float diff = isc.primitive -> GetMaterial() -> GetDiffuse();
     Color color = isc.primitive -> GetMaterial() ->
 					GetColor(isc.primitive -> GetShape() -> Coordinate(isc.p));
     if (diff > EPS) {
-        HitPoint *hp = new HitPoint();
-        hp -> weight = weight * diff * color;
-        hp -> id = id;
-        hp -> ray = ray;
-        hp -> isc = isc;
-        hp -> tot = 0;
-        hp -> R2 = HITRADIUS;
-        hps.push_back(hp);
+        #pragma omp critical
+        {
+            HitPoint *hp = new HitPoint();
+            hp -> weight = weight * diff * color;
+            hp -> id = id;
+            hp -> ray = ray;
+            hp -> isc = isc;
+            hp -> tot = 0;
+            hp -> R2 = HITRADIUS;
+            hps.push_back(hp);
+        }
     }
     float refl = isc.primitive -> GetMaterial() -> GetReflection();
     float refr = isc.primitive -> GetMaterial() -> GetRefraction();
@@ -148,25 +132,25 @@ bool PPMEngine::PhotonDiffusion(const Photon &photon, const Intersection &isc,
     // TODO no specular?
     Color color = isc.primitive -> GetMaterial() ->
 					GetColor(isc.primitive -> GetShape() -> Coordinate(isc.p));
-    double diff = isc.primitive -> GetMaterial() -> GetDiffuse();
-    double spec = isc.primitive -> GetMaterial() -> GetSpecular();
+    float diff = isc.primitive -> GetMaterial() -> GetDiffuse();
+    float spec = isc.primitive -> GetMaterial() -> GetSpecular();
 
-    if ((diff + spec) * color.Power() <= rand() % 10000 / 10000. * prob) {
-        prob -= (diff + spec) * color.Power();
+    if ((diff) * color.Power() <= RAND() * prob) {
+        prob -= (diff) * color.Power();
         return false;
     }
 
-    Vector3 direction = Vector3();
-    double x, y, z;
+    float x, y, z;
     do {
-        x = rand() % 20000 / 10000. - 1;
-        y = rand() % 20000 / 10000. - 1;
-        z = rand() % 20000 / 10000. - 1;
+        x = RAND() * 2 - 1;
+        y = RAND() * 2 - 1;
+        z = RAND() * 2 - 1;
     } while (x*x + y*y + z*z > 1 || x*x + y*y + z*z < EPS || Dot(Vector3(x, y, z), isc.n) < EPS);
+
 
     Color pcolor = photon.color * color / color.Power();
 
-    Photontrace(Photon(photon.position, Vector3(x, y, z), pcolor), depth + 1);
+    Photontrace(Photon(photon.position, Normalize(Vector3(x, y, z)), pcolor), depth + 1);
     return true;
 }
 
@@ -174,9 +158,9 @@ bool PPMEngine::PhotonReflection(const Photon &photon, const Intersection &isc,
                                  int depth, float &prob) {
     Color color = isc.primitive -> GetMaterial() ->
 					GetColor(isc.primitive -> GetShape() -> Coordinate(isc.p));
-    double refl = isc.primitive -> GetMaterial() -> GetReflection();
+    float refl = isc.primitive -> GetMaterial() -> GetReflection();
 
-    if (refl * color.Power() <= rand() % 10000 / 10000. * prob) {
+    if (refl * color.Power() <= RAND() * prob) {
         prob -= refl * color.Power();
         return false;
     }
@@ -193,19 +177,21 @@ bool PPMEngine::PhotonRefraction(const Photon &photon, const Intersection &isc,
                                  int depth, float &prob) {
     Color color = isc.primitive -> GetMaterial() ->
 					GetColor(isc.primitive -> GetShape() -> Coordinate(isc.p));
-    double refr = isc.primitive -> GetMaterial() -> GetRefraction();
+    float refr = isc.primitive -> GetMaterial() -> GetRefraction();
     Color trans = Color(1., 1., 1.);
     if (isc.hit != 1) {
 		Color absorb = -isc.dist * isc.primitive -> GetMaterial() -> GetAbsorb();
 		trans = Color(exp(absorb.r), exp(absorb.g), exp(absorb.b));
     }
-    if (refr * trans.Power() <= rand() % 10000 / 10000. * prob) {
+    if (refr * trans.Power() <= RAND() * prob) {
         prob -= refr * trans.Power();
         return false;
     }
 
     float rindex = isc.primitive -> GetMaterial() -> GetRefrIndex();
     float n = (isc.hit == 1) ? (1 / rindex) : rindex;
+    if (n == 1)
+    cout << n << endl;
     Normal3 N = isc.n;
     float cosI = -Dot(N, photon.direction);
     float cosT2 = 1.0f - n * n * (1.0f - cosI * cosI);
@@ -221,22 +207,13 @@ bool PPMEngine::PhotonRefraction(const Photon &photon, const Intersection &isc,
 static int TOT = 0;
 
 void PPMEngine::Photontrace(const Photon &photon, int depth) {
+    if (photon.color.Power() < EPS) return;
     if (depth >= PHOTON_DEPTH) return;
     Intersection isc;
     bool result = scene -> Intersect(Ray(photon.position, photon.direction), &isc);
     if (!result) return;
     Photon hitphoton = Photon(isc.p, photon.direction, photon.color);
     if (isc.primitive -> GetMaterial() -> GetDiffuse() > EPS) {
-    //    cout << hitphoton.color << endl;
-    /*
-        for(auto hp: hps)
-            if ((hp -> isc.p - photon.position).Length() <= hp -> R2) {
-                double g = (hp -> tot * ALPHA + ALPHA) / (hp -> tot * ALPHA + 1.0);
-                hp -> R2 *= g;
-                hp -> tot ++;
-                hp -> color = (hp -> color + hp -> weight * photon.color / PI) * g;
-            }
-            */
         tree -> Update(tree -> root, hitphoton);
     }
     float prob = 1.;
@@ -247,41 +224,62 @@ void PPMEngine::Photontrace(const Photon &photon, int depth) {
 }
 
 bool PPMEngine::Render() {
+    cout << omp_get_num_threads() << endl;
+    #pragma omp parallel for
+     for (int i = 0; i < 10; i++ )
+     {
+         printf("i = %d\n", i);
+     }
 
-	Point3 eye(0, 10, 5);
-	Point3 des(0, -5, 0);
+	Point3 eye(2, 10, 6);
+	Point3 des(0, -1, 0);
 	Vector3 dir = Normalize(des - eye);
 	Vector3 up = Normalize(Vector3(0, 1, -dir.y / dir.z));
 	camera = new Camera(eye, dir, up, width, height);
-	for(int i = 0; i < width; i++) {
-		for(int j = 0; j < height; j++) {
-            Raytrace(Ray(eye, camera -> Emit(i, j)), 0, 1.0f, Vector3(1, 1, 1), i * height + j);
-        }
-    }
-    tree = new KDTree(hps);
 
+
+    camera -> clear();
+    int tot = 0;
     int count = 0;
-
     while (true) {
+        count ++;
+        for(int i = 0; i < width * height; i++) {
+            float x = (RAND() - 0.5);
+            float y = (RAND() - 0.5);
+            Raytrace(Ray(eye, camera -> Emit(i / height + x, i % height + y)), 0, 1.0f, Vector3(1, 1, 1), i);
+            cout << i  << endl;
+            if (i%height == 0)cout << i/height << " ";
+        }
+        cout << endl;
+        cout << "Hitpoints: " << hps.size() << endl;
+        tree = new KDTree(hps);
+        puts("Tree done");
+
         vector<Photon*> photons = scene -> EmitPhotons(PHOTON_COUNT);
-        count += PHOTON_COUNT;
-        int tot = 0;
-        for(auto photon : photons) {
-            Photontrace(*photon, 0);
+        cout << "Photons " << photons.size() << endl;
+        for(int i = 0; i < photons.size(); i++) {
+            Photontrace(*photons[i], 0);
             tot ++;
             cout << tot << endl;
         }
+        cout << endl;
+        cout << tot << endl;
 
-        camera -> clear();
 
-        for(auto hp: hps) {
-            Color col = hp -> color / (PI * hp -> R2 * count);
+        for(int i = 0; i < hps.size(); i++) {
+            HitPoint* hp = hps[i];
+            Color col = hp -> color / (PI * hp -> R2 * PHOTON_COUNT);
             camera -> AddColor(hp -> id / height, hp -> id % height, col);
         }
-        camera -> print();
+        cout << count << endl;
+        camera -> print(count);
         for(int i = 0; i < photons.size(); i++)
             delete photons[i];
         photons.clear();
+        for(int i = 0; i < hps.size(); i++)
+            delete hps[i];
+        hps.clear();
+        delete tree;
     }
 
 	delete camera;

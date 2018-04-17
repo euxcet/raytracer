@@ -38,7 +38,7 @@ public:
 	bool operator!=(const Vector3& v) const { return x != v.x || y != v.y || z != v.z; }
 
 
-	float Power() const { return (x + y + z) / 3; }
+	float Power() const { return max(max(x, y), z); }
 	float Length() const { return sqrt(x*x + y*y + z*z); }
 	float SqrLength() const { return x*x + y*y + z*z; }
 
@@ -125,6 +125,7 @@ public:
 
 	Normal3& operator=(const Normal3 &n) { x = n.x; y = n.y; z = n.z; return *this; }
 
+	Normal3 operator-() const { return Normal3(-x, -y, -z); return *this; }
 	Normal3 operator+(const Normal3 &n) const { return Normal3(x + n.x, y + n.y, z + n.z); }
 	Normal3 operator-(const Normal3 &n) const { return Normal3(x - n.x, y - n.y, z - n.z); }
 	Normal3 operator*(float f) const { return Normal3(x * f, y * f, z * f); }

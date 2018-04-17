@@ -2,10 +2,14 @@
 
 namespace Raytracer {
 
-    KDTreeAccel::KDTreeAccel(const vector<Primitive*> &triangles,
+    KDTreeAccel::KDTreeAccel(const vector<Mesh*> &meshs,
                              const vector<Primitive*> &others)
-        : triangles(triangles), others(others) {
+        : others(others) {
         AABB scene(Point3(INF, INF, INF), Vector3(-2 * INF, -2 * INF, -2 * INF));
+        for(auto mesh : meshs) {
+            for(auto triangle : mesh -> GetTriangles())
+                triangles.push_back(triangle);
+        }
         for(auto triangle : triangles) {
             scene = scene.Combine(triangle -> GetShape() -> GetAABB());
         }
@@ -13,7 +17,7 @@ namespace Raytracer {
     }
 
     KDTreeNode* KDTreeAccel::BuildTree(const AABB &scene,
-                                       const vector<Primitive*> tris) {
+                                       const vector<Primitive*> &tris) {
         KDTreeNode *node = new KDTreeNode();
         node -> box = scene;
         if (tris.size() < 30) {
@@ -22,6 +26,9 @@ namespace Raytracer {
             return node;
         }
         int dim = rand() % 3;
+        dim = 0;
+        if (scene.size[1] > scene.size[0]) dim = 1;
+        if (scene.size[2] > scene.size[0] && scene.size[2] > scene.size[1]) dim = 2;
         AABB lab = scene.CutLeft(dim);
         AABB rab = scene.CutRight(dim);
         vector<Primitive*> ltris;
@@ -94,8 +101,8 @@ namespace Raytracer {
     }
 
 
-    Aggregate* CreateKDTreeAccelerator(vector<Primitive*> triangles,
+    Aggregate* CreateKDTreeAccelerator(vector<Mesh*> meshs,
                                        vector<Primitive*> others) {
-        return new KDTreeAccel(triangles, others);
+        return new KDTreeAccel(meshs, others);
     }
 }

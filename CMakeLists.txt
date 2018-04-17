@@ -1,6 +1,7 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
 
 SET (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+
 PROJECT( raytracer )
 
 SET( CORE_SOURCE
@@ -29,18 +30,20 @@ set ( CORE_HEADERS
 	src/core/texture.h
 	)
 FILE ( GLOB SOURCE
-	 src/shape/plane.cpp
-	 src/shape/sphere.cpp
-	 src/shape/triangle.cpp
-	 src/accelerator/bfaccel.cpp
-	 src/accelerator/kdtreeaccel.cpp
-	 src/engine/rt.cpp
-	 src/engine/ppm.cpp
-     )
+	src/shape/bezier.cpp
+	src/shape/plane.cpp
+	src/shape/sphere.cpp
+	src/shape/triangle.cpp
+	rc/accelerator/bfaccel.cpp
+	src/accelerator/kdtreeaccel.cpp
+	src/engine/rt.cpp
+	src/engine/ppm.cpp
+ 	)
 
 INCLUDE_DIRECTORIES ( src )
 INCLUDE_DIRECTORIES ( src/core )
 INCLUDE_DIRECTORIES ( texture )
+include_directories( /usr/local/Cellar/eigen/3.3.4/include/eigen3/ )
 
 ADD_LIBRARY ( raytracer STATIC
 	${CORE_SOURCE}
@@ -53,20 +56,13 @@ SET( ALL_LIBS
 	${CMAKE_THREAD_LIBS_INIT}
 	)
 
-SET ( CXX11_FEATURES
-	cxx_auto_type
-	cxx_explicit_conversions
-	cxx_lambdas
-	cxx_nullptr
-	cxx_range_for
-	cxx_static_assert
-	)
-TARGET_COMPILE_FEATURES ( raytracer PRIVATE ${CXX11_FEATURES} )
+set (CMAKE_CXX_STANDARD 11)
+
+SET ( CMAKE_CXX_FLAGS "-std=c++11 -fopenmp ${CMAKE_CXX_FLAGS}" )
 
 ADD_EXECUTABLE ( raytracer_exe src/main/main.cpp )
 
 SET_TARGET_PROPERTIES ( raytracer_exe PROPERTIES OUTPUT_NAME main )
-TARGET_COMPILE_FEATURES ( raytracer_exe PRIVATE ${PBRT_CXX11_FEATUERS} )
 TARGET_LINK_LIBRARIES( raytracer_exe ${ALL_LIBS} )
 
 INSTALL ( TARGETS

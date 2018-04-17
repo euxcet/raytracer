@@ -10,10 +10,10 @@ class Camera {
 public:
     Camera(const Point3& eye, const Vector3& direction,
            const Vector3& _up, int width, int height);
-    Vector3 Emit(double x, double y);
+    Vector3 Emit(float x, float y);
     void SetColor(int x, int y, const Color& c);
     void AddColor(int x, int y, const Color& c);
-    void print();
+    void print(int count = 1);
     void clear();
 
 private:

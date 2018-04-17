@@ -11,7 +11,7 @@ namespace Raytracer {
             for(int i = 0; i < width; i++)
                 data[i] = new Color[height];
         }
-    Vector3 Camera::Emit(double x, double y) {
+    Vector3 Camera::Emit(float x, float y) {
         x += (rand() % 1000 / 1000.) * 1.2 - 0.6;
         y += (rand() % 1000 / 1000.) * 1.2 - 0.6;
         float dx = (x - width / 2) / height;
@@ -33,14 +33,14 @@ namespace Raytracer {
             for(int i = 0; i < width; i++) data[i][j] = Color(0, 0, 0);
     }
 
-    void Camera::print() {
+    void Camera::print(int count) {
         ofstream out("1.ppm");
         out << "P3\n" << width << " " << height << "\n255\n";
         for(int j = 0; j < height; j++)
             for(int i = 0; i < width; i++) {
-                int r = fmin(data[i][j].r * 255, 255.);
-                int g = fmin(data[i][j].g * 255, 255.);
-                int b = fmin(data[i][j].b * 255, 255.);
+                int r = fmin(data[i][j].r / count * 255., 255.);
+                int g = fmin(data[i][j].g / count * 255., 255.);
+                int b = fmin(data[i][j].b / count * 255., 255.);
                 out << r << " " << g << " " << b << endl;
             }
     }
