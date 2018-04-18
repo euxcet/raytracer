@@ -32,9 +32,6 @@ KDTNode* KDTree::BuildTree(int u, int v) {
 
 void KDTree::Update(KDTNode *node, const Photon &photon) {
     if (node == NULL) return;
-
-    //TODO DOT()
-
     HitPoint* hp = node -> hp;
     float curR2 = hp -> R2;
     if ((hp -> isc.p - photon.position).SqrLength() <= curR2 &&
@@ -204,8 +201,6 @@ bool PPMEngine::PhotonRefraction(const Photon &photon, const Intersection &isc,
 
 }
 
-static int TOT = 0;
-
 void PPMEngine::Photontrace(const Photon &photon, int depth) {
     if (photon.color.Power() < EPS) return;
     if (depth >= PHOTON_DEPTH) return;
@@ -224,18 +219,11 @@ void PPMEngine::Photontrace(const Photon &photon, int depth) {
 }
 
 bool PPMEngine::Render() {
-    cout << omp_get_num_threads() << endl;
-    #pragma omp parallel for
-     for (int i = 0; i < 10; i++ )
-     {
-         printf("i = %d\n", i);
-     }
-
-	Point3 eye(2, 10, 6);
-	Point3 des(0, -1, 0);
+	Point3 eye(0, 10, 6);
+	Point3 des(0, 0, 0);
 	Vector3 dir = Normalize(des - eye);
 	Vector3 up = Normalize(Vector3(0, 1, -dir.y / dir.z));
-	camera = new Camera(eye, dir, up, width, height);
+	camera = new FocusCamera(eye, dir, up, des, width, height);
 
 
     camera -> clear();
@@ -246,12 +234,11 @@ bool PPMEngine::Render() {
         for(int i = 0; i < width * height; i++) {
             float x = (RAND() - 0.5);
             float y = (RAND() - 0.5);
-            Raytrace(Ray(eye, camera -> Emit(i / height + x, i % height + y)), 0, 1.0f, Vector3(1, 1, 1), i);
-            cout << i  << endl;
-            if (i%height == 0)cout << i/height << " ";
+            Raytrace(camera -> Emit(i / height + x, i % height + y), 0, 1.0f, Vector3(1, 1, 1), i);
         }
         cout << endl;
         cout << "Hitpoints: " << hps.size() << endl;
+        exit(0);
         tree = new KDTree(hps);
         puts("Tree done");
 

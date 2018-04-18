@@ -56,7 +56,13 @@ namespace Raytracer {
                              new Material(Color(0, 1, 0), Color(0, 0, 0), 0, 0.3, 0.5, 0.25, 1.7));
         primitives.push_back(bezier);
         */
+        /*
+        meshs.push_back(new Mesh("../obj/utah-teapot.obj",
+                         new Material(Color(0, 1, 0), Color(0, 0, 0), 0, 0.3, 0.5, 0.25, 1.7)
+                        ));
+                        */
 
+        /*
         meshs.push_back(new Mesh("../obj/sven_all.obj",
                         new Material(Color(0.803, 0.496, 0.195), Color(0.803, 0.496, 0.195), 0, 0.4, 0.6, 0, 1.7,
                             new Texture("../texture/sven.pic"))
@@ -65,6 +71,7 @@ namespace Raytracer {
                         new Material(Color(0.803, 0.496, 0.195), Color(0.803, 0.496, 0.195), 0, 0.4, 0.6, 0, 1.7,
                             new Texture("../texture/sven_blade.pic"))
                     ));
+                    */
 
 
             /*
@@ -76,14 +83,14 @@ namespace Raytracer {
 
 
                             /*
-        primitives.push_back(new GeometricPrimitive(CreateSphereShape(0, -7.5, 5, 5),
+        primitives.push_back(new GeometricPrimitive(CreateSphereShape(0, -2.5, 5, 5),
                              new Material(Color(1, 0, 0), Color(1, 0, 0), 0, 0.14, 0.65, 0.25, 1.7,
                                 new Texture("../texture/stone.pic"))
                             ));
                             */
 
 
-        /*
+                             /*
         float br = 0.4;
         primitives.push_back(new GeometricPrimitive(CreateSphereShape(-4.1, 1.54, br, br),
                              new Material(Color(1, 0, 0), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
@@ -99,20 +106,21 @@ namespace Raytracer {
                              new Material(Color(1, 0, 0), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
         primitives.push_back(new GeometricPrimitive(CreateSphereShape(3.3, -1.9, br, br),
                              new Material(Color(0, 0, 1), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
+        primitives.push_back(new GeometricPrimitive(CreateSphereShape(0, 0, br, br),
+                             new Material(Color(0, 0, 1), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
                              */
 
 
         vector<Light*> lights;
 //        lights.push_back(new AreaLight(Point3(2, 2, 9), Vector3(1.2, 0, 0), Vector3(0, 1.2, 0), Color(1, 0.8, 0.87)));
-        lights.push_back(new AreaLight(Point3(3, 5, 6), Vector3(1.4, 0, 0), Vector3(0, 1.4, 0), Color(1, 1, 1)));
-        lights.push_back(new AreaLight(Point3(-3, 5, 6), Vector3(1.4, 0, 0), Vector3(0, 1.4, 0), Color(1, 1, 1)));
+        lights.push_back(new AreaLight(Point3(1, -6, 6), Vector3(1.4, 0, 0), Vector3(0, 1.4, 0), Color(1, 1, 1)));
+//        lights.push_back(new AreaLight(Point3(1, 6, 6), Vector3(1.4, 0, 0), Vector3(0, 1.4, 0), Color(1, 1, 1)));
+//        lights.push_back(new AreaLight(Point3(-3, 5, 6), Vector3(1.4, 0, 0), Vector3(0, 1.4, 0), Color(1, 1, 1)));
 
-        puts("!!!");
         Scene *scene = new Scene(CreateKDTreeAccelerator(meshs, primitives), lights, Color(0.1, 0.1, 0.1));
-        puts("!!!");
-//        Engine *engine = CreateRaytracerEngine(scene, 640, 400);
-//      Engine *engine = CreatePPMEngine(scene, 300, 300);
-        Engine *engine = CreatePPMEngine(scene, 2560, 1600);
+        Engine *engine = CreateRaytracerEngine(scene, 1280, 800);
+//        Engine *engine = CreatePPMEngine(scene, 1280, 800);
+    //    Engine *engine = CreatePPMEngine(scene, 2560, 1600);
         engine -> Render();
     }
 }

@@ -59,16 +59,17 @@ Color RaytracerEngine::SpawnRefractionRay(const Ray &ray, Intersection isc, int 
 }
 
 bool RaytracerEngine::Render() {
-	Point3 eye(0, 10, 5);
-	Point3 des(0, -5, 0);
+	Point3 eye(0, 10, 6);
+	Point3 des(0, 0, 0);
 	Vector3 dir = Normalize(des - eye);
 	Vector3 up = Normalize(Vector3(0, 1, -dir.y / dir.z));
-	Camera *camera = new Camera(eye, dir, up, width, height);
+	camera = new FocusCamera(eye, dir, up, des, width, height);
+	
 	for(int i = 0; i < width; i++) {
 		for(int j = 0; j < height; j++) {
 			Color col = Color();
 			for(int t = 0; t < SAMPLE; t++) {
-				col += Raytrace(Ray(eye, camera -> Emit(i, j)), 0, 1.0f);
+				col += Raytrace(camera -> Emit(i, j), 0, 1.0f);
 			}
 			camera -> SetColor(i, j, col / SAMPLE);
 		}

@@ -19,6 +19,7 @@ public:
 
 private:
     Vector3f* m_Patch;
+    Vector3f* m_ControlPoints;
     int m_Patches;
 };
 

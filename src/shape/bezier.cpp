@@ -1,6 +1,209 @@
 #include "shape/bezier.h"
 
 namespace Raytracer {
+    #define ITERDEPTH (5)
+
+    Vector3f S(float u,float v,Vector3f* Patch){
+        float u2 = u * u;
+        float u3 = u2 * u;
+        float f = 1.f;
+        Vector3f s(0,0,0);
+        int i = 15;
+        while(i >= 0){
+            Vector3f t = Patch[i--];
+            t += u * Patch[i--];
+            t += u2 * Patch[i--];
+            t += u3 * Patch[i--];
+            s += t * f;
+            f *= v;
+        }
+        return s;
+    }
+    Vector3f dS_du(float u,float v,Vector3f* Patch){
+        float u2 = 2 * u;
+        float u3 = 3 * u * u;
+        float f = 1.f;
+        Vector3f s(0,0,0);
+        int i = 15;
+        while(i >= 0){
+            i --;
+            Vector3f t = Patch[i--];
+            t += u2 * Patch[i--];
+            t += u3 * Patch[i--];
+            s += t * f;
+            f *= v;
+        }
+        return s;
+    }
+    Vector3f dS_dv(float u, float v,Vector3f* Patch){
+        float u2 = u * u;
+        float u3 = u2 * u;
+        float f = 1.f;
+        Vector3f s(0,0,0);
+        int i = 11;
+        while(i >= 0){
+            Vector3f t = Patch[i--];
+            t += u * Patch[i--];
+            t += u2 * Patch[i--];
+            t += u3 * Patch[i--];
+            s += t * f;
+            f *= i == 7 ? 2 * v : 1.5 * v;
+        }
+        return s;
+    }
+
+    void NT(Vector2f& xn,const Vector3f& N1,const Vector3f& N2,float d1, float d2,Vector2f R,Vector3f* Patch){
+        Vector3f pspu = dS_du(xn(0),xn(1),Patch);
+        Vector3f pspv = dS_dv(xn(0),xn(1),Patch);
+        Matrix2f J;
+        J << N1.dot(pspu), N1.dot(pspv),
+             N2.dot(pspu), N2.dot(pspv);
+        xn -= J.inverse() * R;
+    }
+
+    Vector2f Initx0(const Vector3f& o,const Vector3f& dir, Vector3f* CP){
+        float minD2 = INF;
+        float t = 0.0f;
+        int Patch_Num = -1;
+        for(int i = 0 ; i < 16 ; i ++){
+            Vector3f from_o = CP[i] - o;
+            float temp_t = from_o.dot(dir);
+
+            float dis2 = from_o.dot(from_o) - temp_t * temp_t;
+            if(dis2 < minD2){
+                minD2 = dis2;
+                Patch_Num = i;
+            }
+        }
+        return Vector2f(Patch_Num / 4 * (1 / 3.f) , Patch_Num % 4 * (1 / 3.f));
+    }
+
+    bool NTIteration(const Vector2f& x0, const Vector3f& N1, const Vector3f& N2, float d1, float d2, Vector3f* Patch, Vector2f& res){
+        Vector2f x = x0;
+        Vector3f S_ = S(x(0),x(1),Patch);
+        Vector2f R(N1.dot(S_) + d1, N2.dot(S_) + d2);
+        float last = R.dot(R);
+        for(int i = 0; i < ITERDEPTH; i ++){
+            if(last < 1e-6){
+                res = x;
+                if (res[0] >= -EPS && res[0] <= 1+EPS && res[1] >= -EPS && res[1] <= 1+EPS)
+                    return true;
+                else return false;
+            }
+            NT(x,N1,N2,d1,d2,R,Patch);
+            S_ = S(x(0),x(1),Patch);
+            R << N1.dot(S_) + d1, N2.dot(S_) + d2;
+
+            if(R.dot(R) > last)
+                return false;
+            last = R.dot(R);
+        }
+        return false;
+    }
+
+
+    Bezier3::Bezier3( const char* FileName )
+    :m_Patches(0),m_Patch(NULL),m_ControlPoints(NULL) { LoadModel(FileName); }
+
+    bool Bezier3::Intersect(const Ray& ray, Intersection* isc) const {
+        Point3 o = ray.GetOrigin();
+        Vector3 dir = ray.GetDirection();
+        float a_Dist = ray.tmax;
+        Vector3f D(dir.x,dir.y,dir.z);
+        Vector3f N1(dir.y, -dir.x, 0);
+        N1.normalize();
+        Vector3f O(o.x, o.y, o.z);
+        float d1 = -N1.dot(O);
+        Vector3f N2 = N1.cross(D);
+        float d2 = -N2.dot(O);
+
+
+        Vector2f res;
+        float u,v;
+        int Patch_Hit = -1;
+        bool hit = false;
+        for(int i = 0 ; i < m_Patches ; i ++){
+
+            float minx = INF, miny = INF, minz = INF;
+            float maxx = -INF, maxy= -INF, maxz = -INF;
+            for(int j = i * 16; j < i * 16 + 16; j++) {
+                minx = min(minx, m_ControlPoints[j](0));
+                miny = min(miny, m_ControlPoints[j](1));
+                minz = min(minz, m_ControlPoints[j](2));
+                maxx = max(maxx, m_ControlPoints[j](0));
+                maxy = max(maxy, m_ControlPoints[j](1));
+                maxz = max(maxz, m_ControlPoints[j](2));
+            }
+            float hit0, hit1;
+            AABB aabb(Point3(minx, miny, minz), Point3(maxx, maxy, maxz) - Point3(minx, miny, minz));
+            if (!aabb.Expand().Intersect(ray, hit0, hit1)) continue;
+
+
+            for(int _ = 0; _ < 5; _++) {
+                Vector2f x0(RAND(), RAND());
+//                Vector2f x0 = Initx0(O,D,m_ControlPoints + 16 * i);
+                if(NTIteration(x0,N1,N2,d1,d2,m_Patch + 16 * i,res)){
+                    float t = (S(res(0), res(1), m_Patch + 16 * i) - O).dot(D);
+                    if(a_Dist > t){
+                        Patch_Hit = i;
+                        a_Dist = t;
+                        u = res(0);
+                        v = res(1);
+                        hit = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if(hit){
+            Vector3f* m_Patch_Hit = m_Patch + 16 * Patch_Hit;
+            isc -> hit = HIT;
+			isc -> dist = a_Dist;
+            Vector3f ip = S(u, v, m_Patch_Hit);
+			isc -> p = Point3(ip(0), ip(1), ip(2));
+            Vector3f a_Normal = dS_du(u,v,m_Patch_Hit).cross(dS_dv(u,v,m_Patch_Hit)).normalized();
+            Normal3 normal = Normal3(a_Normal(0), a_Normal(1), a_Normal(2));
+			isc -> n = Normalize(normal);
+        }
+        return hit;
+    }
+    void Bezier3::LoadModel(const char* FileName){
+        ifstream in;
+        in.open(FileName);
+        in >> m_Patches;
+        m_Patch = new Vector3f[m_Patches * 16];
+        m_ControlPoints = new Vector3f[m_Patches * 16];
+        int m, n;
+        float x, y, z;
+        Matrix4f CPx,CPy,CPz;
+        Matrix4f N;
+        N << -1,3,-3,1,3,-6,3,0,-3,3,0,0,1,0,0,0;
+        for(int i = 0; i < m_Patches; i ++){
+            in >> m >> n;
+            for(int j = 0; j < 16; j ++){
+                in >> x >> y >> z;
+                m_ControlPoints[i * 16 + j] = Vector3f(x,y,z);
+                CPx(j) = x, CPy(j) = y, CPz(j) = z;
+            }
+            CPx = (N * CPx * N.transpose()).transpose();
+            CPy = (N * CPy * N.transpose()).transpose();
+            CPz = (N * CPz * N.transpose()).transpose();
+            for(int j = 0; j < 16; j ++){
+                m_Patch[i * 16 + j] = Vector3f(CPx(j),CPy(j),CPz(j));
+            }
+        }
+    }
+
+    Shape* CreateBezier3Shape(const char* FileName) {
+        return new Bezier3(FileName);
+    }
+
+}
+
+/*
+#include "shape/bezier.h"
+
+namespace Raytracer {
 
     #define ITERTIMES 4
     #define ITERDEPTH 5
@@ -169,3 +372,4 @@ Vector3f F(Vector3f& xi, Vector3f* Patch, Vector3f& p, Vector3f& w){        Vect
     }
 
 }
+*/

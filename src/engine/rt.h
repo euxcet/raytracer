@@ -21,6 +21,7 @@ private:
 	Scene* scene;
 	int width;
 	int height;
+    Camera *camera;
 };
 
 Engine* CreateRaytracerEngine(Scene *scene, int width, int height);

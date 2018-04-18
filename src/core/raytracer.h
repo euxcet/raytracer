@@ -37,9 +37,9 @@ namespace Raytracer {
 #define EPS (1e-4)
 #define INF (1e6)
 #define BIGFLOAT (1e6)
-#define TRACEDEPTH (5)
-#define SAMPLE (1)
-#define LIGHT_SAMPLE (1)
+#define TRACEDEPTH (6)
+#define SAMPLE (9)
+#define LIGHT_SAMPLE (4)
 #define PI M_PI
 
 #define HIT 1
@@ -56,6 +56,7 @@ class Ray;
 class Photon;
 
 class Camera;
+class FocusCamera;
 class Engine;
 class Primitive;
 class GeometricPrimitive;

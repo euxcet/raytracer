@@ -48,17 +48,17 @@ vector<Photon*> AreaLight::EmitPhotons(int pcount) const {
     double x, y, z;
     double rx, ry;
     vector<Photon*> photons;
-    Vector3 to = Normalize(Point3(-0.5, -1, 0) - origin);
+    Vector3 to = Normalize(Point3(0, 0, 0) - origin);
     for(int i = 0; i < pcount; i++) {
         do {
             //TODO : 10000 is too small
             x = rand() % 20000 / 10000. - 1;
             y = rand() % 20000 / 10000. - 1;
             z = rand() % 20000 / 10000. - 1;
-        } while (x*x + y*y + z*z >= 1 || x*x + y*y + z*z < EPS || Dot(to, Normalize(Vector3(x, y, z))) < 0.2);
+        } while (x*x + y*y + z*z >= 1 || x*x + y*y + z*z < EPS || Dot(to, Normalize(Vector3(x, y, z))) < 0.1);
         rx = rand() % 10000 / 10000. - 0.5;
         ry = rand() % 10000 / 10000. - 0.5;
-        Photon *photon = new Photon(origin + dx * rx + dy * ry, Normalize(Vector3(x, y, z)), color * 50 * PI * 4.);
+        Photon *photon = new Photon(origin + dx * rx + dy * ry, Normalize(Vector3(x, y, z)), color * 25 * PI * 4.);
         photons.push_back(photon);
     }
     return photons;

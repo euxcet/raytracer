@@ -10,13 +10,13 @@ class Camera {
 public:
     Camera(const Point3& eye, const Vector3& direction,
            const Vector3& _up, int width, int height);
-    Vector3 Emit(float x, float y);
+    virtual Ray Emit(float x, float y);
     void SetColor(int x, int y, const Color& c);
     void AddColor(int x, int y, const Color& c);
     void print(int count = 1);
     void clear();
 
-private:
+protected:
     Point3 eye;
     Vector3 direction;
     Vector3 up;
@@ -25,6 +25,16 @@ private:
 	ofstream out;
     int width;
     int height;
+};
+
+class FocusCamera : public Camera {
+public:
+    FocusCamera(const Point3& eye, const Vector3& direction,
+           const Vector3& _up, const Point3& des, int width, int height)
+           : Camera(eye, direction, _up, width, height), des(des) {}
+    Ray Emit(float x, float y);
+protected:
+    Point3 des;
 };
 
 }
