@@ -3,9 +3,9 @@
 namespace Raytracer {
 
 Camera::Camera(const Point3& eye, const Vector3& _direction,
-               const Vector3& _up, int width, int height)
+               const Vector3& _up, const Point3& des, int width, int height)
     : eye(eye), direction(Normalize(_direction)), up(_up),
-  width(width), height(height) {
+  des(des), width(width), height(height) {
     right = Normalize(Cross(direction, up));
     up = Normalize(Cross(right, direction));
     data = new Color*[width];
@@ -14,12 +14,10 @@ Camera::Camera(const Point3& eye, const Vector3& _direction,
 }
 
 Ray Camera::Emit(float x, float y) {
-    x += RAND() * 1 - 0.5;
-    y += RAND() * 1 - 0.5;
     float dx = (x - width / 2) / height;
     float dy = y / height - 0.5;
-    Point3 onimage = eye + direction * 2 + dx * right + dy * up;
-    return Ray(eye, Normalize(onimage - eye));
+    float dis = (des - eye).Length();
+    return Ray(eye, Normalize(des + dx * dis * right + dy * dis * up - eye));
 }
 
 void Camera::SetColor(int x, int y, const Color& c) {
@@ -54,7 +52,6 @@ Ray FocusCamera::Emit(float x, float y) {
     float dy = y / height - 0.5;
     float dis = (des - eye).Length();
     Point3 origin = eye + ex * right + ey * up;
-//    cout << origin << " " << des + dx * dis * right + dy * dis * up  << endl;
     return Ray(origin, Normalize(des + dx * dis * right + dy * dis * up - origin));
 }
 

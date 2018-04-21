@@ -1,0 +1,78 @@
+PPM {
+	width: 1280
+	height: 800
+	Camera {
+		eye: 0 10 6
+		des: 0 0 0
+	}
+	Scene {
+		accelerator: kdtree
+        background: 0.1 0.1 0.1
+		Mesh {
+			obj: ../obj/sven_blade.obj
+	        Material {
+	            color: 0 1 0
+	            refr: 0
+	            refl: 0.3
+	            diff: 0.5
+	            spec: 0.25
+	            rindex: 1.7
+				Texture {
+                    texture: ../texture/sven_blade.pic
+				}
+	        }
+		}
+		Mesh {
+			obj: ../obj/sven_all.obj
+	        Material {
+	            color: 0 1 0
+	            refr: 0
+	            refl: 0.3
+	            diff: 0.5
+	            spec: 0.25
+	            rindex: 1.7
+				Texture {
+                    texture: ../texture/sven.pic
+				}
+	        }
+		}
+        AreaLight {
+            origin: 0 0 6
+            dx: 1.4 0 0
+            dy: 0 1.4 0
+            color: 1 1 1
+        }
+		Plane {
+			normal: 0 1 0
+            dist: -17
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0.2
+                diff: 0.6
+                spec: 0
+                rindex: 1.7
+                Texture {
+                    texture: ../texture/wall1.pic
+                }
+            }
+		}
+		Plane {
+			normal: 0 0 1
+            dist: 0
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0.4
+                diff: 0.8
+                spec: 0
+                rindex: 1.7
+                Texture {
+                    texture: ../texture/wall2.pic
+                }
+            }
+		}
+	}
+}

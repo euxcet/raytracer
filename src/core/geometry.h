@@ -56,6 +56,7 @@ inline std::ostream& operator<<(std::ostream &os, const Vector3 &v) {
 	return os;
 }
 
+
 inline Vector3 operator*(float f, const Vector3 &v) {
 	return v * f;
 }

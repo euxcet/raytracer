@@ -31,6 +31,7 @@ namespace Raytracer {
         if (scene.size[2] > scene.size[0] && scene.size[2] > scene.size[1]) dim = 2;
         AABB lab = scene.CutLeft(dim);
         AABB rab = scene.CutRight(dim);
+
         vector<Primitive*> ltris;
         vector<Primitive*> rtris;
         for(auto triangle : tris) {

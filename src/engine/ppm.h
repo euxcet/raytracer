@@ -6,7 +6,7 @@
 
 namespace Raytracer {
 
-#define PHOTON_COUNT 200000
+#define PHOTON_COUNT 50000
 #define PHOTON_DEPTH 6
 #define COLLECT_RADIUS 10
 #define HITRADIUS 0.01
@@ -56,8 +56,8 @@ public:
 
 class PPMEngine : public Engine {
 public:
-    PPMEngine(Scene* scene, int width, int height)
-        : scene(scene), width(width), height(height) {}
+    PPMEngine(Scene* scene, Camera* camera, int width, int height)
+        : Engine(scene, camera, width, height) {}
 
 	void Raytrace(const Ray& ray, int depth, float index, Vector3 weight, int id);
 	void SpawnReflectionRay(const Ray &ray, Intersection isc, int depth, float index, Vector3 weight, int id);
@@ -71,15 +71,11 @@ public:
 	bool Render();
 
 private:
-	Scene* scene;
     vector<HitPoint*> hps;
     KDTree *tree;
-	int width;
-	int height;
-    Camera *camera;
 };
 
-Engine* CreatePPMEngine(Scene *scene, int width, int height);
+Engine* CreatePPMEngine(Scene *scene, Camera *camera, int width, int height);
 
 };
 

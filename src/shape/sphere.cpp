@@ -49,5 +49,9 @@ Shape* CreateSphereShape(float x, float y, float z, float radius) {
 	return new Sphere(Point3(x, y, z), radius);
 }
 
+Shape* CreateSphereShape(Point3 origin, float radius) {
+	return new Sphere(origin, radius);
+}
+
 
 }

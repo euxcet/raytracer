@@ -24,6 +24,7 @@ private:
 };
 
 Shape* CreateSphereShape(float x, float y, float z, float radius);
+Shape* CreateSphereShape(Point3 origin, float radius);
 
 
 }

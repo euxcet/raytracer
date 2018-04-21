@@ -126,27 +126,21 @@ void PPMEngine::SpawnRefractionRay(const Ray &ray, Intersection isc, int depth,
 
 bool PPMEngine::PhotonDiffusion(const Photon &photon, const Intersection &isc,
                                 int depth, float &prob) {
-    // TODO no specular?
     Color color = isc.primitive -> GetMaterial() ->
 					GetColor(isc.primitive -> GetShape() -> Coordinate(isc.p));
     float diff = isc.primitive -> GetMaterial() -> GetDiffuse();
     float spec = isc.primitive -> GetMaterial() -> GetSpecular();
-
     if ((diff) * color.Power() <= RAND() * prob) {
         prob -= (diff) * color.Power();
         return false;
     }
-
     float x, y, z;
     do {
         x = RAND() * 2 - 1;
         y = RAND() * 2 - 1;
         z = RAND() * 2 - 1;
     } while (x*x + y*y + z*z > 1 || x*x + y*y + z*z < EPS || Dot(Vector3(x, y, z), isc.n) < EPS);
-
-
     Color pcolor = photon.color * color / color.Power();
-
     Photontrace(Photon(photon.position, Normalize(Vector3(x, y, z)), pcolor), depth + 1);
     return true;
 }
@@ -156,12 +150,10 @@ bool PPMEngine::PhotonReflection(const Photon &photon, const Intersection &isc,
     Color color = isc.primitive -> GetMaterial() ->
 					GetColor(isc.primitive -> GetShape() -> Coordinate(isc.p));
     float refl = isc.primitive -> GetMaterial() -> GetReflection();
-
     if (refl * color.Power() <= RAND() * prob) {
         prob -= refl * color.Power();
         return false;
     }
-
     Normal3 N = isc.n;
     Vector3 D = photon.direction;
     Vector3 R = Normalize(D - 2.0f * Dot(D, N) * N);
@@ -184,7 +176,6 @@ bool PPMEngine::PhotonRefraction(const Photon &photon, const Intersection &isc,
         prob -= refr * trans.Power();
         return false;
     }
-
     float rindex = isc.primitive -> GetMaterial() -> GetRefrIndex();
     float n = (isc.hit == 1) ? (1 / rindex) : rindex;
     if (n == 1)
@@ -198,9 +189,7 @@ bool PPMEngine::PhotonRefraction(const Photon &photon, const Intersection &isc,
         Photontrace(Photon(photon.position, T, pcolor), depth + 1);
     }
     return true;
-
 }
-
 void PPMEngine::Photontrace(const Photon &photon, int depth) {
     if (photon.color.Power() < EPS) return;
     if (depth >= PHOTON_DEPTH) return;
@@ -219,26 +208,17 @@ void PPMEngine::Photontrace(const Photon &photon, int depth) {
 }
 
 bool PPMEngine::Render() {
-	Point3 eye(0, 10, 6);
-	Point3 des(0, 0, 0);
-	Vector3 dir = Normalize(des - eye);
-	Vector3 up = Normalize(Vector3(0, 1, -dir.y / dir.z));
-	camera = new FocusCamera(eye, dir, up, des, width, height);
-
-
-    camera -> clear();
     int tot = 0;
     int count = 0;
     while (true) {
         count ++;
         for(int i = 0; i < width * height; i++) {
+            cout << i << endl;
             float x = (RAND() - 0.5);
             float y = (RAND() - 0.5);
             Raytrace(camera -> Emit(i / height + x, i % height + y), 0, 1.0f, Vector3(1, 1, 1), i);
         }
-        cout << endl;
         cout << "Hitpoints: " << hps.size() << endl;
-        exit(0);
         tree = new KDTree(hps);
         puts("Tree done");
 
@@ -268,13 +248,11 @@ bool PPMEngine::Render() {
         hps.clear();
         delete tree;
     }
-
-	delete camera;
 	return true;
 }
 
-Engine* CreatePPMEngine(Scene *scene, int width, int height) {
-    return new PPMEngine(scene, width, height);
+Engine* CreatePPMEngine(Scene *scene, Camera *camera, int width, int height) {
+    return new PPMEngine(scene, camera, width, height);
 }
 
 };

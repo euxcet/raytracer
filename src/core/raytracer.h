@@ -31,6 +31,9 @@ using std::sort;
 #include <vector>
 using std::vector;
 
+#include <string>
+using std::string;
+
 
 namespace Raytracer {
 

@@ -11,8 +11,15 @@ namespace Raytracer {
 
 class Engine {
 public:
-	Engine() {}
+	Engine(Scene* scene, Camera* camera, int width, int height) :
+		scene(scene), camera(camera), width(width), height(height) {}
 	virtual bool Render() = 0;
+
+protected:
+	Scene* scene;
+	int width;
+	int height;
+    Camera *camera;
 };
 
 }

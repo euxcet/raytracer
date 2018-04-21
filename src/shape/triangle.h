@@ -16,6 +16,7 @@ public:
 	Triangle(const Point3 &v0, const Point3 &v1, const Point3 &v2,
 			 const vector<Point3> &vt) :
         Shape(), v0(v0), v1(v1), v2(v2), vt(vt) {
+			cout << vt[0] << " " << vt[1] << " " << vt[2] << endl;
             Vector3 v0v1 = Normalize(v1 - v0);
             Vector3 v0v2 = Normalize(v2 - v0);
             N = Normal3(Normalize(Cross(v0v1, v0v2)));

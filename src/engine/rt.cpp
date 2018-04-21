@@ -59,14 +59,9 @@ Color RaytracerEngine::SpawnRefractionRay(const Ray &ray, Intersection isc, int 
 }
 
 bool RaytracerEngine::Render() {
-	Point3 eye(0, 10, 6);
-	Point3 des(0, 0, 0);
-	Vector3 dir = Normalize(des - eye);
-	Vector3 up = Normalize(Vector3(0, 1, -dir.y / dir.z));
-	camera = new FocusCamera(eye, dir, up, des, width, height);
-	
 	for(int i = 0; i < width; i++) {
 		for(int j = 0; j < height; j++) {
+			Ray r = camera -> Emit(i, j);
 			Color col = Color();
 			for(int t = 0; t < SAMPLE; t++) {
 				col += Raytrace(camera -> Emit(i, j), 0, 1.0f);
@@ -76,12 +71,11 @@ bool RaytracerEngine::Render() {
 		cout << (1. * i) / width << endl;
 	}
 	camera -> print();
-	delete camera;
 	return true;
 }
 
-Engine* CreateRaytracerEngine(Scene *scene, int width, int height) {
-    return new RaytracerEngine(scene, width, height);
+Engine* CreateRaytracerEngine(Scene *scene, Camera *camera, int width, int height) {
+    return new RaytracerEngine(scene, camera, width, height);
 }
 
 };

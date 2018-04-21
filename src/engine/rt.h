@@ -8,23 +8,16 @@ namespace Raytracer {
 
 class RaytracerEngine : public Engine {
 public:
-    RaytracerEngine(Scene* scene, int width, int height)
-        : scene(scene), width(width), height(height) {}
+    RaytracerEngine(Scene* scene, Camera *camera, int width, int height)
+        : Engine(scene, camera, width, height) {}
 
 	Color Raytrace(const Ray& ray, int depth, float index);
 	Color SpawnReflectionRay(const Ray &ray, Intersection isc, int depth, float index);
 	Color SpawnRefractionRay(const Ray &ray, Intersection isc, int depth, float index);
 	bool Render();
-
-
-private:
-	Scene* scene;
-	int width;
-	int height;
-    Camera *camera;
 };
 
-Engine* CreateRaytracerEngine(Scene *scene, int width, int height);
+Engine* CreateRaytracerEngine(Scene *scene, Camera *camera, int width, int height);
 
 };
 

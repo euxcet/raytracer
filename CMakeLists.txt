@@ -7,8 +7,6 @@ PROJECT( raytracer )
 SET( CORE_SOURCE
 	src/core/api.cpp
 	src/core/camera.cpp
-	src/core/engine.cpp
-	src/core/intersection.cpp
 	src/core/light.cpp
 	src/core/primitive.cpp
 	src/core/scene.cpp
@@ -34,7 +32,7 @@ FILE ( GLOB SOURCE
 	src/shape/plane.cpp
 	src/shape/sphere.cpp
 	src/shape/triangle.cpp
-	rc/accelerator/bfaccel.cpp
+	src/accelerator/bfaccel.cpp
 	src/accelerator/kdtreeaccel.cpp
 	src/engine/rt.cpp
 	src/engine/ppm.cpp
