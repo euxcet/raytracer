@@ -6,6 +6,7 @@
 #include "material.h"
 #include "intersection.h"
 #include "shape.h"
+#include "transform.h"
 
 namespace Raytracer {
 
@@ -33,7 +34,7 @@ private:
 
 class Mesh : public Primitive {
 public:
-	Mesh(const char* file, Material* material, int offset = 0);
+	Mesh(const char* file, Material* material, const Transform &transform, int offset = 0);
 	~Mesh() {}
 	bool Intersect(const Ray &r, Intersection *isc) const;
 	const Material* GetMaterial() const { return material; }
@@ -46,6 +47,7 @@ private:
 	ifstream fin;
 	vector<Primitive*> triangles;
 	Material* material;
+	Transform transform;
 };
 
 class Aggregate : public Primitive {

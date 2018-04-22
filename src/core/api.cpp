@@ -81,16 +81,42 @@ Primitive* LoadPlane(ifstream &fin) {
     return new GeometricPrimitive(CreatePlaneShape(normal, dist), material);
 }
 
+Transform LoadTransform(ifstream &fin, int type) {
+    string s;
+    Vector3 delta;
+    Vector3 scale;
+    float theta;
+    while (fin >> s) {
+        if (s == "delta:") fin >> delta.x >> delta.y >> delta.z;
+        if (s == "scale:") fin >> scale.x >> scale.y >> scale.z;
+        if (s == "theta:") fin >> theta;
+        if (s == "}") break;
+    }
+    if (type == 0) return Translate(delta);
+    if (type == 1) return Scale(scale);
+    if (type == 2) return RotateX(theta);
+    if (type == 3) return RotateY(theta);
+    if (type == 4) return RotateZ(theta);
+}
+
 Mesh* LoadMesh(ifstream &fin) {
     string s;
     string obj;
+    int offset = 0;
     Material *material = NULL;
+    Transform transform;
     while (fin >> s) {
         if (s == "obj:") fin >> obj;
+        if (s == "offset:") fin >> offset;
         if (s == "Material") material = LoadMaterial(fin);
+        if (s == "Translate") transform *= LoadTransform(fin, 0);
+        if (s == "Scale") transform *= LoadTransform(fin, 1);
+        if (s == "RotateX") transform *= LoadTransform(fin, 2);
+        if (s == "RotateY") transform *= LoadTransform(fin, 3);
+        if (s == "RotateZ") transform *= LoadTransform(fin, 4);
         if (s == "}") break;
     }
-    return new Mesh(obj.c_str(), material);
+    return new Mesh(obj.c_str(), material, transform, offset);
 }
 
 Light* LoadLight(ifstream &fin, int type) {

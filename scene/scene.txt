@@ -1,8 +1,8 @@
 PPM {
 	width: 1280
 	height: 800
-	Camera {
-		eye: 0 10 6
+	FocusCamera {
+		eye: 0 8 6
 		des: 0 0 0
 	}
 	Scene {
@@ -10,6 +10,15 @@ PPM {
         background: 0.1 0.1 0.1
 		Mesh {
 			obj: ../obj/sven_blade.obj
+			Scale {
+				scale: 0.02 0.02 0.02
+			}
+			RotateX {
+				theta: 90
+			}
+			RotateY {
+				theta: 180
+			}
 	        Material {
 	            color: 0 1 0
 	            refr: 0
@@ -24,6 +33,16 @@ PPM {
 		}
 		Mesh {
 			obj: ../obj/sven_all.obj
+			offset: 370
+			Scale {
+				scale: 0.02 0.02 0.02
+			}
+			RotateX {
+				theta: 90
+			}
+			RotateY {
+				theta: 180
+			}
 	        Material {
 	            color: 0 1 0
 	            refr: 0

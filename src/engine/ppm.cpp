@@ -178,8 +178,6 @@ bool PPMEngine::PhotonRefraction(const Photon &photon, const Intersection &isc,
     }
     float rindex = isc.primitive -> GetMaterial() -> GetRefrIndex();
     float n = (isc.hit == 1) ? (1 / rindex) : rindex;
-    if (n == 1)
-    cout << n << endl;
     Normal3 N = isc.n;
     float cosI = -Dot(N, photon.direction);
     float cosT2 = 1.0f - n * n * (1.0f - cosI * cosI);
@@ -214,8 +212,8 @@ bool PPMEngine::Render() {
         count ++;
         for(int i = 0; i < width * height; i++) {
             cout << i << endl;
-            float x = (RAND() - 0.5);
-            float y = (RAND() - 0.5);
+            float x = (RAND() - 0.5) / 2;
+            float y = (RAND() - 0.5) / 2;
             Raytrace(camera -> Emit(i / height + x, i % height + y), 0, 1.0f, Vector3(1, 1, 1), i);
         }
         cout << "Hitpoints: " << hps.size() << endl;
@@ -229,7 +227,6 @@ bool PPMEngine::Render() {
             tot ++;
             cout << tot << endl;
         }
-        cout << endl;
         cout << tot << endl;
 
 
@@ -238,7 +235,6 @@ bool PPMEngine::Render() {
             Color col = hp -> color / (PI * hp -> R2 * PHOTON_COUNT);
             camera -> AddColor(hp -> id / height, hp -> id % height, col);
         }
-        cout << count << endl;
         camera -> print(count);
         for(int i = 0; i < photons.size(); i++)
             delete photons[i];

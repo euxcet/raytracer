@@ -6,7 +6,7 @@
 
 namespace Raytracer {
 
-#define PHOTON_COUNT 50000
+#define PHOTON_COUNT 200000
 #define PHOTON_DEPTH 6
 #define COLLECT_RADIUS 10
 #define HITRADIUS 0.01

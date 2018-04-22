@@ -141,7 +141,6 @@ namespace Raytracer {
 
             for(int _ = 0; _ < 5; _++) {
                 Vector2f x0(RAND(), RAND());
-//                Vector2f x0 = Initx0(O,D,m_ControlPoints + 16 * i);
                 if(NTIteration(x0,N1,N2,d1,d2,m_Patch + 16 * i,res)){
                     float t = (S(res(0), res(1), m_Patch + 16 * i) - O).dot(D);
                     if(a_Dist > t){

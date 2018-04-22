@@ -37,7 +37,7 @@ void Camera::print(int count) {
     ofstream out("1.ppm");
     out << "P3\n" << width << " " << height << "\n255\n";
     for(int j = 0; j < height; j++)
-        for(int i = 0; i < width; i++) {
+        for(int i = width - 1; i >= 0; i--) { // WARNING: !!!
             int r = fmin(data[i][j].r / count * 255., 255.);
             int g = fmin(data[i][j].g / count * 255., 255.);
             int b = fmin(data[i][j].b / count * 255., 255.);

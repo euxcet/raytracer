@@ -11,6 +11,7 @@ SET( CORE_SOURCE
 	src/core/primitive.cpp
 	src/core/scene.cpp
 	src/core/shape.cpp
+	src/core/transform.cpp
 	)
 
 set ( CORE_HEADERS
@@ -26,7 +27,9 @@ set ( CORE_HEADERS
 	src/core/scene.h
 	src/core/shape.h
 	src/core/texture.h
+	src/core/transform.h
 	)
+	
 FILE ( GLOB SOURCE
 	src/shape/bezier.cpp
 	src/shape/plane.cpp

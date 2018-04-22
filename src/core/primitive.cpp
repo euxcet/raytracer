@@ -18,7 +18,8 @@ const Shape* GeometricPrimitive::GetShape() const {
 	return shape;
 }
 
-Mesh::Mesh(const char* file, Material *material, int offset) : material(material) {
+Mesh::Mesh(const char* file, Material *material, const Transform &transform, int offset)
+	: material(material), transform(transform) {
     ifstream fin;
     fin.open(file);
     char s[100];
@@ -45,9 +46,9 @@ Mesh::Mesh(const char* file, Material *material, int offset) : material(material
 			}
 			if (f <= offset) continue;
 			for(int i = 2; i < vertex; i++) {
-		        Point3 v0 = Point3(x[u[0]], y[u[0]], z[u[0]]);
-		        Point3 v1 = Point3(x[u[i - 1]], y[u[i - 1]], z[u[i - 1]]);
-		        Point3 v2 = Point3(x[u[i]], y[u[i]], z[u[i]]);
+		        Point3 v0 = transform(Point3(x[u[0]], y[u[0]], z[u[0]]));
+		        Point3 v1 = transform(Point3(x[u[i - 1]], y[u[i - 1]], z[u[i - 1]]));
+		        Point3 v2 = transform(Point3(x[u[i]], y[u[i]], z[u[i]]));
 				vector<Point3> vt;
 				vt.push_back(Point3(cx[ut[0]], cy[ut[0]], 0));
 				vt.push_back(Point3(cx[ut[i - 1]], cy[ut[i - 1]], 0));
@@ -59,9 +60,9 @@ Mesh::Mesh(const char* file, Material *material, int offset) : material(material
 		else if (s[0] == 'v' && strlen(s) == 1) {
 			float tx, ty, tz;
 			fin >> tx >> ty >> tz;
-			x.push_back(tx / 100);
-			y.push_back(ty / 100);
-			z.push_back(tz / 100);
+			x.push_back(tx);
+			y.push_back(ty);
+			z.push_back(tz);
 			fin >> s;
 		}
 		else if (strlen(s) == 2 && s[0] == 'v' && s[1] == 't') {

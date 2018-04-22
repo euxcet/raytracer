@@ -72,6 +72,7 @@ class Scene;
 class Shape;
 class Intersection;
 class Texture;
+class Transform;
 
 
 };
