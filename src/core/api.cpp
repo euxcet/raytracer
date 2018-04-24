@@ -53,34 +53,6 @@ Material* LoadMaterial(ifstream &fin) {
     return new Material(color, absorb, refr, refl, diff, spec, rindex, texture);
 }
 
-Primitive* LoadSphere(ifstream &fin) {
-    string s;
-    Point3 origin;
-    float radius;
-    Material *material = NULL;
-    while (fin >> s) {
-        if (s == "origin:") fin >> origin.x >> origin.y >> origin.z;
-        if (s == "raidus:") fin >> radius;
-        if (s == "Material") material = LoadMaterial(fin);
-        if (s == "}") break;
-    }
-    return new GeometricPrimitive(CreateSphereShape(origin, radius), material);
-}
-
-Primitive* LoadPlane(ifstream &fin) {
-    string s;
-    Normal3 normal;
-    float dist;
-    Material *material = NULL;
-    while (fin >> s) {
-        if (s == "normal:") fin >> normal.x >> normal.y >> normal.z;
-        if (s == "dist:") fin >> dist;
-        if (s == "Material") material = LoadMaterial(fin);
-        if (s == "}") break;
-    }
-    return new GeometricPrimitive(CreatePlaneShape(normal, dist), material);
-}
-
 Transform LoadTransform(ifstream &fin, int type) {
     string s;
     Vector3 delta;
@@ -97,6 +69,37 @@ Transform LoadTransform(ifstream &fin, int type) {
     if (type == 2) return RotateX(theta);
     if (type == 3) return RotateY(theta);
     if (type == 4) return RotateZ(theta);
+}
+
+
+Primitive* LoadSphere(ifstream &fin) {
+    string s;
+    Point3 origin;
+    float radius;
+    Material *material = NULL;
+    Transform transform;
+    while (fin >> s) {
+        if (s == "origin:") fin >> origin.x >> origin.y >> origin.z;
+        if (s == "radius:") fin >> radius;
+        if (s == "Material") material = LoadMaterial(fin);
+        if (s == "}") break;
+    }
+    return new GeometricPrimitive(CreateSphereShape(origin, radius, transform), material);
+}
+
+Primitive* LoadPlane(ifstream &fin) {
+    string s;
+    Normal3 normal;
+    float dist;
+    Material *material = NULL;
+    Transform transform;
+    while (fin >> s) {
+        if (s == "normal:") fin >> normal.x >> normal.y >> normal.z;
+        if (s == "dist:") fin >> dist;
+        if (s == "Material") material = LoadMaterial(fin);
+        if (s == "}") break;
+    }
+    return new GeometricPrimitive(CreatePlaneShape(normal, dist, transform), material);
 }
 
 Mesh* LoadMesh(ifstream &fin) {
@@ -117,6 +120,24 @@ Mesh* LoadMesh(ifstream &fin) {
         if (s == "}") break;
     }
     return new Mesh(obj.c_str(), material, transform, offset);
+}
+
+Primitive* LoadBezier(ifstream &fin) {
+    string s;
+    string obj;
+    Material *material = NULL;
+    Transform transform;
+    while (fin >> s) {
+        if (s == "obj:") fin >> obj;
+        if (s == "Material") material = LoadMaterial(fin);
+        if (s == "Translate") transform *= LoadTransform(fin, 0);
+        if (s == "Scale") transform *= LoadTransform(fin, 1);
+        if (s == "RotateX") transform *= LoadTransform(fin, 2);
+        if (s == "RotateY") transform *= LoadTransform(fin, 3);
+        if (s == "RotateZ") transform *= LoadTransform(fin, 4);
+        if (s == "}") break;
+    }
+    return new GeometricPrimitive(CreateBezier3Shape(obj.c_str(), transform), material);
 }
 
 Light* LoadLight(ifstream &fin, int type) {
@@ -165,6 +186,7 @@ Scene* LoadScene(ifstream &fin) {
         if (s == "Plane") primitives.push_back(LoadPlane(fin));
         if (s == "Sphere") primitives.push_back(LoadSphere(fin));
         if (s == "Mesh") meshs.push_back(LoadMesh(fin));
+        if (s == "Bezier") primitives.push_back(LoadBezier(fin));
         if (s == "AreaLight") lights.push_back(LoadLight(fin, 1));
         if (s == "}") break;
     }
@@ -182,9 +204,11 @@ Engine* LoadEngine(ifstream &fin, int type) {
     Camera *camera = NULL;
     Scene *scene;
     int width, height;
+    int photons = 100000;
     while (fin >> s) {
         if (s == "width:") fin >> width;
         if (s == "height:") fin >> height;
+        if (s == "photons:") fin >> photons;
         if (s == "Scene") scene = LoadScene(fin);
         if (s == "Camera") camera = LoadCamera(fin, width, height, 0);
         if (s == "FocusCamera") camera = LoadCamera(fin, width, height, 1);
@@ -199,7 +223,7 @@ Engine* LoadEngine(ifstream &fin, int type) {
         return NULL;
     }
     if (type == 0) return CreateRaytracerEngine(scene, camera, width, height);
-    return CreatePPMEngine(scene, camera, width, height);
+    return CreatePPMEngine(scene, camera, width, height, photons);
 }
 
 void Init() {
@@ -217,101 +241,6 @@ void Init() {
     }
     engine -> Render();
     delete engine;
-
-                        /*
-    primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 1, 0), -17),
-                         new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.2, 0.6, 0, 1.7,
-                            new Texture("../texture/wall1.pic"))
-                        ));
-
-    primitives.push_back(new GeometricPrimitive(CreatePlaneShape(Normal3(0, 0, 1), 0),
-                         new Material(Color(1, 1, 1), Color(0, 0, 0), 0, 0.4, 0.8, 0, 1.7,
-                            new Texture("../texture/wall2.pic"))
-                        ));
-                        */
-
-
-                        /*
-    primitives.push_back(new GeometricPrimitive(CreateSphereShape(0, 2, 2, 2),
-                         new Material(Color(0, 1, 0), Color(0, 1, 0), 0, 0.3, 0.8, 0.25, 1.7)
-                        ));
-                        */
-
-                        /*
-    Primitive* bezier = new GeometricPrimitive(CreateBezier3Shape("../obj/teapot.bpt"),
-                         new Material(Color(0, 1, 0), Color(0, 0, 0), 0, 0.3, 0.5, 0.25, 1.7));
-    primitives.push_back(bezier);
-    */
-    /*
-    meshs.push_back(new Mesh("../obj/utah-teapot.obj",
-                     new Material(Color(0, 1, 0), Color(0, 0, 0), 0, 0.3, 0.5, 0.25, 1.7)
-                    ));
-                    */
-
-    /*
-    meshs.push_back(new Mesh("../obj/sven_all.obj",
-                    new Material(Color(0.803, 0.496, 0.195), Color(0.803, 0.496, 0.195), 0, 0.4, 0.6, 0, 1.7,
-                        new Texture("../texture/sven.pic"))
-                , 370));
-    meshs.push_back(new Mesh("../obj/sven_blade.obj",
-                    new Material(Color(0.803, 0.496, 0.195), Color(0.803, 0.496, 0.195), 0, 0.4, 0.6, 0, 1.7,
-                        new Texture("../texture/sven_blade.pic"))
-                ));
-                */
-
-
-        /*
-    primitives.push_back(new GeometricPrimitive(CreateSphereShape(0, 2, 2, 2),
-                         new Material(Color(1, 0, 0), Color(1, 0, 0), 0, 0.3, 0.45, 0.25, 1.7,
-                            new Texture("../texture/marble.pic"))
-                        ));
-                        */
-
-
-                        /*
-    primitives.push_back(new GeometricPrimitive(CreateSphereShape(0, -2.5, 5, 5),
-                         new Material(Color(1, 0, 0), Color(1, 0, 0), 0, 0.14, 0.65, 0.25, 1.7,
-                            new Texture("../texture/stone.pic"))
-                        ));
-                        */
-
-
-                         /*
-    float br = 0.4;
-    primitives.push_back(new GeometricPrimitive(CreateSphereShape(-4.1, 1.54, br, br),
-                         new Material(Color(1, 0, 0), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
-    primitives.push_back(new GeometricPrimitive(CreateSphereShape(4, 1.47, br, br),
-                         new Material(Color(0, 0, 1), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
-
-    primitives.push_back(new GeometricPrimitive(CreateSphereShape(-2, 4.2, br, br),
-                         new Material(Color(1, 0, 0), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
-    primitives.push_back(new GeometricPrimitive(CreateSphereShape(1.3, 3.9, br, br),
-                         new Material(Color(0, 0, 1), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
-
-    primitives.push_back(new GeometricPrimitive(CreateSphereShape(-2.9, -2.0, br, br),
-                         new Material(Color(1, 0, 0), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
-    primitives.push_back(new GeometricPrimitive(CreateSphereShape(3.3, -1.9, br, br),
-                         new Material(Color(0, 0, 1), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
-    primitives.push_back(new GeometricPrimitive(CreateSphereShape(0, 0, br, br),
-                         new Material(Color(0, 0, 1), Color(RAND(), RAND(), RAND()), 1, 0, 0, 0, 1.2 + RAND() * 0.6)));
-                         */
-
-                         /*
-    int width = 100;
-    int height = 100;
-
-    vector<Light*> lights;
-    lights.push_back(new AreaLight(Point3(1, -6, 6), Vector3(1.4, 0, 0), Vector3(0, 1.4, 0), Color(1, 1, 1)));
-
-	Point3 eye(0, 10, 6);
-	Point3 des(0, 0, 0);
-	Vector3 dir = Normalize(des - eye);
-	Vector3 up = Normalize(Vector3(0, 1, -dir.y / dir.z));
-
-	Camera *camera = new FocusCamera(eye, dir, up, des, width, height);
-    Scene *scene = new Scene(CreateKDTreeAccelerator(meshs, primitives), lights, Color(0.1, 0.1, 0.1));
-    Engine *engine = CreateRaytracerEngine(scene, camera, width, height);
-    engine -> Render();
-    */
 }
+
 }

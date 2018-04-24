@@ -6,10 +6,8 @@
 
 namespace Raytracer {
 
-#define PHOTON_COUNT 200000
 #define PHOTON_DEPTH 6
-#define COLLECT_RADIUS 10
-#define HITRADIUS 0.01
+#define HITRADIUS 0.1
 #define ALPHA 0.8
 
 class HitPoint {
@@ -56,26 +54,27 @@ public:
 
 class PPMEngine : public Engine {
 public:
-    PPMEngine(Scene* scene, Camera* camera, int width, int height)
-        : Engine(scene, camera, width, height) {}
+    PPMEngine(Scene* scene, Camera* camera, int width, int height, int p)
+        : Engine(scene, camera, width, height), PHOTON_COUNT(p) { }
 
 	void Raytrace(const Ray& ray, int depth, float index, Vector3 weight, int id);
 	void SpawnReflectionRay(const Ray &ray, Intersection isc, int depth, float index, Vector3 weight, int id);
 	void SpawnRefractionRay(const Ray &ray, Intersection isc, int depth, float index, Vector3 weight, int id);
 
-    void Photontrace(const Photon &photon, int depth);
-    bool PhotonDiffusion(const Photon &photon, const Intersection &isc, int depth, float &prob);
-    bool PhotonReflection(const Photon &photon, const Intersection &isc, int depth, float &prob);
-    bool PhotonRefraction(const Photon &photon, const Intersection &isc, int depth, float &prob);
+    void Photontrace(const Photon &photon, int depth, float index);
+    bool PhotonDiffusion(const Photon &photon, const Intersection &isc, int depth, float index, float &prob);
+    bool PhotonReflection(const Photon &photon, const Intersection &isc, int depth, float index, float &prob);
+    bool PhotonRefraction(const Photon &photon, const Intersection &isc, int depth, float index, float &prob);
 
 	bool Render();
 
 private:
+    int PHOTON_COUNT;
     vector<HitPoint*> hps;
     KDTree *tree;
 };
 
-Engine* CreatePPMEngine(Scene *scene, Camera *camera, int width, int height);
+Engine* CreatePPMEngine(Scene *scene, Camera *camera, int width, int height, int p);
 
 };
 

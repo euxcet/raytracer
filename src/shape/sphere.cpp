@@ -45,12 +45,12 @@ pair<float, float> Sphere::Coordinate(const Point3& pos) const {
 	return make_pair(phi, theta);
 }
 
-Shape* CreateSphereShape(float x, float y, float z, float radius) {
-	return new Sphere(Point3(x, y, z), radius);
+Shape* CreateSphereShape(float x, float y, float z, float radius, Transform transform) {
+	return new Sphere(Point3(x, y, z), radius, transform);
 }
 
-Shape* CreateSphereShape(Point3 origin, float radius) {
-	return new Sphere(origin, radius);
+Shape* CreateSphereShape(Point3 origin, float radius, Transform transform) {
+	return new Sphere(origin, radius, transform);
 }
 
 

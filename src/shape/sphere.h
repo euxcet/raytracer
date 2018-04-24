@@ -7,8 +7,8 @@ namespace Raytracer {
 
 class Sphere : public Shape {
 public:
-	Sphere(const Point3& center, float radius) :
-		Shape(), center(center), radius(radius) {}
+	Sphere(const Point3& center, float radius, Transform transform) :
+		Shape(transform), center(center), radius(radius) {}
 
 	bool Intersect(const Ray& ray, Intersection *isc) const;
 	Normal3 GetNormal(const Point3& pos) const { return Normal3(Normalize(pos - center)); }
@@ -23,8 +23,8 @@ private:
 	float radius;
 };
 
-Shape* CreateSphereShape(float x, float y, float z, float radius);
-Shape* CreateSphereShape(Point3 origin, float radius);
+Shape* CreateSphereShape(float x, float y, float z, float radius, Transform transform);
+Shape* CreateSphereShape(Point3 origin, float radius, Transform transform);
 
 
 }

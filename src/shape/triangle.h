@@ -7,15 +7,15 @@ namespace Raytracer {
 
 class Triangle : public Shape {
 public:
-	Triangle(const Point3 &v0, const Point3 &v1, const Point3 &v2) :
-        Shape(), v0(v0), v1(v1), v2(v2) {
+	Triangle(const Point3 &v0, const Point3 &v1, const Point3 &v2, Transform transform) :
+        Shape(transform), v0(transform(v0)), v1(transform(v1)), v2(transform(v2)) {
             Vector3 v0v1 = Normalize(v1 - v0);
             Vector3 v0v2 = Normalize(v2 - v0);
             N = Normal3(Normalize(Cross(v0v1, v0v2)));
         }
 	Triangle(const Point3 &v0, const Point3 &v1, const Point3 &v2,
-			 const vector<Point3> &vt) :
-        Shape(), v0(v0), v1(v1), v2(v2), vt(vt) {
+			 const vector<Point3> &vt, Transform transform) :
+        Shape(transform), v0(transform(v0)), v1(transform(v1)), v2(transform(v2)), vt(vt) {
             Vector3 v0v1 = Normalize(v1 - v0);
             Vector3 v0v2 = Normalize(v2 - v0);
             N = Normal3(Normalize(Cross(v0v1, v0v2)));
@@ -35,9 +35,9 @@ private:
     Normal3 N;
 };
 
-Shape* CreateTriangleShape(const Point3 &v0, const Point3& v1, const Point3 &v2);
+Shape* CreateTriangleShape(const Point3 &v0, const Point3& v1, const Point3 &v2, Transform transform);
 Shape* CreateTriangleShape(const Point3 &v0, const Point3 &v1, const Point3 &v2,
-                           const vector<Point3> &vt);
+                           const vector<Point3> &vt, Transform transform);
 
 
 }

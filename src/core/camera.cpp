@@ -46,8 +46,10 @@ void Camera::print(int count) {
 }
 
 Ray FocusCamera::Emit(float x, float y) {
-    float ex = (RAND() - 0.5) / 3;
-    float ey = (RAND() - 0.5) / 3;
+    float ex = (RAND() - 0.5) / 2;
+    float ey = (RAND() - 0.5) / 2;
+    ex = 0;
+    ey = 0;
     float dx = (x - width / 2) / height;
     float dy = y / height - 0.5;
     float dis = (des - eye).Length();

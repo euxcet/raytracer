@@ -1,5 +1,5 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef GEOMETRY_H
+#define GEOMETRY_H
 
 #include "raytracer.h"
 
@@ -264,6 +264,48 @@ inline std::ostream& operator<<(std::ostream &os, const AABB &ab) {
 	return os;
 }
 
+struct Matrix3 {
+    Matrix3() {
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 3; j++) m[i][j] = 0;
+        for(int i = 0; i < 3; i++) m[i][i] = 1;
+    }
+    Matrix3(const float mat[3][3]) {
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 3; j++) m[i][j] = mat[i][j];
+    }
+    Matrix3(float m00, float m01, float m02,
+           float m10, float m11, float m12,
+           float m20, float m21, float m22) {
+               m[0][0] = m00; m[0][1] = m01; m[0][2] = m02;
+               m[1][0] = m10; m[1][1] = m11; m[1][2] = m12;
+               m[2][0] = m20; m[2][1] = m21; m[2][2] = m22;
+           }
+    bool operator==(const Matrix3 &_m) const {
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 3; j++)
+                if (m[i][j] != _m.m[i][j]) return false;
+        return true;
+    }
+    bool operator!=(const Matrix3 &_m) const {
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 3; j++)
+                if (m[i][j] != _m.m[i][j]) return true;
+        return false;
+    }
+	Vector3 operator*(const Vector3 &v) const;
+    friend Matrix3 Transpose(const Matrix3 &m);
+    friend Matrix3 Inverse(const Matrix3 &m);
+    float m[3][3];
+};
+
+inline Point3 Min(const Point3& p1, const Point3& p2) {
+	return Point3(min(p1.x, p2.x), min(p1.y, p2.y), min(p1.z, p2.z));
+}
+
+inline Point3 Max(const Point3& p1, const Point3& p2) {
+	return Point3(max(p1.x, p2.x), max(p1.y, p2.y), max(p1.z, p2.z));
+}
 
 inline float Dot(const Vector3& v1, const Vector3& v2) {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;

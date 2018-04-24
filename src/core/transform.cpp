@@ -5,7 +5,7 @@ namespace Raytracer {
 Matrix Transpose(const Matrix &m) {
     Matrix mat;
     for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++) mat.m[i][j] = m.m[i][j];
+        for(int j = 0; j < 4; j++) mat.m[i][j] = m.m[j][i];
     return mat;
 }
 

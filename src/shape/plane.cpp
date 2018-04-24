@@ -23,8 +23,8 @@ namespace Raytracer {
         return make_pair(x - floor(x), y - floor(y));
     }
 
-    Shape* CreatePlaneShape(const Normal3 &normal, float dist) {
-        return new Plane(normal, dist);
+    Shape* CreatePlaneShape(const Normal3 &normal, float dist, Transform transform) {
+        return new Plane(normal, dist, transform);
     }
 
 }

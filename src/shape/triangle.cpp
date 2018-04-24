@@ -61,13 +61,13 @@ pair<float, float> Triangle::Coordinate(const Point3& pos) const {
     return make_pair(rx, 1 - ry);
 }
 
-Shape* CreateTriangleShape(const Point3 &v0, const Point3 &v1, const Point3 &v2) {
-    return new Triangle(v0, v1, v2);
+Shape* CreateTriangleShape(const Point3 &v0, const Point3 &v1, const Point3 &v2, Transform transform) {
+    return new Triangle(v0, v1, v2, transform);
 }
 
 Shape* CreateTriangleShape(const Point3 &v0, const Point3 &v1, const Point3 &v2,
-                           const vector<Point3> &vt) {
-    return new Triangle(v0, v1, v2, vt);
+                           const vector<Point3> &vt, Transform transform) {
+    return new Triangle(v0, v1, v2, vt, transform);
 }
 
 }

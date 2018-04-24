@@ -7,8 +7,8 @@ namespace Raytracer {
 
 class Plane : public Shape {
 public:
-	Plane(const Normal3 &normal, float dist) :
-		Shape(), normal(normal), dist(dist)  {
+	Plane(const Normal3 &normal, float dist, Transform transform) :
+		Shape(transform), normal(normal), dist(dist)  {
 			origin = Point3(0, 0, 0) + Vector3(dist * normal);
 		}
 
@@ -24,7 +24,7 @@ private:
     float dist;
 };
 
-Shape* CreatePlaneShape(const Normal3 &normal, float dist);
+Shape* CreatePlaneShape(const Normal3 &normal, float dist, Transform transform);
 
 
 }

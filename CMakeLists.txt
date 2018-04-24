@@ -7,6 +7,7 @@ PROJECT( raytracer )
 SET( CORE_SOURCE
 	src/core/api.cpp
 	src/core/camera.cpp
+	src/core/geometry.cpp
 	src/core/light.cpp
 	src/core/primitive.cpp
 	src/core/scene.cpp
@@ -29,7 +30,7 @@ set ( CORE_HEADERS
 	src/core/texture.h
 	src/core/transform.h
 	)
-	
+
 FILE ( GLOB SOURCE
 	src/shape/bezier.cpp
 	src/shape/plane.cpp

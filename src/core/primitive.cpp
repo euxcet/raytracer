@@ -46,14 +46,14 @@ Mesh::Mesh(const char* file, Material *material, const Transform &transform, int
 			}
 			if (f <= offset) continue;
 			for(int i = 2; i < vertex; i++) {
-		        Point3 v0 = transform(Point3(x[u[0]], y[u[0]], z[u[0]]));
-		        Point3 v1 = transform(Point3(x[u[i - 1]], y[u[i - 1]], z[u[i - 1]]));
-		        Point3 v2 = transform(Point3(x[u[i]], y[u[i]], z[u[i]]));
+		        Point3 v0 = Point3(x[u[0]], y[u[0]], z[u[0]]);
+		        Point3 v1 = Point3(x[u[i - 1]], y[u[i - 1]], z[u[i - 1]]);
+		        Point3 v2 = Point3(x[u[i]], y[u[i]], z[u[i]]);
 				vector<Point3> vt;
 				vt.push_back(Point3(cx[ut[0]], cy[ut[0]], 0));
 				vt.push_back(Point3(cx[ut[i - 1]], cy[ut[i - 1]], 0));
 				vt.push_back(Point3(cx[ut[i]], cy[ut[i]], 0));
-		        Shape* p = CreateTriangleShape(v0, v1, v2, vt);
+		        Shape* p = CreateTriangleShape(v0, v1, v2, vt, transform);
 		        triangles.push_back(new GeometricPrimitive(p, material)); // WARNING : material not new
 			}
 		}

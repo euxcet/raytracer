@@ -1,13 +1,73 @@
 PPM {
-	width: 1280
-	height: 800
-	FocusCamera {
+	width: 400
+	height: 400
+	photons: 100000
+	Camera {
 		eye: 0 8 6
 		des: 0 0 0
 	}
 	Scene {
 		accelerator: kdtree
         background: 0.1 0.1 0.1
+        AreaLight {
+            origin: 0 2 7
+            dx: 1.4 0 0
+            dy: 0 1.4 0
+            color: 1 1 1
+        }
+		Bezier {
+			obj: ../obj/teapot.bpt
+			Translate {
+				delta: 0 0 0.5
+			}
+			Scale {
+				scale: 0.8 0.8 0.8
+			}
+	        Material {
+	            color: 1 1 1
+				absorb: 1 1 1
+	            refr: 1
+	            refl: 0
+	            diff: 0
+	            spec: 0
+	            rindex: 1.5
+	        }
+		}
+		Plane {
+			normal: 0 1 0
+            dist: -17
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0.2
+                diff: 0.6
+                spec: 0
+                rindex: 1.7
+                Texture {
+                    texture: ../texture/wall1.pic
+                }
+            }
+		}
+		Plane {
+			normal: 0 0 1
+            dist: 0
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0.4
+                diff: 0.8
+                spec: 0
+                rindex: 1.7
+                Texture {
+                    texture: ../texture/wall2.pic
+                }
+            }
+		}
+	}
+}
+
 		Mesh {
 			obj: ../obj/sven_blade.obj
 			Scale {
@@ -55,43 +115,18 @@ PPM {
 				}
 	        }
 		}
-        AreaLight {
-            origin: 0 0 6
-            dx: 1.4 0 0
-            dy: 0 1.4 0
-            color: 1 1 1
-        }
-		Plane {
-			normal: 0 1 0
-            dist: -17
-            Material {
-                color: 1 1 1
-                absorb: 0 0 0
-                refr: 0
-                refl: 0.2
-                diff: 0.6
-                spec: 0
-                rindex: 1.7
-                Texture {
-                    texture: ../texture/wall1.pic
-                }
-            }
+		Sphere {
+			origin: 0 0 1
+			radius: 1
+
+	        Material {
+	            color: 0 1 0
+				absorb: 0 1 0
+	            refr: 1
+	            refl: 0
+	            diff: 0
+	            spec: 0
+	            rindex: 1.5
+	        }
+
 		}
-		Plane {
-			normal: 0 0 1
-            dist: 0
-            Material {
-                color: 1 1 1
-                absorb: 0 0 0
-                refr: 0
-                refl: 0.4
-                diff: 0.8
-                spec: 0
-                rindex: 1.7
-                Texture {
-                    texture: ../texture/wall2.pic
-                }
-            }
-		}
-	}
-}
