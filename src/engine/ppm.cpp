@@ -74,17 +74,14 @@ void PPMEngine::Raytrace(const Ray& ray, int depth, float index, Vector3 weight,
     Color color = isc.primitive -> GetMaterial() ->
 					GetColor(isc.primitive -> GetShape() -> Coordinate(isc.p));
     if (diff > EPS) {
-        #pragma omp critical
-        {
-            HitPoint *hp = new HitPoint();
-            hp -> weight = weight * diff * color;
-            hp -> id = id;
-            hp -> ray = ray;
-            hp -> isc = isc;
-            hp -> tot = 0;
-            hp -> R2 = HITRADIUS;
-            hps.push_back(hp);
-        }
+        HitPoint *hp = new HitPoint();
+        hp -> weight = weight * diff * color;
+        hp -> id = id;
+        hp -> ray = ray;
+        hp -> isc = isc;
+        hp -> tot = 0;
+        hp -> R2 = HITRADIUS;
+        hps.push_back(hp);
     }
     float refl = isc.primitive -> GetMaterial() -> GetReflection();
     float refr = isc.primitive -> GetMaterial() -> GetRefraction();
@@ -95,6 +92,7 @@ void PPMEngine::Raytrace(const Ray& ray, int depth, float index, Vector3 weight,
 void PPMEngine::SpawnReflectionRay(const Ray &ray, Intersection isc, int depth,
                                    float index, Vector3 weight, int id) {
     Normal3 N = isc.n;
+    if (Dot(ray.direction, N) > 0) N = -N;
     Vector3 D = ray.GetDirection();
     Vector3 R = Normalize(D - 2.0f * Dot(D, N) * N);
 
@@ -161,6 +159,7 @@ bool PPMEngine::PhotonReflection(const Photon &photon, const Intersection &isc,
         return false;
     }
     Normal3 N = isc.n;
+    if (Dot(photon.direction, N) > 0) N = -N;
     Vector3 D = photon.direction;
     Vector3 R = Normalize(D - 2.0f * Dot(D, N) * N);
     Vector3 pcolor = photon.color * color / color.Power();
@@ -223,9 +222,9 @@ bool PPMEngine::Render() {
     while (true) {
         count ++;
         for(int i = 0; i < width * height; i++) {
-            float x = (RAND() - 0.5) / 2;
-            float y = (RAND() - 0.5) / 2;
-            Raytrace(camera -> Emit(i / height + x, i % height + y), 0, 1.0f, Vector3(1, 1, 1), i);
+            float x = (RAND() - 0.5);
+            float y = (RAND() - 0.5);
+            Raytrace(camera -> Emit(i / height + x, i % height + y), 0, 1, Vector3(1, 1, 1), i);
             cout << i << endl;
         }
         cout << "Hitpoints: " << hps.size() << endl;
@@ -235,7 +234,7 @@ bool PPMEngine::Render() {
         vector<Photon*> photons = scene -> EmitPhotons(PHOTON_COUNT);
         cout << "Photons " << photons.size() << endl;
         for(int i = 0; i < photons.size(); i++) {
-            Photontrace(*photons[i], 0, 1.);
+            Photontrace(*photons[i], 0, 1);
             tot ++;
             cout << tot << endl;
         }
@@ -255,6 +254,7 @@ bool PPMEngine::Render() {
             delete hps[i];
         hps.clear();
         delete tree;
+
     }
 	return true;
 }

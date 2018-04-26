@@ -145,15 +145,19 @@ Light* LoadLight(ifstream &fin, int type) {
     Point3 origin;
     Vector3 dx, dy;
     Color color;
+    float power = 60;
+    float scope = 0.1;
     while (fin >> s) {
         if (s == "origin:") fin >> origin.x >> origin.y >> origin.z;
         if (s == "dx:") fin >> dx.x >> dx.y >> dx.z;
         if (s == "dy:") fin >> dy.x >> dy.y >> dy.z;
         if (s == "color:") fin >> color.x >> color.y >> color.z;
+        if (s == "power:") fin >> power;
+        if (s == "scope:") fin >> scope;
         if (s == "}") break;
     }
-    if (type == 0) return new PointLight(origin, color);
-    return new AreaLight(origin, dx, dy, color);
+    if (type == 0) return new PointLight(origin, color, power, scope);
+    return new AreaLight(origin, dx, dy, color, power, scope);
 }
 
 Camera* LoadCamera(ifstream &fin, int width, int height, int type) {
@@ -187,6 +191,7 @@ Scene* LoadScene(ifstream &fin) {
         if (s == "Sphere") primitives.push_back(LoadSphere(fin));
         if (s == "Mesh") meshs.push_back(LoadMesh(fin));
         if (s == "Bezier") primitives.push_back(LoadBezier(fin));
+        if (s == "PointLight") lights.push_back(LoadLight(fin, 0));
         if (s == "AreaLight") lights.push_back(LoadLight(fin, 1));
         if (s == "}") break;
     }

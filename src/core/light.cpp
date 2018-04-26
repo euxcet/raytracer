@@ -18,8 +18,8 @@ vector<Photon*> PointLight::EmitPhotons(int pcount) const {
             x = RAND() * 2 - 1;
             y = RAND() * 2 - 1;
             z = RAND() * 2. - 1;
-        } while (x*x + y*y + z*z >= 1 || x*x + y*y + z*z < EPS || Dot(to, Normalize(Vector3(x, y, z))) < 0.1);
-        Photon *photon = new Photon(origin, Normalize(Vector3(x, y, z)), color * 85 * PI * 4.);
+        } while (x*x + y*y + z*z >= 1 || x*x + y*y + z*z < EPS || Dot(to, Normalize(Vector3(x, y, z))) < scope);
+        Photon *photon = new Photon(origin, Normalize(Vector3(x, y, z)), color * power * PI * 4.);
         photons.push_back(photon);
     }
     return photons;
@@ -53,10 +53,10 @@ vector<Photon*> AreaLight::EmitPhotons(int pcount) const {
             x = RAND() * 2 - 1;
             y = RAND() * 2 - 1;
             z = RAND() * 2 - 1;
-        } while (x*x + y*y + z*z >= 1 || x*x + y*y + z*z < EPS || Dot(to, Normalize(Vector3(x, y, z))) < 0.1);
+        } while (x*x + y*y + z*z >= 1 || x*x + y*y + z*z < EPS || Dot(to, Normalize(Vector3(x, y, z))) < scope);
         rx = RAND() - 0.5;
         ry = RAND() - 0.5;
-        Photon *photon = new Photon(origin + dx * rx + dy * ry, Normalize(Vector3(x, y, z)), color * 60 * PI * 4.);
+        Photon *photon = new Photon(origin + dx * rx + dy * ry, Normalize(Vector3(x, y, z)), color * power * PI * 4.);
         photons.push_back(photon);
     }
     return photons;

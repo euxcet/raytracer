@@ -17,7 +17,7 @@ Ray Camera::Emit(float x, float y) {
     float dx = (x - width / 2) / height;
     float dy = y / height - 0.5;
     float dis = (des - eye).Length();
-    return Ray(eye, Normalize(des + dx * dis * right + dy * dis * up - eye));
+    return Ray(eye, Normalize(des + dx * dis * 2 * right + dy * dis * 2 * up - eye));
 }
 
 void Camera::SetColor(int x, int y, const Color& c) {
