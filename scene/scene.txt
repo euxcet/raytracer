@@ -1,189 +1,169 @@
 PPM {
-	width: 1280
-	height: 800
+	width: 900
+	height: 900
 	photons: 200000
-	Camera {
-		eye: 1 4.5 3.5
-		des: 0 -7 0
+	FocusCamera {
+		eye: 2.78 2.73 -8.00
+		des: 2.78 2.73 0.73
+		up: 0 -1 0
 	}
 	Scene {
 		accelerator: kdtree
         background: 0.1 0.1 0.1
         AreaLight {
-            origin: 0 0 6.8
-            dx: 1.4 0 0
-            dy: 0 1.4 0
+            origin: 2.78 5.48 1.795
+			focus: 2.78 0 1.795
+            dx: 1.30 0 0
+            dy: 0 0 1.05
             color: 1 1 1
-			power: 60
-			scope: 0.05
+			power: 20
+			scope: 0.6
         }
-		Bezier {
-			obj: ../obj/teapot.bpt
+
+	 	Mesh {
+			obj: ../obj/bunny2.obj
+			#obj: ../obj/armadillo.obj
 			Translate {
-				delta: 0 -1 0
+				delta: 2.5 0.1702 0.73
+			}
+			RotateY {
+				theta: 180
 			}
 			Scale {
-				scale: 0.8 0.8 0.8
+				scale: 0.5 0.5 0.5
 			}
+
+
 	        Material {
-	            color: 1 1 1
-				absorb: 1 1 1
-	            refr: 1
-	            refl: 0
-	            diff: 0
+	            color: 0.8 0.7 0.7
+	            absorb: 0.8 0.7 0.7
+	            refr: 0
+	            refl: 0.2
+	            diff: 0.6
 	            spec: 0
-	            rindex: 1.5
+	            rindex: 1.7
 	        }
 		}
-		Plane {
-			normal: 1 0 0
-            dist: 7
-            Material {
-                color: 1 1 1
-                absorb: 0 0 0
-                refr: 0
-                refl: 0.2
-                diff: 0.6
-                spec: 0
-                rindex: 1.7
-                Texture {
-                    texture: ../texture/wall1.pic
-                }
-            }
+
+		Sphere {
+			origin: 0.78 0.5 2.73
+			radius: 0.5
+	        Material {
+	            color: 1.1 1.1 1.1
+	            absorb: 0.8 0.7 0.7
+	            refr: 0
+	            refl: 0.1
+	            diff: 0.5
+	            spec: 0
+	            rindex: 1.7
+	        }
 		}
-		Plane {
-			normal: -1 0 0
-            dist: 7
-            Material {
-                color: 1 1 1
-                absorb: 0 0 0
-                refr: 0
-                refl: 0.2
-                diff: 0.6
-                spec: 0
-                rindex: 1.7
-                Texture {
-                    texture: ../texture/wall1.pic
-                }
-            }
+		Sphere {
+			origin: 4.78 0.5 2.73
+			radius: 0.5
+	        Material {
+	            color: 1.1 1.1 1.1
+	            absorb: 0.8 0.7 0.7
+	            refr: 0
+	            refl: 0.1
+	            diff: 0.5
+	            spec: 0
+	            rindex: 1.7
+	        }
 		}
-		Plane {
-			normal: 0 1 0
-            dist: 7
-            Material {
-                color: 1 1 1
-                absorb: 0 0 0
-                refr: 0
-                refl: 0.2
-                diff: 0.6
-                spec: 0
-                rindex: 1.7
-                Texture {
-                    texture: ../texture/wall1.pic
-                }
-            }
+
+		Sphere {
+			origin: 1.78 0.2 -0.73
+			radius: 0.2
+	        Material {
+	            color: 1.1 1.1 1.1
+	            absorb: 0.8 0.7 0.7
+	            refr: 0
+	            refl: 0.1
+	            diff: 0.5
+	            spec: 0
+	            rindex: 1.7
+	        }
 		}
-		Plane {
-			normal: 0 -1 0
-            dist: 7
-            Material {
-                color: 1 1 1
-                absorb: 0 0 0
-                refr: 0
-                refl: 0.4
-                diff: 0.8
-                spec: 0
-                rindex: 1.7
-                Texture {
-                    texture: ../texture/wall1.pic
-                }
-            }
+
+		Sphere {
+			origin: 3.78 0.2 -0.73
+			radius: 0.2
+	        Material {
+	            color: 1.1 1.1 1.1
+	            absorb: 0.8 0.7 0.7
+	            refr: 0
+	            refl: 0.1
+	            diff: 0.5
+	            spec: 0
+	            rindex: 1.7
+	        }
 		}
 
 		Plane {
-			normal: 0 0 1
+			normal: 0 1 0
             dist: 0
             Material {
                 color: 1 1 1
                 absorb: 0 0 0
                 refr: 0
-                refl: 0.4
-                diff: 0.8
+                refl: 0
+                diff: 0.7
                 spec: 0
                 rindex: 1.7
-                Texture {
-                    texture: ../texture/wall1.pic
-                }
+            }
+		}
+		Plane {
+			normal: 0 -1 0
+            dist: -5.488
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0
+                diff: 0.7
+                spec: 0
+                rindex: 1.7
+            }
+		}
+		Plane {
+			normal: 0 0 -1
+            dist: -5.592
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0
+                diff: 0.7
+                spec: 0
+                rindex: 1.7
+            }
+		}
+		Plane {
+			normal: 1 0 0
+            dist: 0
+            Material {
+                color: 0 1 0
+                absorb: 0 0 0
+                refr: 0
+                refl: 0
+                diff: 0.7
+                spec: 0
+                rindex: 1.7
+            }
+		}
+		Plane {
+			normal: -1 0 0
+            dist: -5.560
+            Material {
+                color: 1 0 0
+                absorb: 0 0 0
+                refr: 0
+                refl: 0
+                diff: 0.9
+                spec: 0
+                rindex: 1.7
             }
 		}
 	}
 }
-
-		Mesh {
-			obj: ../obj/sven_blade.obj
-			Scale {
-				scale: 0.02 0.02 0.02
-			}
-			RotateX {
-				theta: 90
-			}
-			RotateY {
-				theta: 180
-			}
-	        Material {
-	            color: 0 1 0
-	            refr: 0
-	            refl: 0.3
-	            diff: 0.5
-	            spec: 0.25
-	            rindex: 1.7
-				Texture {
-                    texture: ../texture/sven_blade.pic
-				}
-	        }
-		}
-		Mesh {
-			obj: ../obj/sven_all.obj
-			offset: 370
-			Scale {
-				scale: 0.02 0.02 0.02
-			}
-			RotateX {
-				theta: 90
-			}
-			RotateY {
-				theta: 180
-			}
-	        Material {
-	            color: 0 1 0
-	            refr: 0
-	            refl: 0.3
-	            diff: 0.5
-	            spec: 0.25
-	            rindex: 1.7
-				Texture {
-                    texture: ../texture/sven.pic
-				}
-	        }
-		}
-		Sphere {
-			origin: 0 0 1
-			radius: 1
-
-	        Material {
-	            color: 0 1 0
-				absorb: 0 1 0
-	            refr: 1
-	            refl: 0
-	            diff: 0
-	            spec: 0
-	            rindex: 1.5
-	        }
-
-		}
-        AreaLight {
-            origin: 0 0 2
-            dx: 1.4 0 0
-            dy: 0 1.4 0
-            color: 0.4 0.4 0.4
-        }

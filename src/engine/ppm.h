@@ -12,7 +12,7 @@ namespace Raytracer {
 
 class HitPoint {
 public:
-    HitPoint() { }
+    HitPoint() {}
     Vector3 weight;
     Ray ray;
     Intersection isc;

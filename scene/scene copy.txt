@@ -1,0 +1,115 @@
+PPM {
+	width: 400
+	height: 400
+	photons: 20000
+	Camera {
+		eye: 2.78 2.73 -8.00
+		des: 2.78 2.73 0
+		up: 0 -1 0
+	}
+	Scene {
+		accelerator: kdtree
+        background: 0.1 0.1 0.1
+        AreaLight {
+            origin: 2.78 5.48 2.795
+			focus: 2.78 0 2.795
+            dx: 1.30 0 0
+            dy: 0 0 1.05
+            color: 1 1 1
+			power: 20
+			scope: -10
+        }
+
+
+
+		Plane {
+			normal: 0 1 0
+            dist: 0
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0
+                diff: 0.7
+                spec: 0
+                rindex: 1.7
+            }
+		}
+		Plane {
+			normal: 0 -1 0
+            dist: -5.488
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0
+                diff: 0.7
+                spec: 0
+                rindex: 1.7
+            }
+		}
+		Plane {
+			normal: 0 0 -1
+            dist: -5.592
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0
+                diff: 0.7
+                spec: 0
+                rindex: 1.7
+            }
+		}
+		Plane {
+			normal: 1 0 0
+            dist: 0
+            Material {
+                color: 0 1 0
+                absorb: 0 0 0
+                refr: 0
+                refl: 0
+                diff: 0.7
+                spec: 0
+                rindex: 1.7
+            }
+		}
+		Plane {
+			normal: -1 0 0
+            dist: -5.560
+            Material {
+                color: 1 0 0
+                absorb: 0 0 0
+                refr: 0
+                refl: 0
+                diff: 0.9
+                spec: 0
+                rindex: 1.7
+            }
+		}
+	}
+}
+	 	Mesh {
+			obj: ../obj/bunny2.obj
+			#obj: ../obj/armadillo.obj
+			Translate {
+				delta: 3.0 0.1702 1.0
+			}
+			RotateY {
+				theta: 180
+			}
+			Scale {
+				scale: 0.5 0.5 0.5
+			}
+
+
+	        Material {
+	            color: 0.8 0.7 0.7
+	            absorb: 0.8 0.7 0.7
+	            refr: 0
+	            refl: 0.4
+	            diff: 0.6
+	            spec: 0
+	            rindex: 1.7
+	        }
+		}

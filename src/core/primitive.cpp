@@ -23,15 +23,43 @@ Mesh::Mesh(const char* file, Material *material, const Transform &transform, int
     ifstream fin;
     fin.open(file);
     char s[100];
-    int u[10], ut[10];
+    int u[10], ut[10], un[10];
 	int f = 0;
 	vector<float> x, y, z;
 	vector<float> cx, cy;
+	vector<float> nx, ny, nz;
 	x.push_back(0);y.push_back(0);z.push_back(0);
 	cx.push_back(0);cy.push_back(0);
+	nx.push_back(0);ny.push_back(0);nz.push_back(0);
 	fin >> s;
 	while (true) {
 		if (s[0] == 'f' && strlen(s) == 1) {
+			f ++;
+			int vertex = 0;
+			while (fin >> s) {
+				if (s[0] >= '0' && s[0] <= '9') {
+					u[vertex] = atoi(s);
+					fin >> s;
+					un[vertex] = atoi(s);
+					vertex++;
+				}
+				else break;
+			}
+			if (f <= offset) continue;
+			for(int i = 2; i < vertex; i++) {
+		        Point3 v0 = Point3(x[u[0]], y[u[0]], z[u[0]]);
+		        Point3 v1 = Point3(x[u[i - 1]], y[u[i - 1]], z[u[i - 1]]);
+		        Point3 v2 = Point3(x[u[i]], y[u[i]], z[u[i]]);
+				vector<Normal3> vn;
+				vn.push_back(Normal3(nx[u[0]], ny[u[0]], nz[u[0]]));
+				vn.push_back(Normal3(nx[u[i - 1]], ny[u[i - 1]], nz[u[i - 1]]));
+				vn.push_back(Normal3(nx[u[i]], ny[u[i]], nz[u[i]]));
+
+		        Shape* p = CreateTriangleShape(v0, v1, v2, vn, transform);
+		        triangles.push_back(new GeometricPrimitive(p, material)); // WARNING : material not new
+			}
+
+			/*
 			f ++;
 			int vertex = 0;
 			while (fin >> s) {
@@ -56,6 +84,7 @@ Mesh::Mesh(const char* file, Material *material, const Transform &transform, int
 		        Shape* p = CreateTriangleShape(v0, v1, v2, vt, transform);
 		        triangles.push_back(new GeometricPrimitive(p, material)); // WARNING : material not new
 			}
+			*/
 		}
 		else if (s[0] == 'v' && strlen(s) == 1) {
 			float tx, ty, tz;
@@ -70,6 +99,14 @@ Mesh::Mesh(const char* file, Material *material, const Transform &transform, int
 			fin >> tx >> ty;
 			cx.push_back(tx);
 			cy.push_back(ty);
+			fin >> s;
+		}
+		else if (strlen(s) == 2 && s[0] == 'v' && s[1] == 'n') {
+			float tx, ty, tz;
+			fin >> tx >> ty >> tz;
+			nx.push_back(tx);
+			ny.push_back(ty);
+			nz.push_back(tz);
 			fin >> s;
 		}
 		else if (s[0] == '%') break;

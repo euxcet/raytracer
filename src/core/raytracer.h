@@ -41,8 +41,8 @@ namespace Raytracer {
 #define INF (1e6)
 #define BIGFLOAT (1e6)
 #define TRACEDEPTH (9)
-#define SAMPLE (9)
-#define LIGHT_SAMPLE (4)
+#define SAMPLE (25)
+#define LIGHT_SAMPLE (9)
 #define PI M_PI
 
 #define HIT 1

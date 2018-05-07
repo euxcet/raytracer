@@ -20,7 +20,7 @@ namespace Raytracer {
                                        const vector<Primitive*> &tris) {
         KDTreeNode *node = new KDTreeNode();
         node -> box = scene;
-        if (tris.size() < 30) {
+        if (tris.size() < 20 || scene.size.Length() < EPS) {
             node -> prims = tris;
             node -> leaf = true;
             return node;

@@ -11,8 +11,8 @@ namespace Raytracer {
 
 class Light {
 public:
-    Light(const Color &color, float power, float scope)
-        : color(color), power(power), scope(scope) {}
+    Light(const Color &color, const Point3 &focus, float power, float scope)
+        : color(color), focus(focus), power(power), scope(scope) {}
     Color GetColor() { return color; }
     virtual Point3 GetOrigin() const = 0;
     virtual double CalcShade(const Scene *scene, const Point3 &p) = 0;
@@ -21,14 +21,16 @@ public:
 
 protected:
     Color color;
+    Point3 focus;
     float power;
     float scope;
 };
 
 class PointLight : public Light {
 public:
-    PointLight(const Point3 &origin, const Color &color, float power, float scope)
-        : origin(origin), Light(color, power, scope) {}
+    PointLight(const Point3 &origin, const Color &color, const Point3 &focus,
+        float power, float scope)
+        : origin(origin), Light(color, focus, power, scope) {}
     Point3 GetOrigin() const { return origin; }
     double CalcShade(const Scene *scene, const Point3 &p);
     bool Intersect(const Ray &ray) const { return false; }
@@ -41,8 +43,8 @@ private:
 class AreaLight : public Light {
 public:
     AreaLight(const Point3 &origin, const Vector3 &dx, const Vector3 &dy,
-              const Color &color, float power, float scope)
-        : origin(origin), dx(dx), dy(dy), Light(color, power, scope) {}
+              const Color &color, const Point3& focus, float power, float scope)
+        : origin(origin), dx(dx), dy(dy), Light(color, focus, power, scope) {}
     Point3 GetOrigin() const { return origin; }
     double CalcShade(const Scene *scene, const Point3 &p);
     bool Intersect(const Ray &ray) const;

@@ -12,7 +12,7 @@ double PointLight::CalcShade(const Scene *scene, const Point3 &p) {
 vector<Photon*> PointLight::EmitPhotons(int pcount) const {
     double x, y, z;
     vector<Photon*> photons;
-    Vector3 to = Normalize(Point3(0, 0, 0) - origin);
+    Vector3 to = Normalize(focus - origin);
     for(int i = 0; i < pcount; i++) {
         do {
             x = RAND() * 2 - 1;
@@ -47,7 +47,7 @@ vector<Photon*> AreaLight::EmitPhotons(int pcount) const {
     double x, y, z;
     double rx, ry;
     vector<Photon*> photons;
-    Vector3 to = Normalize(Point3(0, 0, 0) - origin);
+    Vector3 to = Normalize(focus - origin);
     for(int i = 0; i < pcount; i++) {
         do {
             x = RAND() * 2 - 1;

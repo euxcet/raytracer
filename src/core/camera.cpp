@@ -17,7 +17,7 @@ Ray Camera::Emit(float x, float y) {
     float dx = (x - width / 2) / height;
     float dy = y / height - 0.5;
     float dis = (des - eye).Length();
-    return Ray(eye, Normalize(des + dx * dis * 2 * right + dy * dis * 2 * up - eye));
+    return Ray(eye, Normalize(des + dx * dis * 0.8 * right + dy * dis * 0.8 * up - eye));
 }
 
 void Camera::SetColor(int x, int y, const Color& c) {
@@ -46,15 +46,13 @@ void Camera::print(int count) {
 }
 
 Ray FocusCamera::Emit(float x, float y) {
-    float ex = (RAND() - 0.5) / 2;
-    float ey = (RAND() - 0.5) / 2;
-    ex = 0;
-    ey = 0;
+    float ex = (RAND() - 0.5) * 0.25;
+    float ey = (RAND() - 0.5) * 0.25;
     float dx = (x - width / 2) / height;
     float dy = y / height - 0.5;
     float dis = (des - eye).Length();
     Point3 origin = eye + ex * right + ey * up;
-    return Ray(origin, Normalize(des + dx * dis * right + dy * dis * up - origin));
+    return Ray(origin, Normalize(des + dx * dis * 0.8 * right + dy * dis * 0.8 * up - origin));
 }
 
 }

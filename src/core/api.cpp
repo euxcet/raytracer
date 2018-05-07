@@ -48,6 +48,7 @@ Material* LoadMaterial(ifstream &fin) {
         if (s == "Texture") texture = LoadTexture(fin);
         if (s == "}") break;
     }
+    if (color.x > 1.01) color = Color(RAND(), RAND(), RAND());
     if (texture == NULL)
         return new Material(color, absorb, refr, refl, diff, spec, rindex);
     return new Material(color, absorb, refr, refl, diff, spec, rindex, texture);
@@ -144,6 +145,7 @@ Light* LoadLight(ifstream &fin, int type) {
     string s;
     Point3 origin;
     Vector3 dx, dy;
+    Point3 focus;
     Color color;
     float power = 60;
     float scope = 0.1;
@@ -152,27 +154,30 @@ Light* LoadLight(ifstream &fin, int type) {
         if (s == "dx:") fin >> dx.x >> dx.y >> dx.z;
         if (s == "dy:") fin >> dy.x >> dy.y >> dy.z;
         if (s == "color:") fin >> color.x >> color.y >> color.z;
+        if (s == "focus:") fin >> focus.x >> focus.y >> focus.z;
         if (s == "power:") fin >> power;
         if (s == "scope:") fin >> scope;
         if (s == "}") break;
     }
-    if (type == 0) return new PointLight(origin, color, power, scope);
-    return new AreaLight(origin, dx, dy, color, power, scope);
+    if (type == 0) return new PointLight(origin, color, focus, power, scope);
+    return new AreaLight(origin, dx, dy, color, focus, power, scope);
 }
 
 Camera* LoadCamera(ifstream &fin, int width, int height, int type) {
     string s;
     Point3 eye;
     Point3 des;
+    Vector3 up;
     while (fin >> s) {
         if (s == "width:") fin >> width;
         if (s == "height:") fin >> height;
         if (s == "eye:") fin >> eye.x >> eye.y >> eye.z;
         if (s == "des:") fin >> des.x >> des.y >> des.z;
+        if (s == "up:") fin >> up.x >> up.y >> up.z;
         if (s == "}") break;
     }
     Vector3 dir = Normalize(des - eye);
-    Vector3 up = Normalize(Vector3(0, 1, -dir.y / dir.z));
+    if (up.Length() < EPS) up = Normalize(Vector3(0, 1, -dir.y / dir.z));
     if (type == 0) return new Camera(eye, dir, up, des, width, height);
     return new FocusCamera(eye, dir, up, des, width, height);
 }

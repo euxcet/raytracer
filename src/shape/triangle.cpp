@@ -3,28 +3,38 @@
 namespace Raytracer {
 
 bool Triangle::Intersect(const Ray& ray, Intersection *isc) const {
-
     float dot = Dot(N, ray.GetDirection());
+    Vector3 v0v1 = v1 - v0;
+    Vector3 v0v2 = v2 - v0;
+    float area = Cross(v0v1, v0v2).Length() / 2;
     if (fabs(dot) < EPS) return false;
     Normal3 n = N;
     float d = Dot(n, Vector3(v0));
     float dist = -(Dot(n, Vector3(ray.GetOrigin())) - d) / dot;
     if (dist < 0 || dist > ray.tmax) return false;
+
+    float u, v, w;
+
     Point3 p = ray(dist);
     Vector3 edge = v1 - v0;
     Vector3 vp = p - v0;
     if (Dot(n, Cross(edge, vp)) < 0) return false;
+
     edge = v2 - v1;
     vp = p - v1;
+    u = Cross(edge, vp).Length() / 2 / area;
     if (Dot(n, Cross(edge, vp)) < 0) return false;
+
     edge = v0 - v2;
     vp = p - v2;
+    v = Cross(edge, vp).Length() / 2 / area;
+    w = 1 - u - v;
     if (Dot(n, Cross(edge, vp)) < 0) return false;
 
 	isc -> dist = dist;
 	isc -> hit = 1;
 	isc -> p = p;
-	isc -> n = GetNormal(isc -> p);
+	isc -> n = vn[0] * u + vn[1] * v + vn[2] * w;
     if (dot > 0) {
         isc -> hit = -1;
         isc -> n = -isc -> n;
@@ -66,8 +76,15 @@ Shape* CreateTriangleShape(const Point3 &v0, const Point3 &v1, const Point3 &v2,
 }
 
 Shape* CreateTriangleShape(const Point3 &v0, const Point3 &v1, const Point3 &v2,
+                           const vector<Normal3> &vn, Transform transform) {
+    return new Triangle(v0, v1, v2, vn, transform);
+}
+
+/*
+Shape* CreateTriangleShape(const Point3 &v0, const Point3 &v1, const Point3 &v2,
                            const vector<Point3> &vt, Transform transform) {
     return new Triangle(v0, v1, v2, vt, transform);
 }
+*/
 
 }

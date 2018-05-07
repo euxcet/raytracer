@@ -64,7 +64,7 @@ bool RaytracerEngine::Render() {
 			Ray r = camera -> Emit(i, j);
 			Color col = Color();
 			for(int t = 0; t < SAMPLE; t++) {
-				col += Raytrace(camera -> Emit(i, j), 0, 1.0f);
+				col += Raytrace(camera -> Emit(i + RAND() - 0.5, j + RAND() - 0.5), 0, 1.0f);
 			}
 			camera -> SetColor(i, j, col / SAMPLE);
 		}

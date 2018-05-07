@@ -1,0 +1,265 @@
+PPM {
+	width: 1280
+	height: 800
+	photons: 200000
+	Camera {
+		eye: 1 4.5 3.5
+		des: 0 -7 0
+	}
+	Scene {
+		accelerator: kdtree
+        background: 0.1 0.1 0.1
+        AreaLight {
+            origin: 0 0 6.8
+            dx: 1.4 0 0
+            dy: 0 1.4 0
+            color: 1 1 1
+			power: 60
+			scope: 0.05
+        }
+		Bezier {
+			obj: ../obj/teapot.bpt
+			Translate {
+				delta: 0 -1 0
+			}
+			Scale {
+				scale: 0.8 0.8 0.8
+			}
+	        Material {
+	            color: 1 1 1
+				absorb: 1 1 1
+	            refr: 1
+	            refl: 0
+	            diff: 0
+	            spec: 0
+	            rindex: 1.5
+	        }
+		}
+		Plane {
+			normal: 1 0 0
+            dist: 7
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0.2
+                diff: 0.6
+                spec: 0
+                rindex: 1.7
+                Texture {
+                    texture: ../texture/wall1.pic
+                }
+            }
+		}
+		Plane {
+			normal: -1 0 0
+            dist: 7
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0.2
+                diff: 0.6
+                spec: 0
+                rindex: 1.7
+                Texture {
+                    texture: ../texture/wall1.pic
+                }
+            }
+		}
+		Plane {
+			normal: 0 1 0
+            dist: 7
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0.2
+                diff: 0.6
+                spec: 0
+                rindex: 1.7
+                Texture {
+                    texture: ../texture/wall1.pic
+                }
+            }
+		}
+		Plane {
+			normal: 0 -1 0
+            dist: 7
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0.4
+                diff: 0.8
+                spec: 0
+                rindex: 1.7
+                Texture {
+                    texture: ../texture/wall1.pic
+                }
+            }
+		}
+
+		Plane {
+			normal: 0 0 1
+            dist: 0
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0.4
+                diff: 0.8
+                spec: 0
+                rindex: 1.7
+                Texture {
+                    texture: ../texture/wall1.pic
+                }
+            }
+		}
+	}
+}
+
+		Mesh {
+			obj: ../obj/sven_blade.obj
+			Scale {
+				scale: 0.02 0.02 0.02
+			}
+			RotateX {
+				theta: 90
+			}
+			RotateY {
+				theta: 180
+			}
+	        Material {
+	            color: 0 1 0
+	            refr: 0
+	            refl: 0.3
+	            diff: 0.5
+	            spec: 0.25
+	            rindex: 1.7
+				Texture {
+                    texture: ../texture/sven_blade.pic
+				}
+	        }
+		}
+		Mesh {
+			obj: ../obj/sven_all.obj
+			offset: 370
+			Scale {
+				scale: 0.02 0.02 0.02
+			}
+			RotateX {
+				theta: 90
+			}
+			RotateY {
+				theta: 180
+			}
+	        Material {
+	            color: 0 1 0
+	            refr: 0
+	            refl: 0.3
+	            diff: 0.5
+	            spec: 0.25
+	            rindex: 1.7
+				Texture {
+                    texture: ../texture/sven.pic
+				}
+	        }
+		}
+		Sphere {
+			origin: 0 0 1
+			radius: 1
+
+	        Material {
+	            color: 0 1 0
+				absorb: 0 1 0
+	            refr: 1
+	            refl: 0
+	            diff: 0
+	            spec: 0
+	            rindex: 1.5
+	        }
+
+		}
+        AreaLight {
+            origin: 0 0 2
+            dx: 1.4 0 0
+            dy: 0 1.4 0
+            color: 0.4 0.4 0.4
+        }
+
+
+PPM {
+	width: 400
+	height: 400
+	photons: 100000
+	Camera {
+		eye: 0 5 6
+		des: 0 -7 0
+	}
+	Scene {
+		accelerator: kdtree
+        background: 0.1 0.1 0.1
+        AreaLight {
+            origin: 2 2 6.8
+            dx: 1.4 0 0
+            dy: 0 1.4 0
+            color: 1 1 1
+			power: 40
+			scope: 0.6
+        }
+
+	 	Mesh {
+			obj: ../obj/bunny2.obj
+			#obj: ../obj/armadillo.obj
+			Translate {
+				delta: 0 0 1.0
+			}
+			RotateX {
+				theta: 90
+			}
+			RotateY {
+				theta: 180
+			}
+	        Material {
+	            color: 0.2 0.7 0.3
+	            absorb: 0.2 0.7 0.3
+	            refr: 1
+	            refl: 0
+	            diff: 0
+	            spec: 0
+	            rindex: 1.7
+	        }
+		}
+
+		Plane {
+			normal: 0 0 1
+            dist: 0
+            Material {
+                color: 1 1 1
+                absorb: 0 0 0
+                refr: 0
+                refl: 0.4
+                diff: 0.9
+                spec: 0
+                rindex: 1.7
+                Texture {
+                    texture: ../texture/wall1.pic
+                }
+            }
+		}
+	}
+}
+		Sphere {
+			origin: 0 0 2
+			radius: 2
+			Material {
+				color: 1 0 0
+				absorb: 0 0 0
+				refr: 0
+				refl: 0.2
+				diff: 0.6
+				spec: 0.2
+				rindex: 1.7
+			}
+		}

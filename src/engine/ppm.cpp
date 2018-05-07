@@ -122,7 +122,6 @@ void PPMEngine::SpawnRefractionRay(const Ray &ray, Intersection isc, int depth,
         else {
     		Color absorb = -isc.dist * isc.primitive -> GetMaterial() -> GetAbsorb();
     		Color trans = Color(exp(absorb.r), exp(absorb.g), exp(absorb.b));
-            trans = Color(1., 1., 1.);
             Raytrace(Ray(isc.p + T * EPS, T), depth + 1, rindex, weight * trans, id);
         }
     }
@@ -177,7 +176,6 @@ bool PPMEngine::PhotonRefraction(const Photon &photon, const Intersection &isc,
     if (index == rindex) {
 		Color absorb = -isc.dist * isc.primitive -> GetMaterial() -> GetAbsorb();
 		trans = Color(exp(absorb.r), exp(absorb.g), exp(absorb.b));
-        trans = Color(1., 1., 1.);
     }
     if (refr * trans.Power() <= RAND() * prob) {
         prob -= refr * trans.Power();
@@ -209,6 +207,7 @@ void PPMEngine::Photontrace(const Photon &photon, int depth, float index) {
     if (isc.primitive -> GetMaterial() -> GetDiffuse() > EPS) {
         tree -> Update(tree -> root, hitphoton);
     }
+
     float prob = 1.;
     if (PhotonDiffusion(hitphoton, isc, depth, index, prob)) return;
     if (PhotonReflection(hitphoton, isc, depth, index, prob)) return;
@@ -221,25 +220,24 @@ bool PPMEngine::Render() {
     int count = 0;
     while (true) {
         count ++;
+        int sample = 16;
         for(int i = 0; i < width * height; i++) {
-            float x = (RAND() - 0.5);
-            float y = (RAND() - 0.5);
-            Raytrace(camera -> Emit(i / height + x, i % height + y), 0, 1, Vector3(1, 1, 1), i);
+            for(int _ = 0; _ < sample; _++) {
+                float x = (RAND() - 0.5);
+                float y = (RAND() - 0.5);
+                Raytrace(camera -> Emit(i / height + x, i % height + y), 0, 1, Vector3(1, 1, 1) / sample, i);
+            }
             cout << i << endl;
         }
         cout << "Hitpoints: " << hps.size() << endl;
         tree = new KDTree(hps);
-        puts("Tree done");
 
         vector<Photon*> photons = scene -> EmitPhotons(PHOTON_COUNT);
-        cout << "Photons " << photons.size() << endl;
         for(int i = 0; i < photons.size(); i++) {
             Photontrace(*photons[i], 0, 1);
             tot ++;
             cout << tot << endl;
         }
-        cout << tot << endl;
-
 
         for(int i = 0; i < hps.size(); i++) {
             HitPoint* hp = hps[i];
@@ -247,6 +245,7 @@ bool PPMEngine::Render() {
             camera -> AddColor(hp -> id / height, hp -> id % height, col);
         }
         camera -> print(count);
+
         for(int i = 0; i < photons.size(); i++)
             delete photons[i];
         photons.clear();
@@ -254,7 +253,6 @@ bool PPMEngine::Render() {
             delete hps[i];
         hps.clear();
         delete tree;
-
     }
 	return true;
 }
